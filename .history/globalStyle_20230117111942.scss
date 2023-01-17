@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::-webkit-scrollbar-thumb {
+    @apply bg-sidebar-bg;
+  }
+  /* It's styling the scrollbar. */
+  ::-webkit-scrollbar {
+    @apply w-3 bg-sidebar-bg;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-none bg-sidebar-bg/*color trackbar*/;
+  }
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+html {
+  font-size: 62.5%;
+}
+img,
+picture,
+svg,
+video,
+select,
+option {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+body {
+  min-height: 100vh;
+  max-width: 144rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Montserrat";
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  background: #222;
+}
+form,
+input,
+button,
+textarea,
+select,
+option {
+  outline: none;
+  border: none;
+}
+$player-height: 9rem;
+$border-primary: hsla(0, 0%, 100%, 0.1);
+$navigation-text: #dadada;
+.sidebar {
+  width: 24rem;
+  height: calc(100vh - $player-height);
+  z-index: 100;
+}
+.navbar {
+  &-item {
+    color: $navigation-text;
+  }
+  &-item:hover > * {
+    color: #fff;
+  }
+}
+.divide {
+  height: 1px;
+  position: relative;
+  margin-right: 2.5rem;
+  &:after {
+    position: absolute;
+    content: "";
+    border-top: 1px solid $border-primary;
+    width: 100%;
+  }
+}
+.container-login-vip {
+  @apply my-[1rem] rounded-[8px] px-[8px] py-[1.5rem] text-center;
+}
+.circle {
+  @apply inline-flex items-center justify-center p-1 rounded-[99px] w-[3.2rem] h-[3.2rem] hover:bg-hover-circle;
+}
