@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+html {
+  font-size: 62.5%;
+}
+img,
+picture,
+svg,
+video,
+select,
+option {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+}
+body {
+  min-height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Montserrat";
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  background: #222;
+}
+form,
+input,
+button,
+textarea,
+select,
+option {
+  outline: none;
+  border: none;
+}
+$player-height: 9rem;
+$border-primary: hsla(0, 0%, 100%, 0.1);
+$navigation-text: #dadada;
+.sidebar {
+  width: 24rem;
+  height: calc(100vh - $player-height);
+  z-index: 100;
+}
+.navbar {
+  &-item {
+    color: $navigation-text;
+  }
+  &-item:hover > * {
+    color: #fff;
+  }
+}
+.divide {
+  height: 1px;
+  position: relative;
+  margin-right: 2.5rem;
+  &:after {
+    position: absolute;
+    content: "";
+    border-top: 1px solid $border-primary;
+    width: 100%;
+  }
+}
+.container-login-vip {
+  @apply my-[1rem] rounded-[8px] px-[8px] py-[1.5rem] text-center;
+}
+.circle {
+  @apply inline-flex items-center justify-center p-1 rounded-[99px] w-[3.2rem] h-[3.2rem] hover:bg-hover-circle;
+  &__large {
+    @apply inline-flex items-center justify-center p-1 rounded-[99px]  hover:bg-hover-circle w-[4rem] h-[4rem];
+  }
+}
+.navbar-item > a.active {
+  @apply bg-alpha-bg text-white;
+}
+.gallary {
+  padding-top: 3.2rem;
+  &__prev,
+  &__next {
+    position: absolute;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    top: 50%;
+    right: 25px;
+    box-shadow: 0 2px 4px 0 rgb(226 102 102 / 15%);
+    background-color: #eeeeee;
+    opacity: 0;
+    ion-icon {
+      font-size: 1.5vw;
+      color: rgba($color: white, $alpha: 0.8);
+      text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+      position: relative;
+    }
+  }
+  &__prev {
+    left: 3rem;
+  }
+  &__next {
+    right: 3rem;
+  }
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    margin: 0 -15px 20px;
+    transition: height 0.2s;
+  }
+  &__container:hover &__prev,
+  &__container:hover &__next {
+    opacity: 1;
+  }
+  &__item {
+    position: absolute;
+    height: auto;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out,
+      z-index 0s linear 0.25s;
+    width: 33.33%;
+    z-index: 0;
+    opacity: 0;
+    border-radius: 8px;
+    padding: 0 15px;
+  }
+  &__item--selected {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 10;
+  }
+  &__item--last {
+    transform: translateX(20%);
+  }
+  &__item--previous {
+    transform: translateX(-100%);
+  }
+  &__item--first {
+    transform: translateX(-20%);
+  }
+  &__item--next {
+    transform: translateX(100%);
+  }
+  &__item--previous,
+  &__item--next {
+    opacity: 1;
+    z-index: 1;
+  }
+  &__img {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}
