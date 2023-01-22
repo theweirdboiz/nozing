@@ -17,10 +17,9 @@ const Gallary = ({ banner }) => {
   const rotateLeft = () => {
     // 1 2 3 4 5 6
     const firstItem = [...gallaryClassList].slice(0, number);
-
-    const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
-    newGallaryClassList.push(...firstItem);
-
+    console.log(firstItem);
+    const newGallaryClassList = [...gallaryClassList].slice(number);
+    newGallaryClassList.push(firstItem);
     setgallaryClassList(newGallaryClassList);
   };
 

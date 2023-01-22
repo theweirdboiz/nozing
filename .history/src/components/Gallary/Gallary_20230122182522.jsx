@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Gallary = ({ banner }) => {
-  const number = 1;
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -13,51 +12,44 @@ const Gallary = ({ banner }) => {
     "gallary__item gallary__item--next",
     "gallary__item gallary__item--last",
   ]);
+
   // handle events
-  const rotateLeft = () => {
-    // 1 2 3 4 5 6
-    const firstItem = [...gallaryClassList].slice(0, number);
-
-    const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
-    newGallaryClassList.push(...firstItem);
-
+  const rotateLeft = (number) => {
+    const firstItem = [...gallaryClassList].find(
+      (item, index) => index == number
+    );
+    const newGallaryClassList = [...gallaryClassList].slice(number);
+    newGallaryClassList.push(firstItem);
     setgallaryClassList(newGallaryClassList);
   };
-
   useEffect(() => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
       if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
-        // rotateLeft();
+        // rotateLeft(1);
+        rotateRight(1);
       }
-    }, 2800);
+    }, 3000);
     return () => clearInterval(timer);
   }, [gallaryClassList]);
 
-  const rotateRight = () => {
+  const rotateRight = (number) => {
     // 1,2,3,4,5,6
     const newGallaryClassList = [...gallaryClassList].slice(
       0,
       gallaryClassList.length - number
     );
-    const lastItem = [...gallaryClassList].slice(
-      newGallaryClassList.length + 1 - number
-    );
-    newGallaryClassList.unshift(...lastItem);
-    setgallaryClassList(newGallaryClassList);
-  };
-  const handleClickPrevBtn = () => {
-    rotateLeft();
-  };
-  const handleClickNextBtn = () => {
-    rotateRight();
-  };
+    const lastItem = [...gallaryClassList].slice(newGallaryClassList.length);
+    // newGallaryClassList.unshift(...lastItem);
 
+    console.log(lastItem);
+    // newGallaryClassList.unshift();
+    // setgallaryClassList(newGallaryClassList);
+  };
   return (
     <div className="gallary">
       <div className="gallary__container h-[22rem]">
-        <div className="gallary__prev" onClick={handleClickPrevBtn}>
+        <div className="gallary__prev">
           <button className="btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +78,7 @@ const Gallary = ({ banner }) => {
             </div>
           );
         })}
-        <div className="gallary__next" onClick={handleClickNextBtn}>
+        <div className="gallary__next">
           <button className="btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -28,7 +28,7 @@ const Gallary = ({ banner }) => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
       if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
+        // rotateRight();
         // rotateLeft();
       }
     }, 2800);

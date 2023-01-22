@@ -20,7 +20,6 @@ const Gallary = ({ banner }) => {
 
     const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
     newGallaryClassList.push(...firstItem);
-
     setgallaryClassList(newGallaryClassList);
   };
 
@@ -28,7 +27,7 @@ const Gallary = ({ banner }) => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
       if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
+        // rotateRight();
         // rotateLeft();
       }
     }, 2800);

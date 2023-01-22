@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Gallary = ({ banner }) => {
-  const number = 1;
+  const number = 0;
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -15,15 +15,13 @@ const Gallary = ({ banner }) => {
   ]);
   // handle events
   const rotateLeft = () => {
-    // 1 2 3 4 5 6
-    const firstItem = [...gallaryClassList].slice(0, number);
-
-    const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
-    newGallaryClassList.push(...firstItem);
-
+    const firstItem = [...gallaryClassList].find(
+      (item, index) => index == number
+    );
+    const newGallaryClassList = [...gallaryClassList].slice(number);
+    newGallaryClassList.push(firstItem);
     setgallaryClassList(newGallaryClassList);
   };
-
   useEffect(() => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
@@ -33,7 +31,7 @@ const Gallary = ({ banner }) => {
       }
     }, 2800);
     return () => clearInterval(timer);
-  }, [gallaryClassList]);
+  }, [gallaryClassList, setgallaryClassList]);
 
   const rotateRight = () => {
     // 1,2,3,4,5,6
@@ -41,11 +39,9 @@ const Gallary = ({ banner }) => {
       0,
       gallaryClassList.length - number
     );
-    const lastItem = [...gallaryClassList].slice(
-      newGallaryClassList.length + 1 - number
-    );
-    newGallaryClassList.unshift(...lastItem);
-    setgallaryClassList(newGallaryClassList);
+    console.log(newGallaryClassList);
+    const lastItem = [...gallaryClassList].slice(0, newGallaryClassList.length);
+    setgallaryClassList([...newGallaryClassList, ...lastItem]);
   };
   const handleClickPrevBtn = () => {
     rotateLeft();

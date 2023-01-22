@@ -17,10 +17,9 @@ const Gallary = ({ banner }) => {
   const rotateLeft = () => {
     // 1 2 3 4 5 6
     const firstItem = [...gallaryClassList].slice(0, number);
-
-    const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
-    newGallaryClassList.push(...firstItem);
-
+    console.log(firstItem);
+    const newGallaryClassList = [...gallaryClassList].slice(number);
+    newGallaryClassList.push(firstItem);
     setgallaryClassList(newGallaryClassList);
   };
 
@@ -28,7 +27,7 @@ const Gallary = ({ banner }) => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
       if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
+        // rotateRight();
         // rotateLeft();
       }
     }, 2800);
@@ -44,7 +43,7 @@ const Gallary = ({ banner }) => {
     const lastItem = [...gallaryClassList].slice(
       newGallaryClassList.length + 1 - number
     );
-    newGallaryClassList.unshift(...lastItem);
+    newGallaryClassList.unshift(lastItem);
     setgallaryClassList(newGallaryClassList);
   };
   const handleClickPrevBtn = () => {

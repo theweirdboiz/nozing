@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const Gallary = ({ banner }) => {
-  const number = 1;
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -14,44 +13,39 @@ const Gallary = ({ banner }) => {
     "gallary__item gallary__item--last",
   ]);
   // handle events
-  const rotateLeft = () => {
-    // 1 2 3 4 5 6
-    const firstItem = [...gallaryClassList].slice(0, number);
-
-    const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
-    newGallaryClassList.push(...firstItem);
-
+  const rotateLeft = (number) => {
+    const firstItem = [...gallaryClassList].find(
+      (item, index) => index == number
+    );
+    const newGallaryClassList = [...gallaryClassList].slice(number);
+    newGallaryClassList.push(firstItem);
     setgallaryClassList(newGallaryClassList);
   };
-
   useEffect(() => {
     const gallaryContainer = document.querySelector(".gallary__container");
     const timer = setInterval(() => {
       if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
-        // rotateLeft();
+        // rotateLeft(1);
+        rotateRight(1);
       }
-    }, 2800);
+    }, 3000);
     return () => clearInterval(timer);
   }, [gallaryClassList]);
 
-  const rotateRight = () => {
+  const rotateRight = (number) => {
     // 1,2,3,4,5,6
     const newGallaryClassList = [...gallaryClassList].slice(
-      0,
-      gallaryClassList.length - number
+      number,
+      gallaryClassList.length
     );
-    const lastItem = [...gallaryClassList].slice(
-      newGallaryClassList.length + 1 - number
-    );
-    newGallaryClassList.unshift(...lastItem);
-    setgallaryClassList(newGallaryClassList);
+    const lastItem = [...gallaryClassList].slice(0, newGallaryClassList.length);
+    setgallaryClassList([...newGallaryClassList, ...lastItem]);
   };
-  const handleClickPrevBtn = () => {
-    rotateLeft();
+  handleClickPrevBtn = () => {
+    rotateLeft(1);
   };
-  const handleClickNextBtn = () => {
-    rotateRight();
+  handleClickNextBtn = () => {
+    rotateRight(2);
   };
 
   return (
