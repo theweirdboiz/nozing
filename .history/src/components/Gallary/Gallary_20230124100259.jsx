@@ -6,15 +6,15 @@ import GallaryItem from "./GallaryItem";
 
 import { useDispatch, useSelector } from "react-redux";
 import { currentSongSelector } from "@redux/selectors";
-import songsSlice from "@redux/songsSlice";
 
 const Gallary = ({ banner }) => {
   const dispatch = useDispatch();
 
-  const currentSongId = useSelector((state) => state.songs.currentSongId);
+  const currentSongId = useSelector(currentSongSelector);
+
+  console.log(currentSongId);
 
   const number = 1;
-
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -65,7 +65,6 @@ const Gallary = ({ banner }) => {
   };
   const handleClickBanner = (item) => {
     if (item.type === 1) {
-      dispatch(songsSlice.actions.setCurrentSongId(item.encodeId));
     }
   };
   return (

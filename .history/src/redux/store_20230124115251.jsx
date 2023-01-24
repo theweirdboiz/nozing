@@ -22,7 +22,7 @@ const persistConfig = {
 const musicConfig = {
   key: "MUSIC",
   ...persistConfig,
-  whitelist: ["currentSongId"],
+  whilelist: ["currentSongId"],
 };
 
 const store = configureStore({

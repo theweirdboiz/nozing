@@ -14,15 +14,14 @@ import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 
 const persistConfig = {
-  version: 1,
   storage,
   stateReconciler: autoMergeLevel2,
 };
 
 const musicConfig = {
-  key: "MUSIC",
   ...persistConfig,
-  whitelist: ["currentSongId"],
+  key: "MUSIC",
+  whilelist: ["currentSongId"],
 };
 
 const store = configureStore({
@@ -36,11 +35,6 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-  extraReducers: (builder) => {
-    builder.addCase(PURGE, (state) => {
-      customEntityAdapter.removeAll(state);
-    });
-  },
 });
 
 export default store;

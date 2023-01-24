@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const GallaryItem = ({ item, classList, handleClickBanner }) => {
+const GallaryItem = ({ item, classList }) => {
   return (
-    <div className={classList} onClick={() => handleClickBanner(item)}>
+    <div className={classList}>
       <figure className="gallary__img">
         <img src={item.banner} alt="" />
       </figure>

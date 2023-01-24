@@ -3,18 +3,8 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useState } from "react";
 import GallaryItem from "./GallaryItem";
-
-import { useDispatch, useSelector } from "react-redux";
-import { currentSongSelector } from "@redux/selectors";
-import songsSlice from "@redux/songsSlice";
-
 const Gallary = ({ banner }) => {
-  const dispatch = useDispatch();
-
-  const currentSongId = useSelector((state) => state.songs.currentSongId);
-
   const number = 1;
-
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -63,11 +53,7 @@ const Gallary = ({ banner }) => {
   const handleClickNextBtn = () => {
     rotateRight();
   };
-  const handleClickBanner = (item) => {
-    if (item.type === 1) {
-      dispatch(songsSlice.actions.setCurrentSongId(item.encodeId));
-    }
-  };
+
   return (
     <div className="gallary">
       <div className="gallary__container h-[22rem]">
@@ -91,11 +77,17 @@ const Gallary = ({ banner }) => {
         </div>
         {banner.map((item, index) => {
           return (
+            // <div className={gallaryClassList[index]} key={item.encodeId}>
+            //   <a href={item.link}>
+            //     <figure className="gallary__img">
+            //       <img src={item.banner} alt="" />
+            //     </figure>
+            //   </a>
+            // </div>
             <GallaryItem
               item={item}
+              index={index}
               classList={gallaryClassList[index]}
-              key={item.encodeId}
-              handleClickBanner={handleClickBanner}
             />
           );
         })}

@@ -66,6 +66,7 @@ const Gallary = ({ banner }) => {
   const handleClickBanner = (item) => {
     if (item.type === 1) {
       dispatch(songsSlice.actions.setCurrentSongId(item.encodeId));
+      console.log(currentSongId);
     }
   };
   return (

@@ -11,7 +11,7 @@ import songsSlice from "@redux/songsSlice";
 const Gallary = ({ banner }) => {
   const dispatch = useDispatch();
 
-  const currentSongId = useSelector((state) => state.songs.currentSongId);
+  const currentSongId = useSelector(currentSongSelector);
 
   const number = 1;
 
@@ -66,6 +66,7 @@ const Gallary = ({ banner }) => {
   const handleClickBanner = (item) => {
     if (item.type === 1) {
       dispatch(songsSlice.actions.setCurrentSongId(item.encodeId));
+      console.log(currentSongId);
     }
   };
   return (

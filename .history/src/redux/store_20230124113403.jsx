@@ -12,35 +12,30 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import { combineReducers } from "@reduxjs/toolkit";
 
 const persistConfig = {
   version: 1,
   storage,
-  stateReconciler: autoMergeLevel2,
+  // stateReconciler: autoMergeLevel2,
 };
+
+const reducers = combineReducers({
+  explore: exploreSlice.reducer,
+  songs: songsSlice.reducer,
+});
 
 const musicConfig = {
   key: "MUSIC",
+  version: 1,
+  storage,
   ...persistConfig,
-  whitelist: ["currentSongId"],
+  whilelist: ["currentSongId"],
 };
+const persistedReducer = persistReducer(musicConfig, reducers);
 
 const store = configureStore({
-  reducer: {
-    explore: exploreSlice.reducer,
-    songs: persistReducer(musicConfig, songsSlice.reducer),
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-  extraReducers: (builder) => {
-    builder.addCase(PURGE, (state) => {
-      customEntityAdapter.removeAll(state);
-    });
-  },
+  reducer: persistedReducer,
 });
 
 export default store;
