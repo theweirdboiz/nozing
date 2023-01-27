@@ -6,6 +6,7 @@ export default createSlice({
   initialState: {
     currentSongId: null,
     currentSongInfor: null,
+    detailPlaylist: null,
     isPlaying: false,
   },
   reducers: {
@@ -24,7 +25,10 @@ export default createSlice({
       .addCase(getInfoSong.fulfilled, (state, action) => {
         state.currentSongInfor = action.payload;
       })
-      .addCase(getInfoSong.rejected, (state, action) => {});
+      .addCase(getInfoSong.rejected, (state, action) => {})
+      .addCase(getDetailPlaylist.fulfilled, (state, action) => {
+        state.detailPlaylist = action.payload;
+      });
   },
 });
 // thunk actions creator
@@ -32,6 +36,14 @@ export const getInfoSong = createAsyncThunk(
   "songs/fetchInfoSong",
   async (currentSongId) => {
     const response = await APIs.getInfoSong(currentSongId);
+    return response.data.data;
+  }
+);
+
+export const getDetailPlaylist = createAsyncThunk(
+  "songs/fetchDetailPlaylist",
+  async (currentPlaylistId) => {
+    const response = await APIs.getDetailPlaylist(currentPlaylistId);
     return response.data.data;
   }
 );

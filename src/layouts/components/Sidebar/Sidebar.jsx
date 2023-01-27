@@ -220,7 +220,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <aside className="relative left-0 top-0 sidebar bg-sidebar-bg">
+    <aside className="relative left-0 top-0 sidebar bg-sidebar-bg flex-shrink-0">
       <div className="flex flex-col h-full">
         <Brand />
         <Navbar navbarList={navbar1} publicRoutes={publicRoutes} />

@@ -1,20 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
-import { useState } from "react";
-import GallaryItem from "./GallaryItem";
-
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { currentSongSelector } from "@redux/selectors";
+
+import GallaryItem from "./GallaryItem";
 import songsSlice from "@redux/songsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Gallary = ({ banner }) => {
+  // define
   const dispatch = useDispatch();
-
-  const currentSongId = useSelector(currentSongSelector);
-
   const number = 1;
-
+  const navigator = useNavigate();
+  // hooks
   const [gallaryClassList, setgallaryClassList] = useState([
     "gallary__item gallary__item--add",
     "gallary__item gallary__item--first",
@@ -29,21 +27,11 @@ const Gallary = ({ banner }) => {
     const firstItem = [...gallaryClassList].slice(0, number);
 
     const newGallaryClassList = [...gallaryClassList].slice(firstItem.length);
+
     newGallaryClassList.push(...firstItem);
 
     setgallaryClassList(newGallaryClassList);
   };
-
-  useEffect(() => {
-    const gallaryContainer = document.querySelector(".gallary__container");
-    const timer = setInterval(() => {
-      if (!gallaryContainer.matches(":hover")) {
-        rotateRight();
-        // rotateLeft();
-      }
-    }, 2800);
-    return () => clearInterval(timer);
-  }, [gallaryClassList]);
 
   const rotateRight = () => {
     // 1,2,3,4,5,6
@@ -57,6 +45,18 @@ const Gallary = ({ banner }) => {
     newGallaryClassList.unshift(...lastItem);
     setgallaryClassList(newGallaryClassList);
   };
+  // hooks
+  useEffect(() => {
+    const gallaryContainer = document.querySelector(".gallary__container");
+    const timer = setInterval(() => {
+      if (!gallaryContainer.matches(":hover")) {
+        rotateRight();
+        // rotateLeft();
+      }
+    }, 2800);
+    return () => clearInterval(timer);
+  }, [gallaryClassList]);
+
   const handleClickPrevBtn = () => {
     rotateLeft();
   };
@@ -67,6 +67,11 @@ const Gallary = ({ banner }) => {
     if (item.type === 1) {
       dispatch(songsSlice.actions.setCurrentSongId(item.encodeId));
       dispatch(songsSlice.actions.isPlaying(true));
+    }
+    if (item.type === 4) {
+      let link = item.link;
+      const path = link.slice(0, link.indexOf("."));
+      navigator(path);
     }
   };
   return (
@@ -123,7 +128,6 @@ const Gallary = ({ banner }) => {
     </div>
   );
 };
-
 Gallary.propTypes = {
   banner: PropTypes.array,
 };

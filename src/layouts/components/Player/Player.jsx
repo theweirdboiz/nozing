@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { useEffect } from "react";
 import songSlice, { getInfoSong } from "@redux/songsSlice";
 import {
@@ -9,15 +10,13 @@ import {
   songSelector,
   currentSongInforSelector,
 } from "@redux/selectors";
-import { useState } from "react";
-import song from "@ultis/song1.mp3";
 
 const Player = () => {
   // define
   const dispatch = useDispatch();
 
   // elements
-  const audio = new Audio(song);
+  const audio = new Audio();
 
   // get state of song from store
   const isPlaying = useSelector(songSelector).isPlaying;
@@ -36,7 +35,6 @@ const Player = () => {
   // handle events
   const handlePlaySong = () => {
     dispatch(songSlice.actions.isPlaying(!isPlaying));
-    audio.play();
   };
 
   return (
