@@ -4,37 +4,58 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import songSlice, { getInfoSong } from "@redux/songsSlice";
+import songSlice, {
+  getInfoSong,
+  getSong,
+  fetchDetailSong,
+} from "@redux/songsSlice";
 import {
   currentSongSelector,
-  songSelector,
+  isPlayingSelector,
   currentSongInforSelector,
+  currentSongIdSelector,
+  sourceSongSelector,
 } from "@redux/selectors";
+import { useRef } from "react";
 
 const Player = () => {
   // define
   const dispatch = useDispatch();
+  const audio = useRef(new Audio());
 
   // elements
-  const audio = new Audio();
-
-  // get state of song from store
-  const isPlaying = useSelector(songSelector).isPlaying;
+  const isPlaying = useSelector(isPlayingSelector);
 
   // get current song id from store
-  const currentSongId = useSelector(currentSongSelector);
+  const currentSongId = useSelector(currentSongIdSelector);
 
   // get current song from store
   const currentSongInfor = useSelector(currentSongInforSelector);
 
+  const currentSong = useSelector(currentSongSelector);
+
   // hooks
   useEffect(() => {
-    dispatch(getInfoSong(currentSongId));
+    dispatch(fetchDetailSong(currentSongId));
   }, [currentSongId]);
-
+  useEffect(() => {
+    audio.current.pause();
+    audio.current.src = currentSong?.[128];
+    audio.current.load();
+    console.log(currentSong);
+    if (isPlaying) {
+      audio.current.play();
+    }
+  }, [currentSongId, currentSong]);
   // handle events
-  const handlePlaySong = () => {
-    dispatch(songSlice.actions.isPlaying(!isPlaying));
+  const handlePlaySong = async () => {
+    if (isPlaying) {
+      dispatch(songSlice.actions.isPlaying(false));
+      audio.current.pause();
+    } else {
+      dispatch(songSlice.actions.isPlaying(true));
+      audio.current.play();
+    }
   };
 
   return (
@@ -46,18 +67,24 @@ const Player = () => {
               <img src={currentSongInfor?.thumbnail} alt="thumbail" />
             </figure>
           </Link>
-          <div className="">
+          <>
             <Link>
               <h3 className="text-[1.4rem] font-semibold">
                 {currentSongInfor?.title}
               </h3>
             </Link>
-            <Link className="">
-              <span className="text-[1.2rem] text-secondary hover:text-link-text-hover hover:underline">
-                {currentSongId?.artistNames}
-              </span>
-            </Link>
-          </div>
+            <>
+              {currentSongInfor?.artists?.map((artist) => {
+                return (
+                  <Link key={artist?.id}>
+                    <span className="text-[1.2rem] font-medium text-secondary hover:text-link-text-hover hover:underline">
+                      {artist?.name}
+                    </span>
+                  </Link>
+                );
+              })}
+            </>
+          </>
           <div className="ml-6 flex gap-x-4">
             <button className="circle">
               <svg

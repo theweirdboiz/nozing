@@ -96,7 +96,7 @@ const Playlist = (props) => {
           </h3>
           <div className="">
             <div className="">
-              <div className="flex items-center justify-between mb-2 p-[1rem] text-[1.2rem] uppercase font-semibold text-secondary border-b border-border-primary">
+              <div className="flex items-center justify-between p-[1rem] text-[1.2rem] uppercase font-semibold text-secondary border-b border-border-primary">
                 <span className="w-[50%] flex items-center gap-x-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,8 +114,8 @@ const Playlist = (props) => {
                   </svg>
                   Bài hát
                 </span>
-                <span className="flex-1">Album</span>
-                <span className="flex-1 text-right">Thời gian</span>
+                <span className="w-[40%]">Album</span>
+                <span className="text-right">Thời gian</span>
               </div>
               <div className="">
                 <ListSong

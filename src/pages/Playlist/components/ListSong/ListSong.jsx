@@ -4,6 +4,12 @@ import PropTypes from "prop-types";
 import MediaItem from "@components/MediaItem";
 
 const ListSong = ({ listSong, totalDuration }) => {
+  const formatTime = () => {
+    const hour = Math.floor(totalDuration / 3600);
+    const minute = Math.floor((totalDuration - hour * 3600) / 60);
+    return `${hour} giờ ${minute} phút`;
+  };
+  formatTime();
   return (
     <>
       <ul>
@@ -11,10 +17,10 @@ const ListSong = ({ listSong, totalDuration }) => {
           return <MediaItem key={index} song={song} />;
         })}
       </ul>
-      <h6>
-        <span>
-          {listSong?.length} bài hát • {totalDuration}
-        </span>
+      <h6 className="text-[1.2rem] font-medium text-secondary flex items-center mt-4">
+        {listSong?.length} bài hát
+        <span className="font-bold mx-4 text-[1.6rem]">•</span>
+        {formatTime()}
       </h6>
     </>
   );

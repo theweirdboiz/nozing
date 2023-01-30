@@ -1,7 +1,12 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import songsSlice from "@redux/songsSlice";
 
 const MediaItem = ({ song }) => {
+  // define
+  const dispatch = useDispatch();
+
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
   };
@@ -21,9 +26,13 @@ const MediaItem = ({ song }) => {
     }
     return `${minutePrefix}:${secondPrefix}`;
   };
-
+  // handle events
+  const handleClickItem = (songId) => {
+    dispatch(songsSlice.actions.setCurrentSongId(songId));
+    dispatch(songsSlice.actions.isPlaying(true));
+  };
   return (
-    <div className="flex items-center justify-between mb-2 p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary">
+    <div className="flex items-center justify-between p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-alpha-bg">
       <div className="flex items-center w-[50%] gap-x-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -40,9 +49,11 @@ const MediaItem = ({ song }) => {
           />
         </svg>
         <div className="flex items-center gap-x-4">
-          <figure className="w-[4rem] h-[4rem] rounded overflow-hidden flex-shrink-0">
-            <img src={song?.thumbnail} alt="" />
-          </figure>
+          <div onClick={() => handleClickItem(song?.encodeId)}>
+            <figure className="w-[4rem] h-[4rem] rounded overflow-hidden flex-shrink-0">
+              <img src={song?.thumbnail} alt="" />
+            </figure>
+          </div>
           <div className="">
             <h5 className="text-[1.4rem] text-white font-semibold">
               {song?.title?.slice(0, 35)}
@@ -51,7 +62,7 @@ const MediaItem = ({ song }) => {
           </div>
         </div>
       </div>
-      <span className="flex-1 font-medium">{song?.album?.title}</span>
+      <span className="w-[40%] font-medium">{song?.album?.title}</span>
       <span className="flex-1 text-right mr-3">
         {formatDuration(song?.duration)}
       </span>
@@ -61,4 +72,4 @@ const MediaItem = ({ song }) => {
 
 MediaItem.propTypes = {};
 
-export default MediaItem;
+export default memo(MediaItem);
