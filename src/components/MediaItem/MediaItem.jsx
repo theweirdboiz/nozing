@@ -1,12 +1,13 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
-
-const MediaItem = ({ song }) => {
+import { currentSongSelector } from "@redux/selectors";
+const MediaItem = ({ song, onClick }) => {
   // define
   const dispatch = useDispatch();
 
+  const currentSong = useSelector(currentSongSelector);
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
   };
@@ -27,10 +28,9 @@ const MediaItem = ({ song }) => {
     return `${minutePrefix}:${secondPrefix}`;
   };
   // handle events
-  const handleClickItem = (songId) => {
-    dispatch(songsSlice.actions.setCurrentSongId(songId));
-    dispatch(songsSlice.actions.isPlaying(true));
-  };
+  const handleClickItem = useCallback((songId) => {
+    onClick(songId);
+  }, []);
   return (
     <div className="flex items-center justify-between p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-alpha-bg">
       <div className="flex items-center w-[50%] gap-x-3">

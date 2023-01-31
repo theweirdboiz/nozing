@@ -39,6 +39,8 @@ export default createSlice({
         }
         if (res2.err === 0) {
           state.currentSongInfor = res2?.data;
+        } else {
+          state.isPlaying = false;
         }
       });
   },

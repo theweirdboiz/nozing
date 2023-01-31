@@ -14,9 +14,9 @@ import {
   isPlayingSelector,
   currentSongInforSelector,
   currentSongIdSelector,
-  sourceSongSelector,
 } from "@redux/selectors";
 import { useRef } from "react";
+import { useState } from "react";
 
 const Player = () => {
   // define
@@ -35,27 +35,78 @@ const Player = () => {
   const currentSong = useSelector(currentSongSelector);
 
   // hooks
+  const trackProgressbar = useRef();
+  const thumbProgressBar = useRef();
   useEffect(() => {
+    audio.current.pause();
     dispatch(fetchDetailSong(currentSongId));
   }, [currentSongId]);
   useEffect(() => {
-    audio.current.pause();
     audio.current.src = currentSong?.[128];
     audio.current.load();
+    dispatch(songSlice.actions.isPlaying(true));
+
     console.log(currentSong);
     if (isPlaying) {
       audio.current.play();
     }
-  }, [currentSongId, currentSong]);
+  }, [currentSong]);
+
+  const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
+
   // handle events
   const handlePlaySong = async () => {
     if (isPlaying) {
-      dispatch(songSlice.actions.isPlaying(false));
       audio.current.pause();
     } else {
-      dispatch(songSlice.actions.isPlaying(true));
       audio.current.play();
     }
+  };
+  // when song is play
+  audio.current.onplay = () => {
+    dispatch(songSlice.actions.isPlaying(true));
+  };
+  audio.current.onpause = () => {
+    dispatch(songSlice.actions.isPlaying(false));
+  };
+  // when song is update
+  audio.current.ontimeupdate = () => {
+    setCurrentTime(audio.current.currentTime);
+    const numberPixel =
+      (audio.current.currentTime * trackProgressbar.current.offsetWidth) /
+      currentSongInfor?.duration;
+    thumbProgressBar.current.style.cssText = `width: ${numberPixel}px`;
+  };
+  // when song is end
+  // when seek time
+  const handleSeekTime = (e) => {
+    const trackRect = trackProgressbar.current.getBoundingClientRect();
+
+    const percent = ((e.clientX - trackRect.left) * 100) / trackRect.width;
+    thumbProgressBar.current.style.cssText = `width: ${percent}`;
+    audio.current.currentTime = (percent * currentSongInfor?.duration) / 100;
+
+    audio.current.play();
+  };
+
+  const prefixTime = (time) => {
+    return time > 9 ? time : `0${time}`;
+  };
+  const formatDuration = (t) => {
+    // 1p = 60
+    // ? = 230
+    const time = Number.parseInt(t);
+    const hour = Math.floor(time / 3600);
+    const minute = Math.floor((time - hour * 3600) / 60);
+    const second = time - (hour * 3600 + minute * 60);
+    // return
+    const hourPrefix = prefixTime(hour);
+    const minutePrefix = prefixTime(minute);
+    const secondPrefix = prefixTime(second);
+    if (hour > 0) {
+      return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
+    }
+    return `${minutePrefix}:${secondPrefix}`;
   };
 
   return (
@@ -234,9 +285,21 @@ const Player = () => {
           </button>
         </div>
         <div className="flex gap-x-3 items-center text-secondary text-[1.2rem] mt-2">
-          <span>00:00</span>
-          <div className="h-[2.5px] bg-secondary w-full rounded-sm"></div>
-          <span className="text-white">00:00</span>
+          <span>{formatDuration(currentTime)}</span>
+          {/* progress bar */}
+          <div
+            ref={trackProgressbar}
+            onClick={handleSeekTime}
+            className="relative h-[2.5px] bg-secondary w-full rounded-l-full rounded-r-full cursor-pointer hover:py-1"
+          >
+            <div
+              ref={thumbProgressBar}
+              className="absolute top-0 left-0 w-0 h-full bg-white rounded-l-full rounded-r-full"
+            ></div>
+          </div>
+          <span className="text-white">
+            {formatDuration(currentSongInfor?.duration)}
+          </span>
         </div>
       </div>
       {/* option */}

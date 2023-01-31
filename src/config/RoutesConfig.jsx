@@ -33,6 +33,10 @@ const routes = [
     path: "/playlist/:title/:playlistId",
     component: Playlist,
   },
+  {
+    path: "/album/:title/:albumId",
+    component: Playlist,
+  },
 ];
 
 export default routes;
