@@ -3,6 +3,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
+    borderRadius: {
+      full: "999px",
+      inherit: "inherit",
+    },
     colors: {
       "sidebar-bg": "hsla(0,0%,100%,0.05)",
       "alpha-bg": "hsla(0,0%,100%,0.1)",
@@ -24,6 +28,23 @@ module.exports = {
     },
     backgroundImage: {
       "gradient-vip": "linear-gradient(117deg,#5a4be7,#c86dd7 102%);",
+    },
+    keyframes: {
+      "rotate-center": {
+        "0%": { transform: "rotate(0)" },
+        "100%": { transform: "rotate(360deg)" },
+      },
+      "spin-off": {
+        "0%": { transform: "rotate(0)" },
+        "100%": { transform: "rotate(1turn)" },
+      },
+    },
+    animation: {
+      "rotate-center": "rotate-center 12s linear infinite",
+      "spin-off": "spin-off 0.4s ease-out 1 both",
+    },
+    transitionProperty: {
+      "border-radius": "border-radius",
     },
   },
   plugins: [require("tailwind-scrollbar")],

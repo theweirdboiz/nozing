@@ -138,7 +138,6 @@ const Player = () => {
         Math.random() * (detailPlaylist?.song?.total - 1)
       );
       const randomSongId = detailPlaylist?.song?.items[randomIndex]?.encodeId;
-      console.log(randomSongId);
       dispatch(songsSlice.actions.setIndex(randomIndex));
       dispatch(songsSlice.actions.setCurrentSongId(randomSongId));
       dispatch(songsSlice.actions.isPlaying(true));
