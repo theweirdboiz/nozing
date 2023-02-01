@@ -1,19 +1,19 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import songSlice, {
-  getInfoSong,
-  getSong,
-  fetchDetailSong,
-} from "@redux/songsSlice";
+import songsSlice, { fetchDetailSong } from "@redux/songsSlice";
 import {
   currentSongSelector,
   isPlayingSelector,
   currentSongInforSelector,
   currentSongIdSelector,
+  detailPlaylistSelector,
+  currentSongIndexSelector,
+  isRepeatSelector,
+  isRandomSelector,
 } from "@redux/selectors";
 import { useRef } from "react";
 import { useState } from "react";
@@ -24,6 +24,8 @@ const Player = () => {
   const audio = useRef(new Audio());
 
   // elements
+  const detailPlaylist = useSelector(detailPlaylistSelector);
+
   const isPlaying = useSelector(isPlayingSelector);
 
   // get current song id from store
@@ -34,50 +36,35 @@ const Player = () => {
 
   const currentSong = useSelector(currentSongSelector);
 
+  const currentSongIndex = useSelector(currentSongIndexSelector);
+
+  const isReapeat = useSelector(isRepeatSelector);
+
+  const isRandom = useSelector(isRandomSelector);
+
   // hooks
   const trackProgressbar = useRef();
   const thumbProgressBar = useRef();
+
   useEffect(() => {
-    audio.current.pause();
     dispatch(fetchDetailSong(currentSongId));
   }, [currentSongId]);
-  useEffect(() => {
-    audio.current.src = currentSong?.[128];
-    audio.current.load();
-    dispatch(songSlice.actions.isPlaying(true));
 
-    console.log(currentSong);
-    if (isPlaying) {
-      audio.current.play();
-    }
+  useEffect(() => {
+    // audio.current.pause();
+    audio.current.src = currentSong?.[128];
   }, [currentSong]);
 
   const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
 
   // handle events
-  const handlePlaySong = async () => {
+  const handlePlaySong = () => {
     if (isPlaying) {
       audio.current.pause();
     } else {
       audio.current.play();
     }
   };
-  // when song is play
-  audio.current.onplay = () => {
-    dispatch(songSlice.actions.isPlaying(true));
-  };
-  audio.current.onpause = () => {
-    dispatch(songSlice.actions.isPlaying(false));
-  };
-  // when song is update
-  audio.current.ontimeupdate = () => {
-    setCurrentTime(audio.current.currentTime);
-    const numberPixel =
-      (audio.current.currentTime * trackProgressbar.current.offsetWidth) /
-      currentSongInfor?.duration;
-    thumbProgressBar.current.style.cssText = `width: ${numberPixel}px`;
-  };
-  // when song is end
   // when seek time
   const handleSeekTime = (e) => {
     const trackRect = trackProgressbar.current.getBoundingClientRect();
@@ -88,7 +75,86 @@ const Player = () => {
 
     audio.current.play();
   };
+  // handle next song
+  const handleNextSong = () => {
+    const songNextIndex =
+      currentSongIndex + 1 >= detailPlaylist?.song.total
+        ? 0
+        : currentSongIndex + 1;
+    const songNextId = detailPlaylist.song.items[songNextIndex]?.encodeId;
 
+    dispatch(songsSlice.actions.setIndex(songNextIndex));
+    dispatch(songsSlice.actions.setCurrentSongId(songNextId));
+    dispatch(songsSlice.actions.isPlaying(true));
+  };
+  // handle prev song
+  const handlePrevSong = () => {
+    const songPrevIndex =
+      currentSongIndex - 1 < 0
+        ? detailPlaylist?.song?.total - 1
+        : currentSongIndex - 1;
+    const songPrevId = detailPlaylist?.song?.items[songPrevIndex]?.encodeId;
+
+    dispatch(songsSlice.actions.setIndex(songPrevIndex));
+    dispatch(songsSlice.actions.setCurrentSongId(songPrevId));
+    dispatch(songsSlice.actions.isPlaying(true));
+  };
+  // hande repeat song
+  const handleRepeatSong = () => {
+    dispatch(songsSlice.actions.setIsRepeat(!isReapeat));
+  };
+  // hande random song
+  const handleRandomSong = () => {
+    dispatch(songsSlice.actions.setIsRandom(!isRandom));
+  };
+  // when song is load
+  audio.current.onloadeddata = () => {
+    audio.current.pause();
+    console.log(currentSong, isPlaying);
+    console.log(currentSongInfor);
+    if (isPlaying) {
+      audio.current.play();
+    }
+  };
+  // when song is play
+  audio.current.onplay = () => {
+    dispatch(songsSlice.actions.isPlaying(true));
+  };
+  audio.current.onpause = () => {
+    dispatch(songsSlice.actions.isPlaying(false));
+  };
+  // when song is update
+  audio.current.ontimeupdate = () => {
+    setCurrentTime(audio.current.currentTime);
+    const numberPixel =
+      (audio.current.currentTime * trackProgressbar.current.offsetWidth) /
+      currentSongInfor?.duration;
+    thumbProgressBar.current.style.cssText = `width: ${numberPixel}px`;
+  };
+  // when song is end
+  audio.current.onended = () => {
+    if (isRandom) {
+      const randomIndex = Math.floor(
+        Math.random() * (detailPlaylist?.song?.total - 1)
+      );
+      const randomSongId = detailPlaylist?.song?.items[randomIndex]?.encodeId;
+      console.log(randomSongId);
+      dispatch(songsSlice.actions.setIndex(randomIndex));
+      dispatch(songsSlice.actions.setCurrentSongId(randomSongId));
+      dispatch(songsSlice.actions.isPlaying(true));
+    }
+    if (isReapeat) {
+      audio.current.currentTime = 0;
+      setCurrentTime(0);
+      dispatch(songsSlice.actions.setIndex(currentSongIndex));
+      dispatch(songsSlice.actions.setCurrentSongId(currentSongId));
+      dispatch(songsSlice.actions.isPlaying(true));
+      audio.current.play();
+    } else {
+      console.log(audio.current.currentTime, currentTime);
+      handleNextSong();
+    }
+  };
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
   };
@@ -176,7 +242,10 @@ const Player = () => {
       <div className="flex flex-col flex-1">
         <div className="flex gap-x-8 items-center justify-center">
           {/* random */}
-          <button className="circle">
+          <button
+            className={`circle ${isRandom && "text-link-text-hover"}`}
+            onClick={handleRandomSong}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -193,7 +262,7 @@ const Player = () => {
             </svg>
           </button>
           {/* prev */}
-          <button className="circle">
+          <button className="circle" onClick={handlePrevSong}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -251,7 +320,13 @@ const Player = () => {
               </svg>
             )}
           </button>
-          <button className="circle">
+          {/* next */}
+          <button
+            className={`circle ${
+              !detailPlaylist && "pointer-events-none text-secondary"
+            }`}
+            onClick={handleNextSong}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -267,7 +342,11 @@ const Player = () => {
               />
             </svg>
           </button>
-          <button className="circle">
+          {/* repeat */}
+          <button
+            className={`circle ${isReapeat && "text-link-text-hover"}`}
+            onClick={handleRepeatSong}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -395,4 +474,4 @@ const Player = () => {
 
 Player.propTypes = {};
 
-export default Player;
+export default memo(Player);

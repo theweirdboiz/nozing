@@ -5,11 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import GallaryItem from "./GallaryItem";
 import songsSlice from "@redux/songsSlice";
+import { bannerSelector } from "@redux/selectors";
+
 import { useNavigate } from "react-router-dom";
 
-const Gallary = ({ banner }) => {
+const Gallary = () => {
   // define
   const dispatch = useDispatch();
+  const banner = useSelector(bannerSelector);
+
   const number = 1;
   const navigator = useNavigate();
   // hooks
@@ -72,6 +76,8 @@ const Gallary = ({ banner }) => {
       let link = item.link;
       const path = link.slice(0, link.indexOf("."));
       navigator(path);
+    } else {
+      dispatch(songsSlice.actions.setIsList(false));
     }
   };
   return (
@@ -95,7 +101,7 @@ const Gallary = ({ banner }) => {
             </svg>
           </button>
         </div>
-        {banner.map((item, index) => {
+        {banner?.map((item, index) => {
           return (
             <GallaryItem
               item={item}
@@ -127,13 +133,6 @@ const Gallary = ({ banner }) => {
       </div>
     </div>
   );
-};
-Gallary.propTypes = {
-  banner: PropTypes.array,
-};
-
-Gallary.defaultProps = {
-  banner: [],
 };
 
 export default Gallary;

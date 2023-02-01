@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getDetailPlaylist } from "@redux/songsSlice";
 import { detailPlaylistSelector } from "@redux/selectors";
-import { useState } from "react";
 
 import ListSong from "./components/ListSong";
 
@@ -118,10 +117,7 @@ const Playlist = (props) => {
                 <span className="text-right">Thời gian</span>
               </div>
               <div className="">
-                <ListSong
-                  listSong={detailPlaylist?.song?.items}
-                  totalDuration={detailPlaylist?.song?.totalDuration}
-                />
+                <ListSong />
               </div>
             </div>
           </div>

@@ -1,24 +1,16 @@
 import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import songsSlice from "@redux/songsSlice";
-import { currentSongSelector } from "@redux/selectors";
-const MediaItem = ({ song, onClick }) => {
-  // define
-  const dispatch = useDispatch();
 
-  const currentSong = useSelector(currentSongSelector);
+const MediaItem = ({ song, onClick, index }) => {
+  // define
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
   };
   const formatDuration = (t) => {
-    // 1p = 60
-    // ? = 230
     const time = Number.parseInt(t);
     const hour = Math.floor(time / 3600);
     const minute = Math.floor((time - hour * 3600) / 60);
     const second = time - (hour * 3600 + minute * 60);
-    // return
     const hourPrefix = prefixTime(hour);
     const minutePrefix = prefixTime(minute);
     const secondPrefix = prefixTime(second);
@@ -28,9 +20,9 @@ const MediaItem = ({ song, onClick }) => {
     return `${minutePrefix}:${secondPrefix}`;
   };
   // handle events
-  const handleClickItem = useCallback((songId) => {
-    onClick(songId);
-  }, []);
+  const handleClickItem = (songId, index) => {
+    onClick(songId, index);
+  };
   return (
     <div className="flex items-center justify-between p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-alpha-bg">
       <div className="flex items-center w-[50%] gap-x-3">
@@ -49,7 +41,7 @@ const MediaItem = ({ song, onClick }) => {
           />
         </svg>
         <div className="flex items-center gap-x-4">
-          <div onClick={() => handleClickItem(song?.encodeId)}>
+          <div onClick={() => handleClickItem(song?.encodeId, index)}>
             <figure className="w-[4rem] h-[4rem] rounded overflow-hidden flex-shrink-0">
               <img src={song?.thumbnail} alt="" />
             </figure>

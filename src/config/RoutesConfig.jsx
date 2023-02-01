@@ -34,7 +34,7 @@ const routes = [
     component: Playlist,
   },
   {
-    path: "/album/:title/:albumId",
+    path: "/album/:title/:playlistId",
     component: Playlist,
   },
 ];

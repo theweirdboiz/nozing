@@ -1,42 +1,49 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
+import { detailPlaylistSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
 
-const ListSong = ({ listSong, totalDuration }) => {
+const ListSong = () => {
   const dispatch = useDispatch();
-  console.log("rerender list");
-  const formatTime = () => {
+  const detailPlaylist = useSelector(detailPlaylistSelector);
+
+  const formatTime = (totalDuration) => {
     const hour = Math.floor(totalDuration / 3600);
     const minute = Math.floor((totalDuration - hour * 3600) / 60);
     return `${hour} giờ ${minute} phút`;
   };
-  formatTime();
   // handle events
-  const handleClickItem = (songId) => {
+  console.log("rerender");
+  const handleClickItem = (songId, index) => {
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.isPlaying(true));
+    dispatch(songsSlice.actions.setIndex(index));
   };
   return (
     <>
       <ul>
-        {listSong?.map((song, index) => {
+        {detailPlaylist?.song?.items?.map((song, index) => {
           return (
-            <MediaItem key={index} song={song} onClick={handleClickItem} />
+            <MediaItem
+              key={index}
+              song={song}
+              onClick={handleClickItem}
+              index={index}
+            />
           );
         })}
       </ul>
       <h6 className="text-[1.2rem] font-medium text-secondary flex items-center mt-4">
-        {listSong?.length} bài hát
+        {detailPlaylist?.song?.items?.length} bài hát
         <span className="font-bold mx-4 text-[1.6rem]">•</span>
-        {formatTime()}
+        {formatTime(detailPlaylist?.song?.totalDuration)}
       </h6>
     </>
   );
 };
-
 ListSong.propTypes = {};
 
-export default ListSong;
+export default memo(ListSong);

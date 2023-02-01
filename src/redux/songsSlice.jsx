@@ -10,6 +10,11 @@ export default createSlice({
     currentSongInfor: null,
     detailPlaylist: null,
     isPlaying: false,
+    isVip: false,
+    isList: false,
+    index: null,
+    isRepeat: false,
+    isRandom: false,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -18,6 +23,21 @@ export default createSlice({
     },
     isPlaying: (state, action) => {
       state.isPlaying = action.payload;
+    },
+    isVip: (state, action) => {
+      state.isVip = action.payload;
+    },
+    setIsList: (state, action) => {
+      state.isList = action.payload;
+    },
+    setIndex: (state, action) => {
+      state.index = action.payload;
+    },
+    setIsRepeat: (state, action) => {
+      state.isRepeat = action.payload;
+    },
+    setIsRandom: (state, action) => {
+      state.isRandom = action.payload;
     },
   },
   // listen thunk actions
@@ -39,7 +59,8 @@ export default createSlice({
         }
         if (res2.err === 0) {
           state.currentSongInfor = res2?.data;
-        } else {
+        }
+        if (res1.err !== 0) {
           state.isPlaying = false;
         }
       });
