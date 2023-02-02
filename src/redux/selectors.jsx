@@ -15,6 +15,8 @@ export const currentSongIndexSelector = (state) => state.songs.index;
 export const isRepeatSelector = (state) => state.songs.isRepeat;
 
 export const isRandomSelector = (state) => state.songs.isRandom;
+
+export const isLoadedSelector = (state) => state.songs.isLoaded;
 // export const bannerRemainingSelector = createSelector(
 //   bannerSelector,
 //   (banner) => {

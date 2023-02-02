@@ -14,9 +14,12 @@ import {
   currentSongIndexSelector,
   isRepeatSelector,
   isRandomSelector,
+  isLoadedSelector,
 } from "@redux/selectors";
 import { useRef } from "react";
 import { useState } from "react";
+
+import spinSvg from "../../../assests/imgs/spin.gif";
 
 const Player = () => {
   // define
@@ -42,11 +45,16 @@ const Player = () => {
 
   const isRandom = useSelector(isRandomSelector);
 
+  const isLoaded = useSelector(isLoadedSelector);
+
   // hooks
   const trackProgressbar = useRef();
   const thumbProgressBar = useRef();
+  const trackVolume = useRef();
+  const thumbVolume = useRef();
 
   useEffect(() => {
+    dispatch(songsSlice.actions.setIsLoaded(false));
     dispatch(fetchDetailSong(currentSongId));
   }, [currentSongId]);
 
@@ -58,6 +66,17 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
 
   // handle events
+  // when change volume
+  const handleChangeVolume = (e) => {
+    e.stopPropagation();
+    const trackRect = trackVolume.current.getBoundingClientRect();
+    const percent = +((e.clientX - trackRect.left) / trackRect.width).toFixed(
+      2
+    );
+    thumbVolume.current.style.cssText = `width: ${percent * trackRect.width}px`;
+    audio.current.volume = percent;
+  };
+  // when toggle play/pause
   const handlePlaySong = () => {
     if (isPlaying) {
       audio.current.pause();
@@ -110,8 +129,13 @@ const Player = () => {
   // when song is load
   audio.current.onloadeddata = () => {
     audio.current.pause();
+    dispatch(songsSlice.actions.setIsLoaded(true));
     console.log(currentSong, isPlaying);
     console.log(currentSongInfor);
+
+    audio.current.volume = +thumbVolume.current.clientWidth / 100;
+    console.log(audio.current.volume);
+
     if (isPlaying) {
       audio.current.play();
     }
@@ -282,7 +306,34 @@ const Player = () => {
             className="hover:text-link-text-hover"
             onClick={handlePlaySong}
           >
-            {isPlaying ? (
+            {!isLoaded ? (
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.0}
+                stroke="currentColor"
+                className="w-16 h-16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g>
+                  <circle cx="12" cy="2.5" r="1.5" opacity=".14" />
+                  <circle cx="16.75" cy="3.77" r="1.5" opacity=".29" />
+                  <circle cx="20.23" cy="7.25" r="1.5" opacity=".43" />
+                  <circle cx="21.50" cy="12.00" r="1.5" opacity=".57" />
+                  <circle cx="20.23" cy="16.75" r="1.5" opacity=".71" />
+                  <circle cx="16.75" cy="20.23" r="1.5" opacity=".86" />
+                  <circle cx="12" cy="21.5" r="1.5" />
+                  <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    calcMode="discrete"
+                    dur="0.75s"
+                    values="0 12 12;30 12 12;60 12 12;90 12 12;120 12 12;150 12 12;180 12 12;210 12 12;240 12 12;270 12 12;300 12 12;330 12 12;360 12 12"
+                    repeatCount="indefinite"
+                  />
+                </g>
+              </svg>
+            ) : isPlaying ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -447,7 +498,18 @@ const Player = () => {
               />
             </svg>
           </button>
-          <div className="w-[7rem] h-1 bg-purple-primary"></div>
+          <div
+            ref={trackVolume}
+            onClick={handleChangeVolume}
+            className="w-[7rem] h-[3px] hover:py-1 rounded-xl relative bg-sidebar-bg group/item cursor-pointer"
+          >
+            <div
+              ref={thumbVolume}
+              className="absolute w-2/5 h-full inset-0 bg-white rounded-xl"
+            >
+              <div className="hidden group-hover/item:block absolute w-5 h-5 rounded-full right-0 top-[50%] -translate-y-[50%] bg-white"></div>
+            </div>
+          </div>
         </div>
         <div className="h-16 border-l ml-6 border-border-primary"></div>
         <button className="ml-5 bg-purple-primary p-2 rounded-lg hover:text-secondary">

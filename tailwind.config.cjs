@@ -3,10 +3,6 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
-    borderRadius: {
-      full: "999px",
-      inherit: "inherit",
-    },
     colors: {
       "sidebar-bg": "hsla(0,0%,100%,0.05)",
       "alpha-bg": "hsla(0,0%,100%,0.1)",

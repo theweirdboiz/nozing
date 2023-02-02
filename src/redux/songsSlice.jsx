@@ -11,10 +11,10 @@ export default createSlice({
     detailPlaylist: null,
     isPlaying: false,
     isVip: false,
-    isList: false,
     index: null,
     isRepeat: false,
     isRandom: false,
+    isLoaded: false,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -38,6 +38,9 @@ export default createSlice({
     },
     setIsRandom: (state, action) => {
       state.isRandom = action.payload;
+    },
+    setIsLoaded: (state, action) => {
+      state.isLoaded = action.payload;
     },
   },
   // listen thunk actions

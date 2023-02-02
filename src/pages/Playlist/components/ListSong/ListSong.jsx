@@ -16,7 +16,6 @@ const ListSong = () => {
     return `${hour} giờ ${minute} phút`;
   };
   // handle events
-  console.log("rerender");
   const handleClickItem = (songId, index) => {
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.isPlaying(true));
