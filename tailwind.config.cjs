@@ -27,7 +27,7 @@ module.exports = {
     },
     keyframes: {
       "rotate-center": {
-        "0%": { transform: "rotate(0)" },
+        "0%": { transform: "rotate(0)", transition: "border-radius 0.5s" },
         "100%": { transform: "rotate(360deg)" },
       },
       "spin-off": {
@@ -40,10 +40,10 @@ module.exports = {
       "spin-off": "spin-off 0.4s ease-out 1 both",
     },
     transitionProperty: {
-      "border-radius": "border-radius",
+      "border-radius": "border-radius 1s",
     },
   },
-  plugins: [require("tailwind-scrollbar")],
+  plugins: [require("tailwind-scrollbar"), require("@tailwindcss/line-clamp")],
   variants: {
     scrollbar: ["rounded"],
   },

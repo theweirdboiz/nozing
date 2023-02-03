@@ -1,6 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 export const bannerSelector = (state) => state.explore.banner;
+export const homeDataSelector = (state) => state.explore;
+
 export const currentSongSelector = (state) => state.songs.currentSong;
 export const currentSongIdSelector = (state) => state.songs.currentSongId;
 export const currentSongInforSelector = (state) => state.songs.currentSongInfor;
