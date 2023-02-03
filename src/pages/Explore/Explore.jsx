@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Gallary from "../../components/Gallary";
 
-import Chanel from "./components/chanel/Chanel";
-import NewRelease from "./components/NewRelease/NewRelease";
+import Chanel from "./components/chanel";
+import NewRelease from "./components/newRelease";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHomeData } from "@redux/exploreSlice";
