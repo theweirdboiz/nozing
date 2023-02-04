@@ -1,12 +1,21 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { detailPlaylistSelector } from "@redux/selectors";
+import songsSlice, { getDetailPlaylist } from "@redux/songsSlice";
 const Chanel = ({ data }) => {
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
+
   const trimLink = (link) => {
     return link.slice(0, link.indexOf("."));
   };
-
+  const handlePlayChanel = (e, link) => {
+    e.stopPropagation();
+    e.preventDefault();
+    navigator(trimLink(link), { state: { isPlay: true } });
+  };
   return (
     <div className="mt-[4.8rem]">
       <h3 className="mb-[2rem] text-[2rem] font-bold">{data?.title}</h3>
@@ -43,7 +52,10 @@ const Chanel = ({ data }) => {
                     />
                   </svg>
                   {/* play */}
-                  <div className="border rounded-full  flex items-center justify-center p-2 ">
+                  <div
+                    onClick={(e) => handlePlayChanel(e, item?.link)}
+                    className="border rounded-full  flex items-center justify-center p-2"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="#fff"

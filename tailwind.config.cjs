@@ -24,6 +24,9 @@ module.exports = {
     },
     backgroundImage: {
       "gradient-vip": "linear-gradient(117deg,#5a4be7,#c86dd7 102%);",
+      "chart-linear": "linear-gradient(180deg,#740091,#2d1a4c)",
+      chart:
+        "url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.27/static/media/bg-chart.fd766403.jpg')",
     },
     keyframes: {
       "rotate-center": {

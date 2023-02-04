@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -10,11 +10,13 @@ import { detailPlaylistSelector, isPlayingSelector } from "@redux/selectors";
 
 import ListSong from "./components/ListSong";
 import Skeleton from "@components/Skeleton";
+import songsSlice from "../../redux/songsSlice";
 
 const Playlist = (props) => {
   // define
   const { playlistId } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const isPlaying = useSelector(isPlayingSelector);
 
@@ -30,6 +32,18 @@ const Playlist = (props) => {
     dispatch(getDetailPlaylist(playlistId));
     setIsLoaded(false);
   }, [playlistId]);
+
+  useEffect(() => {
+    if (location?.state?.isPlay) {
+      dispatch(songsSlice.actions.setIndex(0));
+      dispatch(
+        songsSlice.actions.setCurrentSongId(
+          detailPlaylist?.song?.items[0]?.encodeId
+        )
+      );
+      dispatch(songsSlice.actions.isPlaying(true));
+    }
+  }, [detailPlaylist]);
 
   return (
     <section className="pt-[2rem] relative">

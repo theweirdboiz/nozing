@@ -1,10 +1,19 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import songsSlice from "@redux/songsSlice";
 const SongItem = ({ item, date }) => {
+  const dispatch = useDispatch();
+  const handleClick = (id) => {
+    dispatch(songsSlice.actions.setCurrentSongId(id));
+    dispatch(songsSlice.actions.isPlaying(true));
+  };
   return (
-    <div className="flex justify-between items-center relative group/item hover:bg-alpha-bg rounded-lg">
+    <div
+      onClick={() => handleClick(item?.encodeId)}
+      className="flex justify-between items-center relative group/item hover:bg-alpha-bg rounded-lg"
+    >
       <div className="flex items-center gap-x-5 p-[1rem]">
         <figure className="flex-shrink-0 rounded-lg overflow-hidden w-[6rem] h-[6rem] relative cursor-pointer">
           <img src={item?.thumbnail} alt="" />

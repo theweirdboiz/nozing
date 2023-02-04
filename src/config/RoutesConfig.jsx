@@ -18,7 +18,11 @@ const routes = [
     component: Explore,
   },
   {
-    path: "/zing-chart",
+    path: "/zing-chart/:title/:chartId",
+    component: ZingChart,
+  },
+  {
+    path: "/zing-chart-tuan/:title/:chartId",
     component: ZingChart,
   },
   {

@@ -24,6 +24,7 @@ import spinSvg from "../../../assests/imgs/spin.gif";
 const Player = () => {
   // define
   const dispatch = useDispatch();
+
   const audio = useRef(new Audio());
 
   // elements
@@ -59,7 +60,7 @@ const Player = () => {
   }, [currentSongId]);
 
   useEffect(() => {
-    // audio.current.pause();
+    audio.current.pause();
     audio.current.src = currentSong?.[128];
   }, [currentSong]);
 
@@ -130,9 +131,8 @@ const Player = () => {
   audio.current.onloadeddata = () => {
     audio.current.pause();
     dispatch(songsSlice.actions.setIsLoaded(true));
-    console.log(currentSong, isPlaying);
+    console.log(currentSong);
     console.log(currentSongInfor);
-
     audio.current.volume = +thumbVolume.current.clientWidth / 100;
     console.log(audio.current.volume);
 
@@ -207,24 +207,22 @@ const Player = () => {
               <img src={currentSongInfor?.thumbnail} alt="thumbail" />
             </figure>
           </Link>
-          <>
-            <Link>
-              <h3 className="text-[1.4rem] font-semibold">
-                {currentSongInfor?.title}
-              </h3>
-            </Link>
-            <>
+          <div>
+            <h3 className="text-[1.4rem] font-semibold">
+              <Link>{currentSongInfor?.title}</Link>
+            </h3>
+            <p>
               {currentSongInfor?.artists?.map((artist) => {
                 return (
                   <Link key={artist?.id}>
                     <span className="text-[1.2rem] font-medium text-secondary hover:text-link-text-hover hover:underline">
-                      {artist?.name}
+                      {artist?.name}{" "}
                     </span>
                   </Link>
                 );
               })}
-            </>
-          </>
+            </p>
+          </div>
           <div className="ml-6 flex gap-x-4">
             <button className="circle">
               <svg

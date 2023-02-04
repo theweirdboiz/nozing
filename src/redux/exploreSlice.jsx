@@ -12,6 +12,7 @@ export default createSlice({
     top100: {},
     album: {},
     newRelease: {},
+    weekChart: [],
     loading: "idle",
   },
   reducers: {},
@@ -39,6 +40,9 @@ export default createSlice({
         state.newRelease =
           action.payload.find((item) => item.sectionType === "new-release") ||
           {};
+        state.weekChart =
+          action.payload.find((item) => item.sectionType === "weekChart")
+            ?.items || [];
         state.loading = "idle";
       });
   },

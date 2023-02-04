@@ -21,6 +21,9 @@ export default createSlice({
     setCurrentSongId: (state, action) => {
       state.currentSongId = action.payload;
     },
+    setDetailPlaylist: (state, action) => {
+      state.detailPlaylist = action.payload;
+    },
     isPlaying: (state, action) => {
       state.isPlaying = action.payload;
     },
