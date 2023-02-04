@@ -13,6 +13,8 @@ export default createSlice({
     album: {},
     newRelease: {},
     weekChart: [],
+    chart: {},
+    rank: [],
     loading: "idle",
   },
   reducers: {},
@@ -43,6 +45,10 @@ export default createSlice({
         state.weekChart =
           action.payload.find((item) => item.sectionType === "weekChart")
             ?.items || [];
+        state.chart =
+          action.payload.find((item) => item.sectionId === "hZC")?.chart || {};
+        state.rank =
+          action.payload.find((item) => item.sectionId === "hZC")?.items || [];
         state.loading = "idle";
       });
   },

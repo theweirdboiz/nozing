@@ -24,7 +24,7 @@ const listSong = [
 const Queue = () => {
   return (
     <aside>
-      <div className="fixed right-0 top-0 w-[33rem] bottom-[9rem] bg-queue-player-bg shadow-box-shadow-queue flex flex-col hidden">
+      <div className="fixed right-0 top-0 w-[33rem] bottom-[9rem] bg-queue-player-bg shadow-box-shadow-queue flex-col hidden">
         <div className="py-[1.4rem]">
           <div className="flex gap-x-2 justify-between  px-2">
             <div className="inline-flex items-center text-[1.2rem] font-medium p-1 bg-alpha-bg rounded-[99px] flex-1">

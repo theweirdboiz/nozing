@@ -8,15 +8,6 @@ import SongItem from "../songItem";
 const NewRelease = (props) => {
   const { newRelease } = useSelector(homeDataSelector);
 
-  const formatReleaseDate = useCallback((time) => {
-    const milis = Math.floor(Date.now() / 1000 - time);
-    const hour = Math.floor(milis / 3600);
-    const result = Math.floor(hour / 24);
-    if (result < 1) {
-      return "Hôm nay";
-    }
-    return `${result} ngày trước`;
-  }, []);
   return (
     <div className="mt-[4.8rem]">
       <h3 className="mb-[2rem] text-[2rem] font-bold">{newRelease?.title}</h3>
@@ -55,8 +46,11 @@ const NewRelease = (props) => {
           return (
             <SongItem
               key={item?.encodeId}
-              item={item}
-              date={formatReleaseDate}
+              songId={item?.encodeId}
+              title={item?.title}
+              thumbnail={item?.thumbnail}
+              artists={item?.artists}
+              releaseDate={item?.releaseDate}
             />
           );
         })}
