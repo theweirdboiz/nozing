@@ -28,7 +28,6 @@ const SongItem = ({
     }
     return `${result} ngày trước`;
   };
-  console.log(bgColor);
 
   return (
     <div
@@ -46,7 +45,11 @@ const SongItem = ({
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-5 p-[1rem]">
           {order && (
-            <span className="text-[3.2rem] mx-2 font-extrabold">{order}</span>
+            <span
+              className={`text-[3.2rem] px-2 text-alpha-bg opacity-100 font-bold text-stroke-${order}`}
+            >
+              {order}
+            </span>
           )}
           <figure className="flex-shrink-0 rounded-lg overflow-hidden w-[6rem] h-[6rem] relative cursor-pointer">
             <img src={thumbnail} alt="" />

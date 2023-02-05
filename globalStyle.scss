@@ -169,3 +169,23 @@ $navigation-text: #dadada;
     overflow: hidden;
   }
 }
+//
+.text-stroke {
+  // opacity: 0.7;
+  &-1,
+  &-2,
+  &-3 {
+    opacity: 1;
+    -webkit-text-stroke: 1.5px #fff;
+  }
+
+  &-1 {
+    -webkit-text-stroke: 1px #4a90e2;
+  }
+  &-2 {
+    -webkit-text-stroke: 1px #27bd9c;
+  }
+  &-3 {
+    -webkit-text-stroke: 1px #e35050;
+  }
+}

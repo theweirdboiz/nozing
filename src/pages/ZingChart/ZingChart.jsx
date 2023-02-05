@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ZingChart = (props) => {
-  return <div></div>;
+  return <div>zing chart ne</div>;
 };
 
 ZingChart.propTypes = {};

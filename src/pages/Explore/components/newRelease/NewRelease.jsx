@@ -4,22 +4,54 @@ import { useDispatch, useSelector } from "react-redux";
 import { homeDataSelector } from "@redux/selectors";
 
 import SongItem from "../songItem";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const NewRelease = (props) => {
   const { newRelease } = useSelector(homeDataSelector);
 
+  const [tabActiveIndex, setTabActiveIndex] = useState(0);
+  const [tabPanel, setTabPanel] = useState([]);
+
+  const handleTabActiveIndex = (index) => {
+    tabActiveIndex !== index && setTabActiveIndex(index);
+  };
+  useEffect(() => {
+    const result =
+      tabActiveIndex === 0
+        ? newRelease?.items?.all
+        : tabActiveIndex === 1
+        ? newRelease?.items?.vPop
+        : newRelease?.items?.others;
+    setTabPanel(result);
+  }, [tabActiveIndex, newRelease]);
   return (
     <div className="mt-[4.8rem]">
       <h3 className="mb-[2rem] text-[2rem] font-bold">{newRelease?.title}</h3>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-4 uppercase text-[1.2rem] font-medium mb-[1.6rem]">
-          <div className="bg-purple-primary rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer">
+          <div
+            onClick={() => handleTabActiveIndex(0)}
+            className={`${
+              tabActiveIndex === 0 && "bg-purple-primary"
+            } rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer`}
+          >
             Tất cả
           </div>
-          <div className=" rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer">
+          <div
+            onClick={() => handleTabActiveIndex(1)}
+            className={`${
+              tabActiveIndex === 1 && "bg-purple-primary"
+            } rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer`}
+          >
             Việt Nam
           </div>
-          <div className=" rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer">
+          <div
+            onClick={() => handleTabActiveIndex(2)}
+            className={`${
+              tabActiveIndex === 2 && "bg-purple-primary"
+            } rounded-3xl border border-alpha-bg px-[2.4rem] py-1 cursor-pointer`}
+          >
             Quốc tế
           </div>
         </div>
@@ -42,7 +74,7 @@ const NewRelease = (props) => {
         </button>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8">
-        {newRelease?.items?.all?.map((item) => {
+        {tabPanel?.map((item) => {
           return (
             <SongItem
               key={item?.encodeId}

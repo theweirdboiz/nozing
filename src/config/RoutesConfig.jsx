@@ -9,35 +9,27 @@ import Follow from "@pages/Follow";
 import Playlist from "@pages/Playlist";
 
 const routes = [
-  {
-    path: "/ca-nhan",
-    component: Personal,
-  },
+  { id: "personal", path: "/ca-nhan", component: Personal },
   {
     path: "/",
+    id: "explore",
     component: Explore,
   },
+  { id: "zing-chart", path: "/zing-chart", component: ZingChart },
   {
-    path: "/zing-chart/:title/:chartId",
-    component: ZingChart,
-  },
-  {
+    id: "zing-chart-week",
     path: "/zing-chart-tuan/:title/:chartId",
     component: ZingChart,
   },
   {
+    id: "radio",
     path: "/radio",
     component: Radio,
   },
+  { id: "follow", path: "/the-loai-nghe-si/Viet-Nam", component: Follow },
+  { id: "playlist", path: "/playlist/:title/:playlistId", component: Playlist },
   {
-    path: "/the-loai-nghe-si/Viet-Nam",
-    component: Follow,
-  },
-  {
-    path: "/playlist/:title/:playlistId",
-    component: Playlist,
-  },
-  {
+    id: "album",
     path: "/album/:title/:playlistId",
     component: Playlist,
   },

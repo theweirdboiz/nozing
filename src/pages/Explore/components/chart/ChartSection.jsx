@@ -6,14 +6,19 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { homeDataSelector } from "@redux/selectors";
 import { useEffect } from "react";
-
-import SongItem from "../songItem";
 import { useRef } from "react";
 
 import _ from "lodash";
+
+import SongItem from "../songItem";
+import { RoutesConfig } from "@config";
+import { Link } from "react-router-dom";
+
 const ChartSection = (props) => {
   // define
   const [dataChart, setDataChart] = useState(null);
+
+  const link = RoutesConfig.find((route) => route.id === "zing-chart").id;
 
   const { chart, rank } = useSelector(homeDataSelector);
 
@@ -122,30 +127,32 @@ const ChartSection = (props) => {
     <div className="mt-[4.8rem] p-[2rem] overflow-hidden rounded-lg relative">
       <div className="absolute inset-0 w-full h-full bg-chart bg-top bg-cover bg-no-repeat"></div>
       <div className="absolute inset-0 z-0 opacity-95 bg-chart-linear"></div>
-      <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative">
-        <span className=" hover:text-link-text-hover cursor-pointer">
-          #Zingchart
-        </span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-14 h-14"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
-          />
-        </svg>
-      </h2>
+      <Link to={link}>
+        <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative">
+          <span className=" hover:text-link-text-hover cursor-pointer">
+            #Zingchart
+          </span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-14 h-14"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+            />
+          </svg>
+        </h2>
+      </Link>
       <div className="flex items-center gap-x-6 relative">
         <div className="w-2/5 flex-shrink-0">
           <div className="grid grid-cols-1 gap-y-4">
@@ -166,7 +173,7 @@ const ChartSection = (props) => {
           </div>
           <div className="text-center mt-6">
             <div className="inline-block border rounded-full px-[2rem] py-[4px] cursor-pointer hover:bg-alpha-bg">
-              Xem thêm
+              <Link to={link}>Xem thêm</Link>
             </div>
           </div>
         </div>
