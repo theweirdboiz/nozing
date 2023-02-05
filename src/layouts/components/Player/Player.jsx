@@ -199,7 +199,7 @@ const Player = () => {
   };
 
   return (
-    <section className="fixed bottom-0 left-0 right-0 px-[2rem] border border-border-primary flex items-center justify-between bg-layout-bg">
+    <section className="fixed bottom-0 left-0 right-0 px-[2rem] border-t border-border-primary flex items-center justify-between bg-layout-bg">
       <div className="flex h-[9rem] py-5 w-[30%]">
         <div className="flex justify-start items-center gap-x-5">
           <Link>

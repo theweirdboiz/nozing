@@ -12,6 +12,7 @@ const SongItem = ({
   percent,
   releaseDate,
   bgColor,
+  isSmall,
 }) => {
   const dispatch = useDispatch();
   // handle events
@@ -51,7 +52,11 @@ const SongItem = ({
               {order}
             </span>
           )}
-          <figure className="flex-shrink-0 rounded-lg overflow-hidden w-[6rem] h-[6rem] relative cursor-pointer">
+          <figure
+            className={`flex-shrink-0 rounded-lg overflow-hidden ${
+              (isSmall && "w-[4rem] h-[4rem]") || "w-[6rem] h-[6rem]"
+            } relative cursor-pointer`}
+          >
             <img src={thumbnail} alt="" />
             <div className="group-hover/item:flex hidden items-center justify-center absolute inset-0 w-full h-full z-20">
               <svg
@@ -72,7 +77,7 @@ const SongItem = ({
             <div className="group-hover/item:block hidden absolute inset-0 w-full h-full bg-layout-bg opacity-40"></div>
           </figure>
           <div className="text-[1.2rem] font-medium text-secondary">
-            <h3 className="text-[1.4rem] text-white">{title}</h3>
+            <h3 className="text-[1.4rem] text-white line-clamp-1">{title}</h3>
             {artists?.map((artist) => {
               return (
                 <Link
@@ -89,8 +94,8 @@ const SongItem = ({
         {percent ? (
           <span className="mr-6 font-bold ">{percent}%</span>
         ) : (
-          <div className="group-hover/item:block hidden">
-            <button className="circle mr-6">
+          <div className="relative z-10 group-hover/item:block hidden">
+            <button className="circle hover:bg-hover-circle mr-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

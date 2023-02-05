@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="fixed min-w-[66rem] top-0 left-[24rem] right-0 px-[6rem] py-6 flex items-center justify-between bg-layout-bg z-50">
+    <header className="absolute min-w-[66rem] top-0 left-0 right-0 px-[6rem] py-6 flex items-center justify-between bg-layout-bg z-50">
       <div className="flex items-center justify-between gap-x-8">
         <button>
           <svg
@@ -38,7 +38,7 @@ const Header = () => {
             />
           </svg>
         </button>
-        <form action="" className="w-[44rem] relative">
+        <form action="" className="w-[42rem] relative">
           <div className="flex items-center gap-x-2 bg-alpha-bg h-[4rem] rounded-[9.9rem] relative">
             <button className="absolute left-3">
               <svg

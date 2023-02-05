@@ -9,6 +9,7 @@ export default createSlice({
     currentSongId: null,
     currentSongInfor: null,
     detailPlaylist: null,
+    currentPlaylistId: null,
     isPlaying: false,
     isVip: false,
     index: null,
@@ -20,6 +21,9 @@ export default createSlice({
     // standard reducer logic, with auto-generated action types per reducer
     setCurrentSongId: (state, action) => {
       state.currentSongId = action.payload;
+    },
+    setCurrentPlaylistId: (state, action) => {
+      state.currentPlaylistId = action.payload;
     },
     setDetailPlaylist: (state, action) => {
       state.detailPlaylist = action.payload;
