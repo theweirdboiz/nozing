@@ -20,6 +20,7 @@ const Queue = () => {
     setTabActive(index);
   };
   const dispatch = useDispatch();
+
   const currentSongInfor = useSelector(currentSongInforSelector);
 
   const detailPlaylist = useSelector(detailPlaylistSelector);
@@ -118,14 +119,14 @@ const Queue = () => {
                   </span>
                 </p>
                 <ul className="flex flex-col gap-y-1 mt-6">
-                  {detailPlaylist?.song?.items?.map((item) => {
+                  {queue?.song?.items?.map((item) => {
                     return (
                       <li key={item?.encodeId}>
                         <SongItem
-                          songId={queue?.encodeId}
-                          title={queue?.title}
-                          artists={queue?.artists}
-                          thumbnail={queue?.thumbnail}
+                          songId={item?.encodeId}
+                          title={item?.title}
+                          artists={item?.artists}
+                          thumbnail={item?.thumbnail}
                           isSmall
                         />
                       </li>
