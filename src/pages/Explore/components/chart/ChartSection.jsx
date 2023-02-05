@@ -8,9 +8,27 @@ import { homeDataSelector } from "@redux/selectors";
 import { useEffect } from "react";
 
 import SongItem from "../songItem";
+import { useRef } from "react";
+
+import _ from "lodash";
 const ChartSection = (props) => {
+  // define
   const [dataChart, setDataChart] = useState(null);
+
   const { chart, rank } = useSelector(homeDataSelector);
+
+  const chartRef = useRef();
+
+  const [tooltip, setTooltip] = useState({
+    opacity: 0,
+    top: 0,
+    left: 0,
+    bgColor: "white",
+    pointerEvents: "none",
+  });
+
+  const [hoverItemId, setHoverItemId] = useState();
+
   const options = {
     responsive: true,
     pointRadius: 0,
@@ -32,30 +50,60 @@ const ChartSection = (props) => {
     },
     plugins: {
       legend: false,
+      tooltip: {
+        enabled: false,
+        external: (context) => {
+          if (!chartRef || !chartRef.current) return;
+          const tooltipModel = context.tooltip;
+          // set tooltip model hidden when tooltip hidden
+          if (tooltipModel.opacity === 0) {
+            tooltip.opacity !== 0 &&
+              setTooltip((prev) => ({ ...prev, opacity: 0 }));
+            return;
+          }
+
+          const counter = +tooltipModel.body[0].lines[0].replace(",", "");
+          const rs = dataChart.datasets.filter((dataset) =>
+            dataset.data.some((item) => item === counter)
+          );
+          setHoverItemId(rs[0].encodeId);
+          console.log(rs[0].borderColor);
+          // custom tooltip
+          const newTooltipData = {
+            opacity: 1,
+            left: tooltipModel.caretX,
+            top: tooltipModel.caretY,
+            bgColor: rs[0].borderColor,
+            pointerEvents: "none",
+          };
+          if (!_.isEqual(tooltip, newTooltipData)) {
+            setTooltip(newTooltipData);
+          }
+        },
+      },
     },
     hover: {
       mode: "dataset",
       intersect: false,
     },
   };
+
+  // set chart
   useEffect(() => {
     const items = chart?.items;
+    const datasets = [];
     const labels = chart?.times
       ?.filter((time) => +time?.hour % 2 === 0)
       ?.map((time) => time.hour + ":00");
-    const datasets = [];
     if (items) {
       for (let index = 0; index < 3; index++) {
         datasets.push({
           data: items[Object.keys(items)[index]]
             ?.filter((item) => +item?.hour % 2 === 0)
             ?.map((time) => time.counter),
+          encodeId: Object.keys(items)[index],
           borderColor:
-            index === 0
-              ? "rgb(74, 144, 226)"
-              : index === 1
-              ? "rgb(39, 189, 156)"
-              : "rgb(227, 80, 80);",
+            index === 0 ? "#4A90E2" : index === 1 ? "#27BD9C" : "#E35050",
           tension: 0.2,
           borderWidth: 2,
           pointBackgroundColor: "white",
@@ -111,6 +159,7 @@ const ChartSection = (props) => {
                   artists={item?.artists}
                   order={index + 1}
                   percent={handlePercent(item?.score / chart?.totalScore)}
+                  bgColor="hsla(0,0%,100%,.07)"
                 />
               );
             })}
@@ -121,8 +170,36 @@ const ChartSection = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex-1 max-h-[30rem]">
-          {dataChart && <Line data={dataChart} options={options} />}
+        <div className="flex-1 h-[30rem] py-3 relative">
+          {dataChart && (
+            <Line ref={chartRef} data={dataChart} options={options} />
+          )}
+          <div
+            className={`absolute rounded-lg pointer-events-${tooltip.pointerEvents}`}
+            style={{
+              top: tooltip.top,
+              left: tooltip.left,
+              opacity: tooltip.opacity,
+            }}
+          >
+            <SongItem
+              songId={hoverItemId}
+              title={
+                rank?.find((item) => item?.encodeId === hoverItemId)?.title
+              }
+              thumbnail={
+                rank?.find((item) => item?.encodeId === hoverItemId)?.thumbnail
+              }
+              artists={
+                rank?.find((item) => item?.encodeId === hoverItemId)?.artists
+              }
+              percent={handlePercent(
+                rank?.find((item) => item?.encodeId === hoverItemId)?.score /
+                  chart?.totalScore
+              )}
+              bgColor={tooltip.bgColor}
+            />
+          </div>
         </div>
       </div>
     </div>
