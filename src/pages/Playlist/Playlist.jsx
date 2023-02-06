@@ -29,8 +29,8 @@ const Playlist = (props) => {
   const [isLoaded, setIsLoaded] = useState(true);
 
   useEffect(() => {
-    dispatch(getDetailPlaylist(playlistId));
     dispatch(songsSlice.actions.setCurrentPlaylistId(playlistId));
+    dispatch(getDetailPlaylist(playlistId));
     setIsLoaded(false);
   }, [playlistId]);
 

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,11 +17,12 @@ const Queue = () => {
   // define
   // 0: playlist, 1: recent songs
   const [tabActive, setTabActive] = useState(0);
-
-  const [queue, setQueue] = useState([]);
+  const [queue, setQueue] = useState();
   const handleSetTabActive = (index) => {
     setTabActive(index);
   };
+
+  const dispatch = useDispatch();
 
   const recentSongs = useSelector(recentSongsSelector);
 
@@ -29,19 +30,20 @@ const Queue = () => {
 
   const detailPlaylist = useSelector(detailPlaylistSelector);
 
+  const location = useLocation();
+
   const currentPlaylistId = useSelector(currentPlaylistIdSelector);
 
   const isPlaying = useSelector(isPlayingSelector);
   const isQueue = useSelector(isQueueSelector);
 
+  // first time
   useEffect(() => {
-    detailPlaylist && setQueue(detailPlaylist);
+    currentPlaylistId && setQueue(detailPlaylist);
   }, []);
 
   useEffect(() => {
-    if (currentPlaylistId && isPlaying) {
-      setQueue(detailPlaylist);
-    }
+    isPlaying && setQueue(detailPlaylist);
   }, [currentPlaylistId, isPlaying]);
 
   useEffect(() => {

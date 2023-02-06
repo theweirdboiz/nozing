@@ -23,8 +23,8 @@ const ListSong = () => {
   };
   // handle events
   const handleClickItem = (songId, index) => {
-    dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.isPlaying(true));
+    dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.setIndex(index));
     dispatch(
       songsSlice.actions.setRecentSongs({

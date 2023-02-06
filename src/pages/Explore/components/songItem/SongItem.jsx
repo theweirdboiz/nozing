@@ -21,8 +21,8 @@ const SongItem = ({
 
   // handle events
   const handleClick = (id) => {
-    dispatch(songsSlice.actions.setCurrentSongId(id));
     dispatch(songsSlice.actions.isPlaying(true));
+    dispatch(songsSlice.actions.setCurrentSongId(id));
     dispatch(
       songsSlice.actions.setRecentSongs({
         songId: currentSongInfor?.encodeId,
