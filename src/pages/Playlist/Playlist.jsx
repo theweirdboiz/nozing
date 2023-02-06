@@ -6,11 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 import { getDetailPlaylist } from "@redux/songsSlice";
-import {
-  detailPlaylistSelector,
-  isPlayingSelector,
-  currentPlaylistIdSelector,
-} from "@redux/selectors";
+import { detailPlaylistSelector, isPlayingSelector } from "@redux/selectors";
 
 import ListSong from "./components/ListSong";
 import Skeleton from "@components/Skeleton";
@@ -23,8 +19,6 @@ const Playlist = (props) => {
   const location = useLocation();
 
   const isPlaying = useSelector(isPlayingSelector);
-
-  const currentPlaylistId = useSelector(currentPlaylistIdSelector);
 
   const detailPlaylist = useSelector(detailPlaylistSelector);
 

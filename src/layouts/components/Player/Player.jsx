@@ -15,11 +15,10 @@ import {
   isRepeatSelector,
   isRandomSelector,
   isLoadedSelector,
+  isQueueSelector,
 } from "@redux/selectors";
 import { useRef } from "react";
 import { useState } from "react";
-
-import spinSvg from "../../../assests/imgs/spin.gif";
 
 const Player = () => {
   // define
@@ -31,6 +30,8 @@ const Player = () => {
   const detailPlaylist = useSelector(detailPlaylistSelector);
 
   const isPlaying = useSelector(isPlayingSelector);
+
+  const isQueue = useSelector(isQueueSelector);
 
   // get current song id from store
   const currentSongId = useSelector(currentSongIdSelector);
@@ -54,6 +55,8 @@ const Player = () => {
   const trackVolume = useRef();
   const thumbVolume = useRef();
 
+  const [mute, setMute] = useState(0);
+
   useEffect(() => {
     dispatch(songsSlice.actions.setIsLoaded(false));
     dispatch(fetchDetailSong(currentSongId));
@@ -63,6 +66,17 @@ const Player = () => {
     audio.current.pause();
     audio.current.src = currentSong?.[128];
   }, [currentSong]);
+
+  useEffect(() => {
+    if (mute) {
+      audio.current.volume = 0.0;
+      thumbVolume.current.style.cssText = `width: 0px`;
+    } else {
+      const trackRect = trackVolume.current.getBoundingClientRect();
+      audio.current.volume = 0.75;
+      thumbVolume.current.style.cssText = `width: ${0.75 * trackRect.width}px`;
+    }
+  }, [mute]);
 
   const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
 
@@ -76,6 +90,10 @@ const Player = () => {
     );
     thumbVolume.current.style.cssText = `width: ${percent * trackRect.width}px`;
     audio.current.volume = percent;
+  };
+  // when toggle mute/unmute volume
+  const handleMute = () => {
+    setMute((prev) => !prev);
   };
   // when toggle play/pause
   const handlePlaySong = () => {
@@ -131,10 +149,7 @@ const Player = () => {
   audio.current.onloadeddata = () => {
     audio.current.pause();
     dispatch(songsSlice.actions.setIsLoaded(true));
-    console.log(currentSong);
-    console.log(currentSongInfor);
     audio.current.volume = +thumbVolume.current.clientWidth / 100;
-    console.log(audio.current.volume);
 
     if (isPlaying) {
       audio.current.play();
@@ -480,21 +495,38 @@ const Player = () => {
           </svg>
         </button>
         <div className="flex items-center gap-x-3">
-          <button className="circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-8 h-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
-              />
-            </svg>
+          <button onClick={handleMute} className="circle">
+            {!mute ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.531V19.94a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.506-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.395C2.806 8.757 3.63 8.25 4.51 8.25H6.75z"
+                />
+              </svg>
+            )}
           </button>
           <div
             ref={trackVolume}
@@ -510,7 +542,14 @@ const Player = () => {
           </div>
         </div>
         <div className="h-16 border-l ml-6 border-border-primary"></div>
-        <button className="ml-5 bg-purple-primary p-2 rounded-lg hover:text-secondary">
+        <button
+          onClick={() => {
+            dispatch(songsSlice.actions.setIsQueue(!isQueue));
+          }}
+          className={`${
+            (isQueue && "bg-purple-primary") || "bg-alpha-bg"
+          } ml-5 p-2 rounded-lg hover:text-secondary`}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as APIs from "@APIs";
-import { useDispatch } from "react-redux";
 
 export default createSlice({
   name: "songs",
@@ -10,12 +9,14 @@ export default createSlice({
     currentSongInfor: null,
     detailPlaylist: null,
     currentPlaylistId: null,
+    recentSongs: [],
     isPlaying: false,
     isVip: false,
     index: null,
     isRepeat: false,
     isRandom: false,
     isLoaded: false,
+    isQueue: true,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -27,6 +28,15 @@ export default createSlice({
     },
     setDetailPlaylist: (state, action) => {
       state.detailPlaylist = action.payload;
+    },
+    setRecentSongs: (state, action) => {
+      if (
+        state.recentSongs.every(
+          (song) => song?.songId !== action.payload?.songId
+        )
+      ) {
+        state.recentSongs = [action.payload, ...state.recentSongs];
+      }
     },
     isPlaying: (state, action) => {
       state.isPlaying = action.payload;
@@ -48,6 +58,9 @@ export default createSlice({
     },
     setIsLoaded: (state, action) => {
       state.isLoaded = action.payload;
+    },
+    setIsQueue: (state, action) => {
+      state.isQueue = action.payload;
     },
   },
   // listen thunk actions

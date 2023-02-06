@@ -2,13 +2,19 @@ import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
-import { detailPlaylistSelector } from "@redux/selectors";
+import {
+  detailPlaylistSelector,
+  currentSongInforSelector,
+} from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
 
 const ListSong = () => {
   const dispatch = useDispatch();
+
   const detailPlaylist = useSelector(detailPlaylistSelector);
+
+  const currentSongInfor = useSelector(currentSongInforSelector);
 
   const formatTime = (totalDuration) => {
     const hour = Math.floor(totalDuration / 3600);
@@ -20,7 +26,16 @@ const ListSong = () => {
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.isPlaying(true));
     dispatch(songsSlice.actions.setIndex(index));
+    dispatch(
+      songsSlice.actions.setRecentSongs({
+        songId: currentSongInfor?.encodeId,
+        title: currentSongInfor?.title,
+        thumbnail: currentSongInfor?.thumbnail,
+        artists: currentSongInfor?.artists,
+      })
+    );
   };
+
   return (
     <>
       <ul>

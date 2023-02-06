@@ -1,24 +1,36 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
+import { currentSongInforSelector } from "@redux/selectors";
 const SongItem = ({
   songId,
   title,
   thumbnail,
   artists,
   order,
-  percent,
   releaseDate,
+  percent,
   bgColor,
   isSmall,
 }) => {
   const dispatch = useDispatch();
+
+  const currentSongInfor = useSelector(currentSongInforSelector);
+
   // handle events
   const handleClick = (id) => {
     dispatch(songsSlice.actions.setCurrentSongId(id));
     dispatch(songsSlice.actions.isPlaying(true));
+    dispatch(
+      songsSlice.actions.setRecentSongs({
+        songId: currentSongInfor?.encodeId,
+        title: currentSongInfor?.title,
+        thumbnail: currentSongInfor?.thumbnail,
+        artists: currentSongInfor?.artists,
+      })
+    );
   };
   const formatReleaseDate = (time) => {
     const milis = Math.floor(Date.now() / 1000 - time);

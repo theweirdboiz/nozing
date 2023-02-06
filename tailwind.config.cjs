@@ -44,9 +44,6 @@ module.exports = {
       "rotate-center": "rotate-center 12s linear infinite",
       "spin-off": "spin-off 0.4s ease-out 1 both",
     },
-    transitionProperty: {
-      "border-radius": "border-radius 1s",
-    },
   },
   plugins: [require("tailwind-scrollbar"), require("@tailwindcss/line-clamp")],
   variants: {

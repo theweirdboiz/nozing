@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,19 +7,23 @@ import {
   detailPlaylistSelector,
   currentPlaylistIdSelector,
   isPlayingSelector,
+  isQueueSelector,
+  recentSongsSelector,
 } from "@redux/selectors";
 
-import { getDetailPlaylist } from "@redux/songsSlice";
 import SongItem from "@pages/Explore/components/songItem";
 
 const Queue = () => {
   // define
+  // 0: playlist, 1: recent songs
   const [tabActive, setTabActive] = useState(0);
+
   const [queue, setQueue] = useState([]);
   const handleSetTabActive = (index) => {
     setTabActive(index);
   };
-  const dispatch = useDispatch();
+
+  const recentSongs = useSelector(recentSongsSelector);
 
   const currentSongInfor = useSelector(currentSongInforSelector);
 
@@ -28,16 +32,30 @@ const Queue = () => {
   const currentPlaylistId = useSelector(currentPlaylistIdSelector);
 
   const isPlaying = useSelector(isPlayingSelector);
+  const isQueue = useSelector(isQueueSelector);
+
+  useEffect(() => {
+    detailPlaylist && setQueue(detailPlaylist);
+  }, []);
 
   useEffect(() => {
     if (currentPlaylistId && isPlaying) {
       setQueue(detailPlaylist);
     }
-  }, [detailPlaylist, isPlaying]);
+  }, [currentPlaylistId]);
+
+  useEffect(() => {
+    isPlaying && setTabActive(0);
+  }, [isPlaying]);
 
   return (
-    /* */
-    <aside className="h-full">
+    <aside
+      className={`h-full  ${
+        (isQueue &&
+          "w-[33rem] translate-x-0 transition-all duration-500 ease-out") ||
+        "w-0 translate-x-full transition-all duration-500 ease-in"
+      }`}
+    >
       <div className="flex flex-col w-[33rem] h-full bg-queue-player-bg border border-border-primary  shadow-box-shadow-queue">
         <div className="py-[1.6rem]">
           <div className="flex gap-x-2 justify-between  px-3">
@@ -95,15 +113,21 @@ const Queue = () => {
         </div>
         <div className="flex-1">
           <div className="relative w-full h-full overflow-hidden">
-            <div className="absolute inset-0 scrollbar-thin px-3">
-              <SongItem
-                songId={currentSongInfor?.encodeId}
-                title={currentSongInfor?.title}
-                artists={currentSongInfor?.artists}
-                thumbnail={currentSongInfor?.thumbnail}
-                bgColor={"#9b4de0"}
-                isSmall
-              />
+            <div
+              className={`absolute inset-0 scrollbar-thin px-3 ${
+                tabActive && "hidden"
+              }`}
+            >
+              {currentPlaylistId && (
+                <SongItem
+                  songId={currentSongInfor?.encodeId}
+                  title={currentSongInfor?.title}
+                  artists={currentSongInfor?.artists}
+                  thumbnail={currentSongInfor?.thumbnail}
+                  bgColor={"#9b4de0"}
+                  isSmall
+                />
+              )}
               <div className="mt-6 text-[1.4rem]">
                 <p className="text-secondary font-medium px-[1rem]">
                   <span className="font-bold text-white  line-clamp-1">
@@ -135,6 +159,24 @@ const Queue = () => {
                 </ul>
               </div>
             </div>
+            <div
+              className={`absolute inset-0 scrollbar-thin px-3 ${
+                !tabActive && "hidden"
+              }`}
+            >
+              {recentSongs?.map((song, index) => {
+                return (
+                  <SongItem
+                    key={index}
+                    songId={song?.songId}
+                    title={song?.title}
+                    thumbnail={song?.thumbnail}
+                    artists={song?.artists}
+                    isSmall
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -144,4 +186,4 @@ const Queue = () => {
 
 Queue.propTypes = {};
 
-export default Queue;
+export default memo(Queue);

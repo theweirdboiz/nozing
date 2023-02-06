@@ -9,7 +9,7 @@ import Player from "@layouts/components/Player";
 const DefaultLayout = ({ children }) => {
   return (
     <div className="bg-layout-bg text-[#fff]">
-      <div className="flex items-center h-[calc(100vh_-_9rem)]">
+      <div className="flex items-center h-[calc(100vh_-_9rem)] overflow-hidden">
         <Sidebar />
         <div className="relative flex-col w-full h-full">
           <Header />
