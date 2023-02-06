@@ -42,7 +42,7 @@ const Queue = () => {
     if (currentPlaylistId && isPlaying) {
       setQueue(detailPlaylist);
     }
-  }, [currentPlaylistId]);
+  }, [currentPlaylistId, isPlaying]);
 
   useEffect(() => {
     isPlaying && setTabActive(0);
