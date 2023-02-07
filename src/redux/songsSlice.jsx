@@ -33,12 +33,10 @@ export default createSlice({
     setRecentSongs: (state, action) => {
       if (
         state.recentSongs.every(
-          (song) =>
-            song?.songId !== action.payload?.songId && action.payload?.song
+          (song) => song?.songId !== action.payload?.songId
         )
       ) {
         state.recentSongs = [action.payload, ...state.recentSongs];
-        console.log(state.recentSongs);
       }
     },
     isPlaying: (state, action) => {

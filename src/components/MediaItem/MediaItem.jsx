@@ -1,10 +1,39 @@
 import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-
-const MediaItem = ({ song, onClick, index }) => {
+import { useDispatch, useSelector } from "react-redux";
+import songsSlice from "@redux/songsSlice";
+import { currentSongInforSelector } from "@redux/selectors";
+import { Link } from "react-router-dom";
+// songId,
+// thumbnail,
+// artists,
+// title,
+// albumTitle,
+// duration,
+// index,
+const MediaItem = (props) => {
+  const { songId, thumbnail, artists, title, albumTitle, duration, index } =
+    props;
   // define
+  const dispatch = useDispatch();
+
+  const currentSongInfor = useSelector(currentSongInforSelector);
+
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
+  };
+  const handleClick = (songId, index) => {
+    dispatch(songsSlice.actions.isPlaying(true));
+    dispatch(songsSlice.actions.setCurrentSongId(songId));
+    dispatch(songsSlice.actions.setIndex(index));
+    dispatch(
+      songsSlice.actions.setRecentSongs({
+        songId: currentSongInfor?.encodeId,
+        title: currentSongInfor?.title,
+        thumbnail: currentSongInfor?.thumbnail,
+        artists: currentSongInfor?.artists,
+      })
+    );
   };
   const formatDuration = (t) => {
     const time = Number.parseInt(t);
@@ -20,13 +49,15 @@ const MediaItem = ({ song, onClick, index }) => {
     return `${minutePrefix}:${secondPrefix}`;
   };
   // handle events
-  const handleClickItem = (songId, index) => {
-    onClick(songId, index);
-  };
+
   return (
     <div className="relative group/item">
-      <div className="flex items-center justify-between p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-hover-circle">
-        <div className="flex items-center w-[50%] gap-x-3">
+      <div className="flex items-center p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-hover-circle">
+        <div
+          className={`flex ${
+            albumTitle && "w-[50%]"
+          } flex-shrink-0 items-center gap-x-3`}
+        >
           <div className="relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,10 +83,10 @@ const MediaItem = ({ song, onClick, index }) => {
           <div className="flex items-center gap-x-4">
             <div
               className="cursor-pointer relative"
-              onClick={() => handleClickItem(song?.encodeId, index)}
+              onClick={() => handleClick(songId, index)}
             >
               <figure className="w-[4rem] h-[4rem] rounded overflow-hidden flex-shrink-0">
-                <img src={song?.thumbnail} alt="" />
+                <img src={thumbnail} alt="" />
               </figure>
               <div className="absolute inset-0 w-full h-full bg-layout-bg opacity-0 group-hover/item:opacity-60"></div>
               <div className="absolute inset-0 w-full h-full hidden items-center justify-center group-hover/item:flex">
@@ -76,19 +107,28 @@ const MediaItem = ({ song, onClick, index }) => {
               </div>
             </div>
             <div className="">
-              <h5 className="text-[1.4rem] text-white font-semibold">
-                {song?.title?.slice(0, 35)}
+              <h5 className="text-[1.4rem] text-white font-semibold line-clamp-1">
+                {title}
               </h5>
-              <span className="font-medium hover:underline hover:text-link-text-hover cursor-pointer">
-                {song?.artistsNames}
-              </span>
+              {artists?.map((artist, index) => {
+                return (
+                  <Link
+                    className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
+                    key={index}
+                  >
+                    {artist?.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
-        <span className="w-[40%] font-medium cursor-pointer hover:underline hover:text-link-text-hover">
-          {song?.album?.title}
-        </span>
-        <div className="flex-1 text-right mr-3 relative">
+        {albumTitle && (
+          <span className="w-[40%] font-medium cursor-pointer hover:underline hover:text-link-text-hover line-clamp-1">
+            {albumTitle}
+          </span>
+        )}
+        <div className="ml-auto text-right mr-3 relative">
           <div className="absolute right-0 top-[50%] -translate-y-[50%] hidden text-white group-hover/item:flex">
             <button className="circle__large">
               <svg
@@ -140,7 +180,7 @@ const MediaItem = ({ song, onClick, index }) => {
             </button>
           </div>
           <span className="group-hover/item:hidden">
-            {formatDuration(song?.duration)}
+            {formatDuration(duration)}
           </span>
         </div>
       </div>

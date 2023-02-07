@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import songsSlice from "@redux/songsSlice";
 import {
   detailPlaylistSelector,
   currentSongInforSelector,
@@ -22,19 +21,6 @@ const ListSong = () => {
     return `${hour} giờ ${minute} phút`;
   };
   // handle events
-  const handleClickItem = (songId, index) => {
-    dispatch(songsSlice.actions.isPlaying(true));
-    dispatch(songsSlice.actions.setCurrentSongId(songId));
-    dispatch(songsSlice.actions.setIndex(index));
-    dispatch(
-      songsSlice.actions.setRecentSongs({
-        songId: currentSongInfor?.encodeId,
-        title: currentSongInfor?.title,
-        thumbnail: currentSongInfor?.thumbnail,
-        artists: currentSongInfor?.artists,
-      })
-    );
-  };
 
   return (
     <>
@@ -42,9 +28,13 @@ const ListSong = () => {
         {detailPlaylist?.song?.items?.map((song, index) => {
           return (
             <MediaItem
-              key={index}
-              song={song}
-              onClick={handleClickItem}
+              key={song?.encodeId}
+              songId={song?.encodeId}
+              thumbnail={song?.thumbnail}
+              artists={song?.artists}
+              title={song?.title}
+              albumTitle={song?.album?.title}
+              duration={song?.duration}
               index={index}
             />
           );
