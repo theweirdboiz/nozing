@@ -40,3 +40,16 @@ export const getDetailPlaylist = (playlistId) =>
       reject(err);
     }
   });
+export const getSearchData = (keyword) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        url: "/search",
+        method: "get",
+        params: { keyword },
+      });
+      resolve(res);
+    } catch (err) {
+      reject(err);
+    }
+  });

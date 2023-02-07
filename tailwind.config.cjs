@@ -11,6 +11,7 @@ module.exports = {
       "border-primary": "hsla(0,0%,100%,0.1);",
       "bg-song": "hsla(0,0%,100%,.07)",
       "hover-song": "hsla(0,0%,100%,.2)",
+      "navigation-text": "#dadada",
       vip: "#ffdb00",
       black: "#111111",
       white: "#fff",

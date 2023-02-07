@@ -17,6 +17,7 @@ export default createSlice({
     isRandom: false,
     isLoaded: false,
     isQueue: true,
+    searchData: null,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -32,10 +33,12 @@ export default createSlice({
     setRecentSongs: (state, action) => {
       if (
         state.recentSongs.every(
-          (song) => song?.songId !== action.payload?.songId
+          (song) =>
+            song?.songId !== action.payload?.songId && action.payload?.song
         )
       ) {
         state.recentSongs = [action.payload, ...state.recentSongs];
+        console.log(state.recentSongs);
       }
     },
     isPlaying: (state, action) => {
@@ -86,6 +89,9 @@ export default createSlice({
         if (res1.err !== 0) {
           state.isPlaying = false;
         }
+      })
+      .addCase(fetchSearchData.fulfilled, (state, action) => {
+        state.searchData = action.payload;
       });
   },
 });
@@ -120,6 +126,13 @@ export const fetchDetailSong = createAsyncThunk(
       APIs.getSong(currentSongId),
       APIs.getInfoSong(currentSongId),
     ]);
-    return [res1.data, res2.data];
+    return [res1?.data, res2?.data];
+  }
+);
+export const fetchSearchData = createAsyncThunk(
+  "songs/fetchSearchData",
+  async (keyword) => {
+    const response = await APIs.getSearchData(keyword);
+    return response?.data?.data;
   }
 );

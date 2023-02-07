@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import Search from "@components/Search";
+
 const Header = () => {
   return (
     <header className="absolute min-w-[66rem] top-0 left-0 right-0 px-[6rem] py-6 flex items-center justify-between bg-layout-bg z-50">
@@ -38,31 +40,7 @@ const Header = () => {
             />
           </svg>
         </button>
-        <form action="" className="w-[42rem] relative">
-          <div className="flex items-center gap-x-2 bg-alpha-bg h-[4rem] rounded-[9.9rem] relative">
-            <button className="absolute left-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-10 h-10"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-            </button>
-            <input
-              type="text"
-              placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát ..."
-              className="absolute left-16 bg-transparent w-full"
-            />
-          </div>
-        </form>
+        <Search />
       </div>
       <div className="flex items-center justify-between gap-x-5">
         <div className="flex items-center gap-x-3 px-8 py-4 rounded-[99rem] bg-alpha-bg text-link-text-hover font-semibold text-[1.4rem] cursor-pointer">

@@ -9,6 +9,9 @@ export const currentSongInforSelector = (state) => state.songs.currentSongInfor;
 export const currentPlaylistIdSelector = (state) =>
   state.songs.currentPlaylistId;
 export const detailPlaylistSelector = (state) => state.songs.detailPlaylist;
+
+export const searchDataSelector = (state) => state.songs.searchData;
+
 export const isPlayingSelector = (state) => state.songs.isPlaying;
 export const isVipSelector = async (state) => await state.songs.isVip;
 export const isListSelector = (state) => state.songs.isList;
@@ -22,9 +25,3 @@ export const isRandomSelector = (state) => state.songs.isRandom;
 export const isLoadedSelector = (state) => state.songs.isLoaded;
 
 export const isQueueSelector = (state) => state.songs.isQueue;
-// export const bannerRemainingSelector = createSelector(
-//   bannerSelector,
-//   (banner) => {
-//     return banner;
-//   }
-// );
