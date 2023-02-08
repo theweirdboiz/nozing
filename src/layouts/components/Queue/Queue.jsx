@@ -22,8 +22,6 @@ const Queue = () => {
     setTabActive(index);
   };
 
-  const dispatch = useDispatch();
-
   const recentSongs = useSelector(recentSongsSelector);
 
   const currentSongInfor = useSelector(currentSongInforSelector);
@@ -39,6 +37,7 @@ const Queue = () => {
 
   // first time
   useEffect(() => {
+    console.log(location);
     currentPlaylistId && setQueue(detailPlaylist);
   }, []);
 

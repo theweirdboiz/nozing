@@ -23,14 +23,14 @@ const SongItem = ({
   const handleClick = (id) => {
     dispatch(songsSlice.actions.isPlaying(true));
     dispatch(songsSlice.actions.setCurrentSongId(id));
-    dispatch(
-      songsSlice.actions.setRecentSongs({
-        songId: currentSongInfor?.encodeId,
-        title: currentSongInfor?.title,
-        thumbnail: currentSongInfor?.thumbnail,
-        artists: currentSongInfor?.artists,
-      })
-    );
+    // dispatch(
+    //   songsSlice.actions.setRecentSongs({
+    //     songId: currentSongInfor?.encodeId,
+    //     title: currentSongInfor?.title,
+    //     thumbnail: currentSongInfor?.thumbnail,
+    //     artists: currentSongInfor?.artists,
+    //   })
+    // );
   };
   const formatReleaseDate = (time) => {
     const milis = Math.floor(Date.now() / 1000 - time);

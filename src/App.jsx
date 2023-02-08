@@ -1,6 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { publicRoutes } from "@routers";
 import { DefaultLayout } from "@layouts";
+import { SearchAll } from "@pages/Search";
+import {
+  SearchArtist,
+  SearchMv,
+  SearchPlaylist,
+  SearchSong,
+} from "./pages/Search";
+import { SearchMenuNavbar } from "@ultis";
 
 function App() {
   return (
@@ -23,7 +31,17 @@ function App() {
                   <Page />
                 </Layout>
               }
-            />
+            >
+              {route.id === "search" && (
+                <>
+                  <Route path={"tat-ca"} element={<SearchAll />} />
+                  <Route path={"bai-hat"} element={<SearchSong />} />
+                  <Route path={"playlist"} element={<SearchPlaylist />} />
+                  <Route path={"artist"} element={<SearchArtist />} />
+                  <Route path={"video"} element={<SearchMv />} />
+                </>
+              )}
+            </Route>
           );
         })}
       </Routes>

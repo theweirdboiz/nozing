@@ -23,7 +23,7 @@ const Search = (props) => {
     if (e.keyCode === 13) {
       dispatch(fetchSearchData(inputRef.current.value));
       navigator({
-        pathname: RoutesConfig.find((route) => route.id === "search")?.path,
+        pathname: "tat-ca",
         search: createSearchParams({
           p: inputRef.current.value,
         }).toString(),

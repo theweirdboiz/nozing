@@ -2,7 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 
-const Album = ({ data }) => {
+const Album = ({
+  encodeId,
+  sectionId,
+  thumbnail,
+  title,
+  artists,
+  sortDescription,
+  link,
+}) => {
   const navigator = useNavigate();
 
   const trimLink = (link) => {
@@ -15,15 +23,12 @@ const Album = ({ data }) => {
   };
 
   return (
-    <div className="" key={data?.encodeId}>
-      <Link
-        to={trimLink(data?.link)}
-        className="relative cursor-pointer group/item"
-      >
+    <div className="" key={encodeId}>
+      <Link to={trimLink(link)} className="relative cursor-pointer group/item">
         <figure className="rounded-xl overflow-hidden">
           <img
             className="w-full group-hover/item:scale-110 duration-500 ease-out"
-            src={data?.thumbnail}
+            src={thumbnail}
             alt=""
           />
         </figure>
@@ -46,7 +51,7 @@ const Album = ({ data }) => {
           </svg>
           {/* play */}
           <div
-            onClick={(e) => handlePlayChanel(e, data?.link)}
+            onClick={(e) => handlePlayChanel(e, link)}
             className="border rounded-full  flex items-center justify-center p-2"
           >
             <svg
@@ -82,12 +87,12 @@ const Album = ({ data }) => {
       </Link>
       <div className="mt-[1.2rem]">
         <h3 className="font-semibold hover:text-link-text-hover cursor-pointer line-clamp-1">
-          {data?.title}
+          {title}
         </h3>
         <p className=" text-secondary text-[1.4rem] font-medium line-clamp-1">
-          {data?.sectionId === "h100" ? (
+          {sectionId === "h100" || sectionId === "search" ? (
             <>
-              {item?.artists?.map((artist) => {
+              {artists?.map((artist) => {
                 return (
                   <Link
                     key={artist?.id}
@@ -101,7 +106,7 @@ const Album = ({ data }) => {
               })}
             </>
           ) : (
-            data?.sortDescription
+            sortDescription
           )}
         </p>
       </div>

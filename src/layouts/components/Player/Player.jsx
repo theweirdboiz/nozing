@@ -59,6 +59,16 @@ const Player = () => {
 
   useEffect(() => {
     dispatch(songsSlice.actions.setIsLoaded(false));
+    if (currentSongInfor?.encodeId) {
+      dispatch(
+        songsSlice.actions.setRecentSongs({
+          songId: currentSongInfor?.encodeId,
+          title: currentSongInfor?.title,
+          thumbnail: currentSongInfor?.thumbnail,
+          artists: currentSongInfor?.artists,
+        })
+      );
+    }
     dispatch(fetchDetailSong(currentSongId));
   }, [currentSongId]);
 
@@ -189,7 +199,6 @@ const Player = () => {
       dispatch(songsSlice.actions.isPlaying(true));
       audio.current.play();
     } else {
-      console.log(audio.current.currentTime, currentTime);
       handleNextSong();
     }
   };

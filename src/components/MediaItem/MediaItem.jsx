@@ -26,14 +26,14 @@ const MediaItem = (props) => {
     dispatch(songsSlice.actions.isPlaying(true));
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.setIndex(index));
-    dispatch(
-      songsSlice.actions.setRecentSongs({
-        songId: currentSongInfor?.encodeId,
-        title: currentSongInfor?.title,
-        thumbnail: currentSongInfor?.thumbnail,
-        artists: currentSongInfor?.artists,
-      })
-    );
+    // dispatch(
+    //   songsSlice.actions.setRecentSongs({
+    //     songId: currentSongInfor?.encodeId,
+    //     title: currentSongInfor?.title,
+    //     thumbnail: currentSongInfor?.thumbnail,
+    //     artists: currentSongInfor?.artists,
+    //   })
+    // );
   };
   const formatDuration = (t) => {
     const time = Number.parseInt(t);

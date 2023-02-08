@@ -7,13 +7,8 @@ import ZingChart from "@pages/ZingChart";
 import Radio from "@pages/Radio";
 import Follow from "@pages/Follow";
 import Playlist from "@pages/Playlist";
-import {
-  SearchAll,
-  SearchSong,
-  SearchPlaylist,
-  SearchArtist,
-  SearchMv,
-} from "@pages/Search";
+import Artist from "@pages/Artist";
+import { Search } from "@pages/Search";
 
 const routes = [
   { id: "personal", path: "/ca-nhan", component: Personal },
@@ -42,28 +37,13 @@ const routes = [
   },
   {
     id: "search",
-    path: "/tim-kiem/tat-ca",
-    component: SearchAll,
+    path: "/tim-kiem",
+    component: Search,
   },
   {
-    id: "search-song",
-    path: "/tim-kiem/bai-hat",
-    component: SearchSong,
-  },
-  {
-    id: "search-playlist",
-    path: "/tim-kiem/playlist",
-    component: SearchPlaylist,
-  },
-  {
-    id: "search-artist",
-    path: "/tim-kiem/artist",
-    component: SearchArtist,
-  },
-  {
-    id: "search-mv",
-    path: "/tim-kiem/video",
-    component: SearchMv,
+    id: "artist",
+    path: "/:artist",
+    component: Artist,
   },
 ];
 
