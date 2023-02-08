@@ -16,8 +16,9 @@ const Explore = (props) => {
   const { autoTheme1, autoTheme2, top100, album, artistTheme, weekChart } =
     useSelector(homeDataSelector);
 
-  console.log(autoTheme1);
-
+  const trimLink = (link) => {
+    return link.slice(0, link.indexOf("."));
+  };
   useEffect(() => {
     // dispatch thunk action
     dispatch(fetchHomeData());
@@ -36,7 +37,7 @@ const Explore = (props) => {
       <ChartSection />
       {/* week chart */}
       <div className="grid grid-cols-3 gap-x-12 mt-[2.8rem]">
-        {/* {weekChart?.map((item) => {
+        {weekChart?.map((item) => {
           return (
             <Link
               key={item?.banner}
@@ -46,7 +47,7 @@ const Explore = (props) => {
               <img src={item?.cover} alt="" />
             </Link>
           );
-        })} */}
+        })}
       </div>
       <Chanel data={top100}></Chanel>
       <Chanel data={album}></Chanel>

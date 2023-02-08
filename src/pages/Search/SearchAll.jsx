@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 import { searchDataSelector } from "@redux/selectors";
 
-import { Navbar } from "./components";
 import MediaItem from "@components/MediaItem";
 import Album from "@pages/Explore/components/album";
 import ArtistCard from "@components/artistCard";

@@ -18,6 +18,7 @@ export default createSlice({
     isLoaded: false,
     isQueue: true,
     searchData: null,
+    searchKeyword: null,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -38,6 +39,9 @@ export default createSlice({
       ) {
         state.recentSongs = [action.payload, ...state.recentSongs];
       }
+    },
+    setSearchKeyword: (state, action) => {
+      state.searchKeyword = action.payload;
     },
     isPlaying: (state, action) => {
       state.isPlaying = action.payload;

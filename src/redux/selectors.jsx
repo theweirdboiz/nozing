@@ -11,6 +11,7 @@ export const currentPlaylistIdSelector = (state) =>
 export const detailPlaylistSelector = (state) => state.songs.detailPlaylist;
 
 export const searchDataSelector = (state) => state.songs.searchData;
+export const searchKeywordSelector = (state) => state.songs.searchKeyword;
 
 export const isPlayingSelector = (state) => state.songs.isPlaying;
 export const isVipSelector = async (state) => await state.songs.isVip;
