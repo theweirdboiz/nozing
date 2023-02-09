@@ -32,7 +32,6 @@ const Playlist = (props) => {
     dispatch(songsSlice.actions.setCurrentPlaylistId(playlistId));
     dispatch(getDetailPlaylist(playlistId));
     setIsLoaded(false);
-    dispatch(songsSlice.actions.setCurrentQueue(detailPlaylist));
   }, [playlistId]);
 
   useEffect(() => {
@@ -57,10 +56,10 @@ const Playlist = (props) => {
             <div className="fixed top-[11rem] w-[30rem] h-full">
               <div className="relative cursor-pointer group/item rounded-xl overflow-hidden">
                 <figure
-                  className={`rounded-xl overflow-hidden ${
+                  className={`overflow-hidden ${
                     isPlaying
                       ? "rounded-full animate-rotate-center ease-in duration-1000"
-                      : "animate-spin-off ease-out duration-500 delay-500"
+                      : "rounded-xl animate-spin-off ease-out duration-500 delay-500"
                   }`}
                 >
                   <img

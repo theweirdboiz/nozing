@@ -9,7 +9,6 @@ import {
   isPlayingSelector,
   isQueueSelector,
   recentSongsSelector,
-  currentQueueSelector,
 } from "@redux/selectors";
 
 import SongItem from "@pages/Explore/components/songItem";
@@ -29,14 +28,10 @@ const Queue = () => {
 
   const detailPlaylist = useSelector(detailPlaylistSelector);
 
-  const location = useLocation();
-
   const currentPlaylistId = useSelector(currentPlaylistIdSelector);
 
   const isPlaying = useSelector(isPlayingSelector);
   const isQueue = useSelector(isQueueSelector);
-
-  const currentQueue = useSelector(currentQueueSelector);
 
   // first time
   useEffect(() => {
@@ -51,8 +46,6 @@ const Queue = () => {
   useEffect(() => {
     isPlaying && setTabActive(0);
   }, [isPlaying]);
-
-  console.log(queue);
 
   return (
     <aside

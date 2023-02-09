@@ -17,7 +17,6 @@ export default createSlice({
     isRandom: false,
     isLoaded: false,
     isQueue: true,
-    currentQueue: null,
     searchData: null,
     searchKeyword: null,
     searchSongsData: null,
@@ -68,9 +67,6 @@ export default createSlice({
     },
     setIsQueue: (state, action) => {
       state.isQueue = action.payload;
-    },
-    setCurrentQueue: (state, action) => {
-      state.currentQueue = action.payload;
     },
   },
   // listen thunk actions
