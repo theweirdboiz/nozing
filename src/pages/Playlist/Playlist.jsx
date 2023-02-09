@@ -32,6 +32,7 @@ const Playlist = (props) => {
     dispatch(songsSlice.actions.setCurrentPlaylistId(playlistId));
     dispatch(getDetailPlaylist(playlistId));
     setIsLoaded(false);
+    dispatch(songsSlice.actions.setCurrentQueue(detailPlaylist));
   }, [playlistId]);
 
   useEffect(() => {
