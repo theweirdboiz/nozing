@@ -4,17 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
 import { currentSongInforSelector } from "@redux/selectors";
 import { Link } from "react-router-dom";
-// songId,
-// thumbnail,
-// artists,
-// title,
-// albumTitle,
-// duration,
-// index,
-const MediaItem = (props) => {
-  const { songId, thumbnail, artists, title, albumTitle, duration, index } =
-    props;
-  // define
+const MediaItem = ({
+  songId,
+  thumbnail,
+  artists,
+  title,
+  albumTitle,
+  duration,
+  index,
+}) => {
   const dispatch = useDispatch();
 
   const currentSongInfor = useSelector(currentSongInforSelector);

@@ -53,3 +53,17 @@ export const getSearchData = (keyword) =>
       reject(err);
     }
   });
+
+export const getSearchArtistSongs = (id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        url: "/artistsong",
+        method: "get",
+        params: { id: id, page: 1, count: 100 },
+      });
+      resolve(res);
+    } catch (err) {
+      reject(err);
+    }
+  });

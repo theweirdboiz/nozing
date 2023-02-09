@@ -37,11 +37,12 @@ const Queue = () => {
 
   // first time
   useEffect(() => {
-    console.log(location);
     currentPlaylistId && setQueue(detailPlaylist);
-  }, []);
+  }, [queue]);
 
+  // bug
   useEffect(() => {
+    console.log(currentPlaylistId, isPlaying);
     isPlaying && setQueue(detailPlaylist);
   }, [currentPlaylistId, isPlaying]);
 

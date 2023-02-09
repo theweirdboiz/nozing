@@ -18,7 +18,7 @@ const Navbar = (props) => {
             {SearchMenuNavbar.map((item) => {
               return (
                 <li
-                  key={item?.encodeId}
+                  key={item?.id}
                   className="mx-[2rem] relative text-white hover:text-white"
                 >
                   <NavLink

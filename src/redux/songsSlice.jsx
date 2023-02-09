@@ -19,6 +19,7 @@ export default createSlice({
     isQueue: true,
     searchData: null,
     searchKeyword: null,
+    searchSongsData: null,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -94,6 +95,9 @@ export default createSlice({
       })
       .addCase(fetchSearchData.fulfilled, (state, action) => {
         state.searchData = action.payload;
+      })
+      .addCase(fetchSearchArtistSongs.fulfilled, (state, action) => {
+        state.searchSongsData = action.payload;
       });
   },
 });
@@ -135,6 +139,13 @@ export const fetchSearchData = createAsyncThunk(
   "songs/fetchSearchData",
   async (keyword) => {
     const response = await APIs.getSearchData(keyword);
+    return response?.data?.data;
+  }
+);
+export const fetchSearchArtistSongs = createAsyncThunk(
+  "songs/fetchSearchArtistSongs",
+  async (id) => {
+    const response = await APIs.getSearchArtistSongs(id);
     return response?.data?.data;
   }
 );
