@@ -27,3 +27,5 @@ export const isRandomSelector = (state) => state.songs.isRandom;
 export const isLoadedSelector = (state) => state.songs.isLoaded;
 
 export const isQueueSelector = (state) => state.songs.isQueue;
+
+export const currentArtistSelector = (state) => state.songs.currentArtist;

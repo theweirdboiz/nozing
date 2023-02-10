@@ -14,7 +14,7 @@ const SearchAll = (props) => {
   const isArtist = searchData?.top?.objectType === "artist";
 
   return (
-    <div>
+    <div className="pb-10">
       <section className="mt-[2rem]">
         <h3 className="mb-[2rem] font-bold capitalize text-[2rem] flex justify-between">
           <span>Bài hát</span>

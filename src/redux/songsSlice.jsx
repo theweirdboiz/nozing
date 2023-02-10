@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as APIs from "@APIs";
+import { getArtist } from "../APIs/songs";
 
 export default createSlice({
   name: "songs",
@@ -20,6 +21,7 @@ export default createSlice({
     searchData: null,
     searchKeyword: null,
     searchSongsData: null,
+    currentArtist: null,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -98,6 +100,9 @@ export default createSlice({
       })
       .addCase(fetchSearchArtistSongs.fulfilled, (state, action) => {
         state.searchSongsData = action.payload;
+      })
+      .addCase(fetchArtist.fulfilled, (state, action) => {
+        state.currentArtist = action.payload;
       });
   },
 });
@@ -146,6 +151,13 @@ export const fetchSearchArtistSongs = createAsyncThunk(
   "songs/fetchSearchArtistSongs",
   async (id) => {
     const response = await APIs.getSearchArtistSongs(id);
+    return response?.data?.data;
+  }
+);
+export const fetchArtist = createAsyncThunk(
+  "songs/fetchArtist",
+  async (name) => {
+    const response = await APIs.getArtist(name);
     return response?.data?.data;
   }
 );

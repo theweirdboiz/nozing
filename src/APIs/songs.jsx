@@ -60,7 +60,20 @@ export const getSearchArtistSongs = (id) =>
       const res = await axios({
         url: "/artistsong",
         method: "get",
-        params: { id: id, page: 1, count: 100 },
+        params: { id: id, page: 1, count: 20 },
+      });
+      resolve(res);
+    } catch (err) {
+      reject(err);
+    }
+  });
+export const getArtist = (name) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        url: "/artist",
+        method: "get",
+        params: { name },
       });
       resolve(res);
     } catch (err) {

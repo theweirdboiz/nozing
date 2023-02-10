@@ -12,19 +12,14 @@ const SearchSong = (props) => {
 
   const searchData = useSelector(searchDataSelector);
 
-  const searchSongsData = useSelector(searchSongsDataSelector);
-
-  useEffect(() => {
-    dispatch(fetchSearchArtistSongs(searchData?.top?.id));
-  }, []);
-
   return (
-    <div>
+    <div className="pb-10">
       <h3>Bài hát</h3>
       <div className="">
-        {searchSongsData?.items.map((item, index) => {
+        {searchData?.songs?.map((item, index) => {
           return (
             <MediaItem
+              key={item?.encodeId}
               songId={item.encodeId}
               thumbnail={item.thumbnail}
               artists={item.artists}

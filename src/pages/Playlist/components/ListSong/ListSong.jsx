@@ -36,6 +36,7 @@ const ListSong = () => {
               albumTitle={song?.album?.title}
               duration={song?.duration}
               index={index}
+              inPlaylist
             />
           );
         })}
