@@ -14,7 +14,7 @@ const DefaultLayout = ({ children }) => {
         <div className="relative flex-col w-full h-full">
           <Header />
           <div className="relative inset-0 overflow-hidden w-full h-full">
-            <div className="absolute inset-0 px-[6rem] flex-grow sidebar-scrollbar h-full scrollbar-thin scrollbar-thumb-secondary scrollbar-thumb-rounded-lg">
+            <div className="absolute inset-0 flex-grow sidebar-scrollbar h-full scrollbar-thin scrollbar-thumb-secondary scrollbar-thumb-rounded-lg">
               <div className="mt-[7rem] pt-[2rem] h-full">{children}</div>
             </div>
           </div>

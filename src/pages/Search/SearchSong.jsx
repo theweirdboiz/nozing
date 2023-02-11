@@ -14,7 +14,7 @@ const SearchSong = (props) => {
 
   return (
     <div className="pb-10">
-      <h3>Bài hát</h3>
+      <h3 className="font-bold text-[2.4rem]">Bài hát</h3>
       <div className="">
         {searchData?.songs?.map((item, index) => {
           return (

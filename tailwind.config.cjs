@@ -6,6 +6,7 @@ module.exports = {
     colors: {
       "sidebar-bg": "hsla(0,0%,100%,0.05)",
       "alpha-bg": "hsla(0,0%,100%,0.1)",
+      "artist-bg": "rgba(41,21,71,0.8)",
       "layout-bg": "#170f23",
       "purple-primary": "#9b4de0",
       "border-primary": "hsla(0,0%,100%,0.1);",

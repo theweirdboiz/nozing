@@ -10,10 +10,10 @@ import { Navbar } from "./components";
 
 const Search = (props) => {
   return (
-    <>
+    <div className="px-[6rem]">
       <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 };
 
