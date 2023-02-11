@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice, { fetchSearchData } from "@redux/songsSlice";
 import { searchKeywordSelector } from "@redux/selectors";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 const Search = (props) => {
   const inputRef = useRef();
@@ -19,6 +19,8 @@ const Search = (props) => {
 
   // show close btn
   const [isShow, setIsShow] = useState(0);
+
+  const location = useLocation();
 
   const handleKeywordChange = () => {
     setIsShow(1);

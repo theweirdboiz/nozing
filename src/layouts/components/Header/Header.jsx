@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Search from "@components/Search";
 
 const Header = () => {
+  const navigator = useNavigate();
+
   return (
     <header className="absolute min-w-[66rem] top-0 left-0 right-0 px-[6rem] py-6 flex items-center justify-between bg-layout-bg z-50">
       <div className="flex items-center justify-between gap-x-8">
-        <button>
+        <button onClick={() => navigator(-1)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -24,7 +26,7 @@ const Header = () => {
             />
           </svg>
         </button>
-        <button>
+        <button onClick={() => navigator(1)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

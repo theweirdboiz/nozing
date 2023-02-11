@@ -26,7 +26,7 @@ const NewRelease = (props) => {
     setTabPanel(result);
   }, [tabActiveIndex, newRelease]);
   return (
-    <div className="mt-[4.8rem]">
+    <div className="mt-[4.8rem]  px-[6rem]">
       <h3 className="mb-[2rem] text-[2rem] font-bold">{newRelease?.title}</h3>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-x-4 uppercase text-[1.2rem] font-medium mb-[1.6rem]">

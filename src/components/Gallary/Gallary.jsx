@@ -81,7 +81,7 @@ const Gallary = () => {
     }
   };
   return (
-    <div className="gallary">
+    <div className="gallary px-[6rem]">
       <div className="gallary__container h-[22rem]">
         <div className="gallary__prev" onClick={handleClickPrevBtn}>
           <button className="btn">

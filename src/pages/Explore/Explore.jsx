@@ -36,7 +36,7 @@ const Explore = (props) => {
       {/* chart */}
       <ChartSection />
       {/* week chart */}
-      <div className="grid grid-cols-3 gap-x-12 mt-[2.8rem]">
+      <div className="grid grid-cols-3 gap-x-12 mt-[2.8rem] px-[6rem]">
         {weekChart?.map((item) => {
           return (
             <Link
