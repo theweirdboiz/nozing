@@ -26,6 +26,7 @@ module.exports = {
       opacity: "rgba(0,0,0,0.5)",
       transparent: "transparent",
       "chart-box-alpha": "hsla(0,0%,100%,0.05)",
+      "chart-bg-alpha": "rgba(32,19,53,0.9)",
     },
     backgroundImage: {
       "gradient-vip": "linear-gradient(117deg,#5a4be7,#c86dd7 102%);",
@@ -34,6 +35,8 @@ module.exports = {
         "url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.27/static/media/bg-chart.fd766403.jpg')",
       alpha: "linear-gradient(180deg, hsla(0,0%,100%,0) 37%, #170f23)",
       alpha1: "linear-gradient(180deg, #170f23,#170f23)",
+      "chart-section":
+        "url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.34/static/media/week-chart-bg.edf332e5.jpg')",
     },
     keyframes: {
       "rotate-center": {

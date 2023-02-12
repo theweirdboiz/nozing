@@ -141,110 +141,112 @@ const ZingChart = (props) => {
   };
   const link = RoutesConfig.find((route) => route.id === "zing-chart").id;
   return (
-    <div className="pt-[11rem] mx-[6rem] relative overflow-hidden">
-      <div className="absolute inset-0 w-full h-[50rem] bg-chart bg-top bg-cover bg-no-repeat grayscale"></div>
-      <div className="absolute inset-0 w-full h-[50rem] bg-alpha bg-top bg-cover bg-no-repeat"></div>
-      <div className="absolute inset-0 w-full h-[50rem] bg-alpha1 bg-top bg-cover bg-no-repeat opacity-90"></div>
-      {/* <div className="absolute inset-0 z-0 opacity-95 bg-chart-linear"></div> */}
-      <Link to={link}>
-        <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative px-10">
-          <span className=" hover:text-link-text-hover cursor-pointer">
-            #Zingchart
-          </span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-14 h-14"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
-            />
-          </svg>
-        </h2>
-      </Link>
-      <div className="flex-1 h-[30rem] py-3 relative z-20">
-        {dataChart && (
-          <Line ref={chartRef} data={dataChart} options={options} />
-        )}
-        <div
-          className={`absolute rounded-lg pointer-events-${tooltip.pointerEvents}`}
-          style={{
-            top: tooltip.top,
-            left: tooltip.left,
-            opacity: tooltip.opacity,
-          }}
-        >
-          <SongItem
-            songId={hoverItemId}
-            title={
-              chartHomeData?.RTChart?.items?.find(
-                (item) => item?.encodeId === hoverItemId
-              )?.title
-            }
-            thumbnail={
-              chartHomeData?.RTChart?.items?.find(
-                (item) => item?.encodeId === hoverItemId
-              )?.thumbnail
-            }
-            artists={
-              chartHomeData?.RTChart?.items?.find(
-                (item) => item?.encodeId === hoverItemId
-              )?.artists
-            }
-            percent={handlePercent(
-              chartHomeData?.RTChart?.items?.find(
-                (item) => item?.encodeId === hoverItemId
-              )?.score / chartHomeData?.RTChart?.chart?.totalScore
-            )}
-            bgColor={tooltip.bgColor}
-          />
-        </div>
-      </div>
-      {/* <div className="mt-6">
-        {listSong?.map((item, index) => {
-          return (
-            <div key={item?.encodeId} className="flex items-center pl-5">
-              <span
-                className={`w-[5%] text-stroke-${
-                  index + 1
-                } font-bold text-alpha-bg text-[3.5rem] text-center`}
-              >
-                {index + 1}
-              </span>
-              <div className="w-5 h-1 bg-secondary mx-5"></div>
-              <MediaItem
-                songId={item?.encodeId}
-                thumbnail={item?.thumbnail}
-                artists={item?.artists}
-                title={item?.title}
-                albumTitle={item?.album?.title}
-                duration={item?.duration}
-                index={index}
+    <div className="pt-[10rem] relative overflow-hidden">
+      <div className="mx-[6rem]">
+        <div className="absolute inset-0 w-full h-[50rem] bg-chart bg-top bg-cover bg-no-repeat grayscale"></div>
+        <div className="absolute inset-0 w-full h-[50rem] bg-alpha bg-top bg-cover bg-no-repeat"></div>
+        <div className="absolute inset-0 w-full h-[50rem] bg-alpha1 bg-top bg-cover bg-no-repeat opacity-90"></div>
+        {/* <div className="absolute inset-0 z-0 opacity-95 bg-chart-linear"></div> */}
+        <Link to={link}>
+          <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative px-10">
+            <span className=" hover:text-link-text-hover cursor-pointer">
+              #Zingchart
+            </span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-14 h-14"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
-            </div>
-          );
-        })}
-      </div> */}
-      <RankSongs
-        isRank
-        listSong={
-          isMore
-            ? chartHomeData?.RTChart?.items
-            : chartHomeData?.RTChart?.items?.slice(0, 10)
-        }
-        inPlaylist
-      />
-      <div className="text-center  my-6 ">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+              />
+            </svg>
+          </h2>
+        </Link>
+        <div className="flex-1 h-[30rem] py-3 relative z-20">
+          {dataChart && (
+            <Line ref={chartRef} data={dataChart} options={options} />
+          )}
+          <div
+            className={`absolute rounded-lg pointer-events-${tooltip.pointerEvents}`}
+            style={{
+              top: tooltip.top,
+              left: tooltip.left,
+              opacity: tooltip.opacity,
+            }}
+          >
+            <SongItem
+              songId={hoverItemId}
+              title={
+                chartHomeData?.RTChart?.items?.find(
+                  (item) => item?.encodeId === hoverItemId
+                )?.title
+              }
+              thumbnail={
+                chartHomeData?.RTChart?.items?.find(
+                  (item) => item?.encodeId === hoverItemId
+                )?.thumbnail
+              }
+              artists={
+                chartHomeData?.RTChart?.items?.find(
+                  (item) => item?.encodeId === hoverItemId
+                )?.artists
+              }
+              percent={handlePercent(
+                chartHomeData?.RTChart?.items?.find(
+                  (item) => item?.encodeId === hoverItemId
+                )?.score / chartHomeData?.RTChart?.chart?.totalScore
+              )}
+              bgColor={tooltip.bgColor}
+            />
+          </div>
+        </div>
+        {/* <div className="mt-6">
+          {listSong?.map((item, index) => {
+            return (
+              <div key={item?.encodeId} className="flex items-center pl-5">
+                <span
+                  className={`w-[5%] text-stroke-${
+                    index + 1
+                  } font-bold text-alpha-bg text-[3.5rem] text-center`}
+                >
+                  {index + 1}
+                </span>
+                <div className="w-5 h-1 bg-secondary mx-5"></div>
+                <MediaItem
+                  songId={item?.encodeId}
+                  thumbnail={item?.thumbnail}
+                  artists={item?.artists}
+                  title={item?.title}
+                  albumTitle={item?.album?.title}
+                  duration={item?.duration}
+                  index={index}
+                />
+              </div>
+            );
+          })}
+        </div> */}
+        <RankSongs
+          isRank
+          listSong={
+            isMore
+              ? chartHomeData?.RTChart?.items
+              : chartHomeData?.RTChart?.items?.slice(0, 10)
+          }
+          inPlaylist
+        />
+      </div>
+      <div className="text-center  my-6">
         <div
           className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
           onClick={handleSeeMore}
@@ -253,58 +255,62 @@ const ZingChart = (props) => {
         </div>
       </div>
       {/*  */}
-      <section className="mb-5">
-        <h3 className="font-bold text-[4rem] uppercase mb-3">
-          Bảng xếp hạng tuần
-        </h3>
-        <div className="grid grid-cols-3 gap-x-10">
-          {/* vn */}
-          <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
-            <div className="">
-              <RankSongs
-                listSong={chartHomeData?.weekChart?.vn?.items?.slice(0, 5)}
-                isRank
-              />
-            </div>
-            <div className="text-center mt-8">
-              <div
-                className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
-                onClick={handleSeeMore}
-              >
-                Xem tất cả
+      <section className="mt-10 mb-4 relative">
+        <div className="absolute inset-0 bg-chart-section bg-top bg-cover bg-no-repeat grayscale"></div>
+        <div className="absolute inset-0 bg-chart-bg-alpha"></div>
+        <div className="relative z-10 p-[6rem]">
+          <h3 className="font-bold text-[3.2rem] uppercase mb-3">
+            Bảng xếp hạng tuần
+          </h3>
+          <div className="grid grid-cols-3 gap-x-10">
+            {/* vn */}
+            <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
+              <div className="">
+                <RankSongs
+                  listSong={chartHomeData?.weekChart?.vn?.items?.slice(0, 5)}
+                  isRank
+                />
+              </div>
+              <div className="text-center mt-8">
+                <div
+                  className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
+                  onClick={handleSeeMore}
+                >
+                  Xem tất cả
+                </div>
               </div>
             </div>
-          </div>
-          <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
-            <div className="">
-              <RankSongs
-                listSong={chartHomeData?.weekChart?.us?.items?.slice(0, 5)}
-                isRank
-              />
-            </div>
-            <div className="text-center mt-8">
-              <div
-                className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
-                onClick={handleSeeMore}
-              >
-                Xem tất cả
+            <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
+              <div className="">
+                <RankSongs
+                  listSong={chartHomeData?.weekChart?.us?.items?.slice(0, 5)}
+                  isRank
+                />
+              </div>
+              <div className="text-center mt-8">
+                <div
+                  className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
+                  onClick={handleSeeMore}
+                >
+                  Xem tất cả
+                </div>
               </div>
             </div>
-          </div>
-          {/* usuk */}
-          <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
-            <div className="">
-              <RankSongs
-                listSong={chartHomeData?.weekChart?.korea?.items?.slice(0, 5)}
-                isRank
-              />
-            </div>
-            <div className="text-center mt-8">
-              <div
-                className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
-                onClick={handleSeeMore}
-              >
-                Xem tất cả
+            {/* usuk */}
+            <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
+              <div className="">
+                <RankSongs
+                  listSong={chartHomeData?.weekChart?.korea?.items?.slice(0, 5)}
+                  isRank
+                />
+              </div>
+              <div className="text-center mt-8">
+                <div
+                  className="inline-block px-6 py-2 rounded-full border border-border-primary bg-transparent font-semibold hover:bg-alpha-bg cursor-pointer"
+                  onClick={handleSeeMore}
+                >
+                  Xem tất cả
+                </div>
               </div>
             </div>
           </div>
