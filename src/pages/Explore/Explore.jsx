@@ -27,7 +27,7 @@ const Explore = (props) => {
   // ref banner from store
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <Gallary />
       <NewRelease />
       <Chanel data={autoTheme1}></Chanel>

@@ -124,11 +124,11 @@ const ChartSection = (props) => {
     return Math.round(score * 100).toFixed(0);
   };
   return (
-    <div className="mt-[4.8rem] py-[2rem] mx-[6rem] overflow-hidden rounded-lg relative">
+    <div className="mt-[4.8rem] mx-[6rem] p-[2rem] overflow-hidden rounded-lg relative">
       <div className="absolute inset-0 w-full h-full bg-chart bg-top bg-cover bg-no-repeat"></div>
       <div className="absolute inset-0 z-0 opacity-95 bg-chart-linear"></div>
       <Link to={link}>
-        <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative px-10">
+        <h2 className="mb-[2rem] text-[2.8rem] flex items-center lowercase font-extrabold gap-x-1 relative">
           <span className=" hover:text-link-text-hover cursor-pointer">
             #Zingchart
           </span>
@@ -153,7 +153,7 @@ const ChartSection = (props) => {
           </svg>
         </h2>
       </Link>
-      <div className="flex items-center gap-x-6 relative px-10">
+      <div className="flex items-center gap-x-6 relative">
         <div className="w-2/5 flex-shrink-0">
           <div className="grid grid-cols-1 gap-y-4">
             {rank?.slice(0, 3).map((item, index) => {
@@ -177,7 +177,7 @@ const ChartSection = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex-1 h-[30rem] py-3 relative max-w-[50rem]">
+        <div className="flex-1 h-[30rem] py-3 relative">
           {dataChart && (
             <Line ref={chartRef} data={dataChart} options={options} />
           )}

@@ -25,12 +25,15 @@ module.exports = {
       "tab-active-bg": "hsla(0,0%,100%,0.3);",
       opacity: "rgba(0,0,0,0.5)",
       transparent: "transparent",
+      "chart-box-alpha": "hsla(0,0%,100%,0.05)",
     },
     backgroundImage: {
       "gradient-vip": "linear-gradient(117deg,#5a4be7,#c86dd7 102%);",
       "chart-linear": "linear-gradient(180deg,#740091,#2d1a4c)",
       chart:
         "url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.27/static/media/bg-chart.fd766403.jpg')",
+      alpha: "linear-gradient(180deg, hsla(0,0%,100%,0) 37%, #170f23)",
+      alpha1: "linear-gradient(180deg, #170f23,#170f23)",
     },
     keyframes: {
       "rotate-center": {

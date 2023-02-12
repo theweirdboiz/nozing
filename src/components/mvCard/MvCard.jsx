@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MvCard = ({
   encodeId,
@@ -14,6 +14,7 @@ const MvCard = ({
   const prefixTime = (time) => {
     return time > 9 ? time : `0${time}`;
   };
+  const navigator = useNavigate();
   const formatDuration = (t) => {
     const time = Number.parseInt(t);
     const hour = Math.floor(time / 3600);

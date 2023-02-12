@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { searchKeywordSelector } from "@redux/selectors";
 const Navbar = (props) => {
   const searchKeyword = useSelector(searchKeywordSelector);
-
   return (
     <>
       <nav className="mb-[2.8rem]">

@@ -20,8 +20,6 @@ const Search = (props) => {
   // show close btn
   const [isShow, setIsShow] = useState(0);
 
-  const location = useLocation();
-
   const handleKeywordChange = () => {
     setIsShow(1);
   };
@@ -46,7 +44,17 @@ const Search = (props) => {
   return (
     <div className="w-[42rem] relative">
       <div className="flex items-center gap-x-2 bg-alpha-bg h-[4rem] rounded-[9.9rem] relative">
-        <button onClick={handleSubmit} className="absolute left-3">
+        <button
+          onClick={() => {
+            navigator({
+              pathname: "tat-ca",
+              search: createSearchParams({
+                p: inputRef.current.value,
+              }).toString(),
+            });
+          }}
+          className="absolute left-3"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import Personal from "@pages/Personal";
 import Explore from "@pages/Explore";
-import ZingChart from "@pages/ZingChart";
 import Radio from "@pages/Radio";
+import ZingChart from "@pages/ZingChart";
 import Follow from "@pages/Follow";
 import Playlist from "@pages/Playlist";
 import Artist from "@pages/Artist";

@@ -13,6 +13,7 @@ const MediaItem = ({
   duration,
   index,
   inPlaylist,
+  isRank,
 }) => {
   const dispatch = useDispatch();
 
@@ -40,14 +41,25 @@ const MediaItem = ({
   // handle events
 
   return (
-    <div className="relative group/item">
+    <div className="relative group/item flex-1 flex-shrink-0">
       <div className="flex items-center p-[1rem] text-[1.2rem] text-secondary border-b border-border-primary rounded-lg hover:bg-hover-circle">
         <div
           className={`flex ${
-            albumTitle && "w-[50%]"
-          } flex-shrink-0 items-center gap-x-3`}
+            albumTitle && inPlaylist ? "w-[50%]" : "w-[70%]"
+          } flex-shrink-0 items-center gap-x-3 overflow-hidden`}
         >
-          {inPlaylist && (
+          {isRank ? (
+            <>
+              <span
+                className={`w-[8%] flex-shrink-0 text-stroke-${
+                  index + 1
+                } font-bold text-alpha-bg text-[3.5rem] text-center`}
+              >
+                {index + 1}
+              </span>
+              <div className="w-5 h-1 bg-secondary mx-5 flex-shrink-0"></div>
+            </>
+          ) : inPlaylist ? (
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +82,8 @@ const MediaItem = ({
                 className="absolute inset-0 cursor-pointer hidden group-hover/item:block"
               />
             </div>
+          ) : (
+            <></>
           )}
           <div className="flex items-center gap-x-4">
             <div
@@ -101,26 +115,30 @@ const MediaItem = ({
               <h5 className="text-[1.4rem] text-white font-semibold line-clamp-1">
                 {title}
               </h5>
-              {artists?.map((artist, index) => {
-                return (
-                  <Link
-                    className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
-                    key={index}
-                  >
-                    {artist?.name}
-                  </Link>
-                );
-              })}
+              <p className="line-clamp-1">
+                {artists?.map((artist, index) => {
+                  return (
+                    <Link
+                      className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
+                      key={index}
+                    >
+                      {artist?.name}
+                    </Link>
+                  );
+                })}
+              </p>
             </div>
           </div>
         </div>
-        {albumTitle && (
+        {albumTitle && inPlaylist && (
           <span className="w-[40%] font-medium cursor-pointer hover:underline hover:text-link-text-hover line-clamp-1">
             {albumTitle}
           </span>
         )}
-        <div className="ml-auto text-right mr-3 relative">
-          <div className="absolute right-0 top-[50%] -translate-y-[50%] hidden text-white group-hover/item:flex">
+        <div
+          className={!albumTitle && !inPlaylist ? "w-[30%]" : "flex-1 text-end"}
+        >
+          <div className="hidden text-white group-hover/item:flex justify-end">
             <button className="circle__large">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -137,22 +155,24 @@ const MediaItem = ({
                 />
               </svg>
             </button>
-            <button className="circle__large">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                />
-              </svg>
-            </button>
+            {inPlaylist && (
+              <button className="circle__large">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-8 h-8"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
+              </button>
+            )}
             <button className="circle__large">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,6 +194,8 @@ const MediaItem = ({
             {formatDuration(duration)}
           </span>
         </div>
+        {/* <div className="w-[20%] ml-auto text-right mr-3 relative flex-shrink-0">
+        </div> */}
       </div>
     </div>
   );

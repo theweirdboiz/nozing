@@ -1,19 +1,12 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  detailPlaylistSelector,
-  currentSongInforSelector,
-} from "@redux/selectors";
+import { useSelector } from "react-redux";
+import { detailPlaylistSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
 
 const ListSong = () => {
-  const dispatch = useDispatch();
-
   const detailPlaylist = useSelector(detailPlaylistSelector);
-
-  const currentSongInfor = useSelector(currentSongInforSelector);
 
   const formatTime = (totalDuration) => {
     const hour = Math.floor(totalDuration / 3600);
@@ -21,7 +14,6 @@ const ListSong = () => {
     return `${hour} giờ ${minute} phút`;
   };
   // handle events
-
   return (
     <>
       <ul>

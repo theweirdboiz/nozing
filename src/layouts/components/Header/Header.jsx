@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 
 import Search from "@components/Search";
+import { useSelector } from "react-redux";
+
+import { isBgSelector } from "@redux/selectors";
 
 const Header = () => {
   const navigator = useNavigate();
 
+  const isBg = useSelector(isBgSelector);
+
   return (
-    <header className="absolute min-w-[66rem] top-0 left-0 right-0 px-[6rem] py-6 flex items-center justify-between bg-layout-bg z-50">
+    <header
+      className={`absolute min-w-[66rem] top-0 left-0 right-0 px-[6rem] py-6 flex items-center justify-between ${
+        isBg ? "bg-layout-bg" : "bg-transparent"
+      } z-50`}
+    >
       <div className="flex items-center justify-between gap-x-8">
         <button onClick={() => navigator(-1)}>
           <svg

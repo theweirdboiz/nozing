@@ -79,16 +79,18 @@ const SongItem = ({
           </figure>
           <div className="text-[1.2rem] font-medium text-secondary">
             <h3 className="text-[1.4rem] text-white line-clamp-1">{title}</h3>
-            {artists?.map((artist) => {
-              return (
-                <Link
-                  className="hover:text-link-text-hover hover:underline"
-                  key={artist?.id}
-                >
-                  {artist?.name}{" "}
-                </Link>
-              );
-            })}
+            <p className="line-clamp-1">
+              {artists?.map((artist) => {
+                return (
+                  <Link
+                    className="hover:text-link-text-hover hover:underline"
+                    key={artist?.id}
+                  >
+                    {artist?.name}{" "}
+                  </Link>
+                );
+              })}
+            </p>
             <h4>{releaseDate && formatReleaseDate(releaseDate)}</h4>
           </div>
         </div>

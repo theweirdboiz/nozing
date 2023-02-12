@@ -47,7 +47,7 @@ const Playlist = (props) => {
   }, [detailPlaylist]);
 
   return (
-    <section className="pt-[2rem] relative">
+    <section className="pt-[2rem] relative px-[6rem] mt-[7rem]">
       {isLoaded ? (
         <Skeleton />
       ) : (

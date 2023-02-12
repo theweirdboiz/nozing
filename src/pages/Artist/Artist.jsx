@@ -288,17 +288,17 @@ const Artist = (props) => {
             ></p>
             <div className="flex items-center gap-x-20">
               <h4>
-                <h5 className="font-bold text-[2rem]">
+                <span className="font-bold text-[2rem]">
                   {currentArtist?.follow}
-                </h5>
+                </span>
                 <span className="text-[1.4rem] text-secondary font-medium">
                   Người quan tâm
                 </span>
               </h4>
               <h4>
-                <h5 className="font-bold text-[2rem]">
-                  {currentArtist?.awards.length}
-                </h5>
+                <span className="font-bold text-[2rem]">
+                  {currentArtist?.awards?.length}
+                </span>
                 <span className="text-[1.4rem] text-secondary font-medium">
                   Giải thưởng
                 </span>

@@ -1,11 +1,3 @@
-import {
-  SearchAll,
-  SearchArtist,
-  SearchMv,
-  SearchPlaylist,
-  SearchSong,
-} from "@pages/Search";
-
 const SearchMenuNavbar = [
   {
     path: "tat-ca",

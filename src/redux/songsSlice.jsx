@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as APIs from "@APIs";
-import { getArtist } from "../APIs/songs";
 
 export default createSlice({
   name: "songs",
@@ -18,6 +17,7 @@ export default createSlice({
     isRandom: false,
     isLoaded: false,
     isQueue: true,
+    isBg: false,
     searchData: null,
     searchKeyword: null,
     searchSongsData: null,
@@ -69,6 +69,9 @@ export default createSlice({
     },
     setIsQueue: (state, action) => {
       state.isQueue = action.payload;
+    },
+    setIsBg: (state, action) => {
+      state.isBg = action.payload;
     },
   },
   // listen thunk actions

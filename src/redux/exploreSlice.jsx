@@ -16,6 +16,7 @@ export default createSlice({
     chart: {},
     rank: [],
     loading: "idle",
+    zingchart: null,
   },
   reducers: {},
   // listen thunk actions
@@ -50,6 +51,9 @@ export default createSlice({
         state.rank =
           action.payload.find((item) => item.sectionId === "hZC")?.items || [];
         state.loading = "idle";
+      })
+      .addCase(fetchChartHomeData.fulfilled, (state, action) => {
+        state.zingchart = action.payload;
       });
   },
 });
@@ -60,5 +64,12 @@ export const fetchHomeData = createAsyncThunk(
   async () => {
     const response = await APIs.getHome();
     return response.data.data.items;
+  }
+);
+export const fetchChartHomeData = createAsyncThunk(
+  "home/fetchChartHomeData",
+  async () => {
+    const response = await APIs.getChartHome();
+    return response.data.data;
   }
 );
