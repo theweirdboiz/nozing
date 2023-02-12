@@ -80,3 +80,17 @@ export const getArtist = (name) =>
       reject(err);
     }
   });
+
+export const getLyricSong = (id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        url: "/lyric",
+        method: "get",
+        params: { id: id },
+      });
+      resolve(res);
+    } catch (err) {
+      reject(err);
+    }
+  });

@@ -22,6 +22,7 @@ export default createSlice({
     searchKeyword: null,
     searchSongsData: null,
     currentArtist: null,
+    lyricSong: null,
   },
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
@@ -106,6 +107,9 @@ export default createSlice({
       })
       .addCase(fetchArtist.fulfilled, (state, action) => {
         state.currentArtist = action.payload;
+      })
+      .addCase(fetchLyricSong.fulfilled, (state, action) => {
+        state.lyricSong = action.payload;
       });
   },
 });
@@ -161,6 +165,13 @@ export const fetchArtist = createAsyncThunk(
   "songs/fetchArtist",
   async (name) => {
     const response = await APIs.getArtist(name);
+    return response?.data?.data;
+  }
+);
+export const fetchLyricSong = createAsyncThunk(
+  "songs/fetchLyricSong",
+  async (id) => {
+    const response = await APIs.getLyricSong(id);
     return response?.data?.data;
   }
 );

@@ -37,6 +37,7 @@ module.exports = {
       alpha1: "linear-gradient(180deg, #170f23,#170f23)",
       "chart-section":
         "url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.34/static/media/week-chart-bg.edf332e5.jpg')",
+      random: "url('https://source.unsplash.com/random')",
     },
     keyframes: {
       "rotate-center": {

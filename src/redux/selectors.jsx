@@ -12,6 +12,8 @@ export const currentPlaylistIdSelector = (state) =>
   state.songs.currentPlaylistId;
 export const detailPlaylistSelector = (state) => state.songs.detailPlaylist;
 
+export const lyricSongSelector = (state) => state.songs.lyricSong;
+
 export const searchDataSelector = (state) => state.songs.searchData;
 export const searchKeywordSelector = (state) => state.songs.searchKeyword;
 export const searchSongsDataSelector = (state) => state.songs.searchSongsData;
