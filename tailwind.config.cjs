@@ -54,7 +54,12 @@ module.exports = {
       "spin-off": "spin-off 0.4s ease-out 1 both",
     },
   },
-  plugins: [require("tailwind-scrollbar"), require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("tailwind-scrollbar"),
+    require("@tailwindcss/line-clamp"),
+    require("tailwind-gradient-mask-image"),
+    require("tailwind-scrollbar-hide"),
+  ],
   variants: {
     scrollbar: ["rounded"],
   },

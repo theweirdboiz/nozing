@@ -27,10 +27,21 @@ const Player = () => {
   const navigator = useNavigate();
 
   const audio = useRef(new Audio());
+  const currentSentenceHightlight = useRef();
 
   const [tabActive, setTabActive] = useState(0);
 
   const [isToggleLyric, setIsToggleLyric] = useState(0);
+
+  const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
+
+  const initLyric = {
+    sentenceIndex: null,
+    isPassed: false,
+  };
+  const timeToHighlight = (currentTime * 1000).toFixed(0);
+
+  const [lyric, setLyric] = useState(initLyric);
 
   // elements
   const detailPlaylist = useSelector(detailPlaylistSelector);
@@ -97,8 +108,15 @@ const Player = () => {
     }
   }, [mute]);
 
-  const [currentTime, setCurrentTime] = useState(audio.current.currentTime);
-
+  useEffect(() => {
+    if (currentSentenceHightlight.current) {
+      currentSentenceHightlight.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }
+  }, [currentSentenceHightlight.current]);
   // handle events
   // when change volume
   const handleChangeVolume = (e) => {
@@ -201,6 +219,16 @@ const Player = () => {
       (audio.current.currentTime * trackProgressbar.current.offsetWidth) /
       currentSongInfor?.duration;
     thumbProgressBar.current.style.cssText = `width: ${numberPixel}px`;
+
+    lyricSong?.sentences?.map((sentence, index) => {
+      if (timeToHighlight >= sentence?.words[0].startTime) {
+        setLyric({
+          sentenceIndex: index,
+          color: "yellow",
+        });
+        return index;
+      }
+    });
   };
   // when song is end
   audio.current.onended = () => {
@@ -610,12 +638,17 @@ const Player = () => {
         <div className="absolute inset-0 bg-random bg-center bg-cover bg-no-repeat blur-2xl "></div>
         <div className="relative z-10">
           <header className="py-[2rem] flex items-center justify-between">
-            <div className=""></div>
-            <div className="flex rounded-full p-1 bg-alpha-bg font-bold">
+            <div className="">
+              <img
+                src="https://zjs.zmdcdn.me/zmp3-desktop/dev/119956/static/media/icon_zing_mp3_60.f6b51045.svg"
+                alt=""
+              />
+            </div>
+            <div className="flex rounded-full p-1 bg-alpha-bg font-bold ml-[10rem]">
               <div
-                onClick={() => setTabActive(0)}
+                onClick={() => setTabActive(2)}
                 className={`px-[5rem] py-[6px] rounded-full text-secondary cursor-pointer
-              ${tabActive === 0 && "bg-tab-active-bg text-white"}
+              ${tabActive === 2 && "bg-tab-active-bg text-white"}
               `}
               >
                 Danh sách phát
@@ -629,9 +662,9 @@ const Player = () => {
                 Karaoke
               </div>
               <div
-                onClick={() => setTabActive(2)}
+                onClick={() => setTabActive(0)}
                 className={`px-[5rem] py-[6px]  rounded-full text-secondary cursor-pointer
-               ${tabActive === 2 && "bg-tab-active-bg text-white"}
+               ${tabActive === 0 && "bg-tab-active-bg text-white"}
                `}
               >
                 Lời bài hát
@@ -699,14 +732,23 @@ const Player = () => {
           <div className="flex items-center gap-x-10 mx-[10rem] my-6">
             <img
               src={currentSongInfor?.thumbnailM}
-              className="w-[50rem] max-w-[80%]"
+              className="w-[50rem] max-w-[80%] rounded-2xl"
               alt=""
             />
-            <div className="max-h-[50rem] overflow-y-scroll ml-5">
+            <div className="max-h-[52rem] py-2 overflow-y-scroll scrollbar-hide ml-5 gradient-mask-t-50">
               {lyricSong?.sentences?.map((sentence, index) => (
                 <p
+                  ref={
+                    index === lyric.sentenceIndex
+                      ? currentSentenceHightlight
+                      : undefined
+                  }
                   key={index}
-                  className="px-[2rem] py-[1rem] text-[4rem] font-bold"
+                  className={`
+                  px-[2rem] py-[1rem] text-[4rem] font-bold
+                  ${index === lyric.sentenceIndex && "text-vip"}
+                  ${lyric.isPassed ? "text-secondary" : "text-white"}
+                  `}
                 >
                   {sentence?.words
                     ?.map((word, index) => word?.data)
@@ -720,7 +762,7 @@ const Player = () => {
             </div>
           </div>
         </div>
-        <p className="relative z-10 mt-[8rem] text-center text-secondary font-semibold text-[1.4rem]">
+        <p className="relative z-10 mt-[7rem] text-center text-secondary font-semibold text-[1.4rem]">
           <span className="text-white">{currentSongInfor?.title} - </span>
           <span>
             {currentSongInfor?.artists

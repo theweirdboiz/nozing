@@ -30,7 +30,7 @@ const DefaultLayout = ({ children }) => {
           <div className="relative inset-0 overflow-hidden w-full h-full">
             <div
               onScroll={handleBgHeader}
-              className="absolute inset-0 flex-grow sidebar-scrollbar h-full scrollbar-thin scrollbar-thumb-secondary scrollbar-thumb-rounded-lg"
+              className="absolute inset-0 flex-grow sidebar-scrollbar h-full scrollbar-thin scrollbar-thumb-secondary scrollbar-hide scrollbar-thumb-rounded-lg"
             >
               <div className="h-full">{children}</div>
             </div>
