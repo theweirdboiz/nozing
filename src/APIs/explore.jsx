@@ -12,7 +12,8 @@ export const getHome = () =>
       reject(err);
     }
   });
-export const getChartHome = (name) =>
+
+export const getChartHome = () =>
   new Promise(async (resolve, reject) => {
     try {
       const res = await axios({

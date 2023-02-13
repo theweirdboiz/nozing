@@ -24,7 +24,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <div className="bg-layout-bg text-[#fff]">
       <div className="flex items-center h-[calc(100vh_-_9rem)] overflow-hidden">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="relative flex-col w-full h-full">
           <Header />
           <div className="relative inset-0 overflow-hidden w-full h-full">
@@ -36,9 +36,9 @@ const DefaultLayout = ({ children }) => {
             </div>
           </div>
         </div>
-        <Queue />
+        {/* <Queue /> */}
       </div>
-      <Player />
+      {/* <Player /> */}
     </div>
   );
 };

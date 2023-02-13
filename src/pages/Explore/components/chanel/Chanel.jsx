@@ -3,7 +3,7 @@ import Album from "@pages/Explore/components/album";
 
 const Chanel = ({ data }) => {
   return (
-    <div className="mt-[4.8rem]  px-[6rem]">
+    <div className="mt-[4.8rem] mx-[6rem]">
       <h3 className="mb-[2rem] text-[2rem] font-bold">{data?.title}</h3>
       <div className="grid grid-cols-5 gap-x-[2.8rem]">
         {data?.items?.slice(0, 5)?.map((item) => {

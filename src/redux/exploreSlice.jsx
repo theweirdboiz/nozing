@@ -15,16 +15,12 @@ export default createSlice({
     weekChart: [],
     chart: {},
     rank: [],
-    loading: "idle",
     zingchart: null,
   },
   reducers: {},
   // listen thunk actions
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHomeData.pending, (state, action) => {
-        state.loading = `loading`;
-      })
       .addCase(fetchHomeData.fulfilled, (state, action) => {
         state.banner =
           action.payload.find((item) => item.sectionId === "hSlider")?.items ||
@@ -50,7 +46,6 @@ export default createSlice({
           action.payload.find((item) => item.sectionId === "hZC")?.chart || {};
         state.rank =
           action.payload.find((item) => item.sectionId === "hZC")?.items || [];
-        state.loading = "idle";
       })
       .addCase(fetchChartHomeData.fulfilled, (state, action) => {
         state.zingchart = action.payload;

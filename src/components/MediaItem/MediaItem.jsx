@@ -116,16 +116,20 @@ const MediaItem = ({
                 {title}
               </h5>
               <p className="line-clamp-1">
-                {artists?.map((artist, index) => {
-                  return (
-                    <Link
-                      className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
-                      key={index}
-                    >
-                      {artist?.name}
-                    </Link>
-                  );
-                })}
+                {artists
+                  .map((artist) => artist.name)
+                  ?.join(", --")
+                  ?.split("--")
+                  ?.map((artist, index) => {
+                    return (
+                      <Link
+                        className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
+                        key={index}
+                      >
+                        {artist}
+                      </Link>
+                    );
+                  })}
               </p>
             </div>
           </div>

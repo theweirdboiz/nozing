@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import Gallary from "../../components/Gallary";
 
 import Chanel from "./components/chanel";
@@ -11,20 +10,21 @@ import { fetchHomeData } from "@redux/exploreSlice";
 import { homeDataSelector } from "@redux/selectors";
 import { Link } from "react-router-dom";
 
-const Explore = (props) => {
+const Explore = () => {
+  // define
   const dispatch = useDispatch();
   const { autoTheme1, autoTheme2, top100, album, artistTheme, weekChart } =
     useSelector(homeDataSelector);
 
+  // helper
   const trimLink = (link) => {
     return link.slice(0, link.indexOf("."));
   };
+  // hooks
   useEffect(() => {
-    // dispatch thunk action
     dispatch(fetchHomeData());
+    console.log("fetch home data");
   }, []);
-
-  // ref banner from store
 
   return (
     <div className="w-full h-full ">
@@ -54,7 +54,5 @@ const Explore = (props) => {
     </div>
   );
 };
-
-Explore.propTypes = {};
 
 export default Explore;
