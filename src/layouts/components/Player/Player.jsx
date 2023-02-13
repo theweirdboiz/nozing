@@ -76,9 +76,13 @@ const Player = () => {
 
   const [mute, setMute] = useState(0);
 
+  // the first load
   useEffect(() => {
+    // set state "is loaded:false"
     dispatch(songsSlice.actions.setIsLoaded(false));
+    // check exist currentSongInfor?
     if (currentSongInfor?.encodeId) {
+      // notice store save current song to recent songs
       dispatch(
         songsSlice.actions.setRecentSongs({
           songId: currentSongInfor?.encodeId,
@@ -88,16 +92,23 @@ const Player = () => {
         })
       );
     }
+    // notice store save detail current song
     dispatch(fetchDetailSong(currentSongId));
+    // notice store save lyric current song
     dispatch(fetchLyricSong(currentSongId));
   }, [currentSongId]);
 
+  // the first load
   useEffect(() => {
     audio.current.pause();
-    audio.current.src = currentSong?.[128];
+    if (currentSong) {
+      audio.current.src = currentSong?.[128];
+    }
   }, [currentSong]);
 
+  // first load
   useEffect(() => {
+    // handle volume
     if (mute) {
       audio.current.volume = 0.0;
       thumbVolume.current.style.cssText = `width: 0px`;
@@ -109,6 +120,7 @@ const Player = () => {
   }, [mute]);
 
   useEffect(() => {
+    // handle lyric song
     if (currentSentenceHightlight.current) {
       currentSentenceHightlight.current.scrollIntoView({
         behavior: "smooth",
@@ -117,6 +129,7 @@ const Player = () => {
       });
     }
   }, [currentSentenceHightlight.current]);
+
   // handle events
   // when change volume
   const handleChangeVolume = (e) => {
@@ -129,11 +142,13 @@ const Player = () => {
     audio.current.volume = percent;
   };
   // when toggle mute/unmute volume
-  const handleMute = () => {
+  const handleMute = (e) => {
+    e.stopPropagation();
     setMute((prev) => !prev);
   };
   // when toggle play/pause
-  const handlePlaySong = () => {
+  const handlePlaySong = (e) => {
+    e.stopPropagation();
     if (isPlaying) {
       audio.current.pause();
     } else {
@@ -142,6 +157,8 @@ const Player = () => {
   };
   // when seek time
   const handleSeekTime = (e) => {
+    e.stopPropagation();
+
     const trackRect = trackProgressbar.current.getBoundingClientRect();
 
     const percent = ((e.clientX - trackRect.left) * 100) / trackRect.width;
@@ -151,7 +168,9 @@ const Player = () => {
     audio.current.play();
   };
   // handle next song
-  const handleNextSong = () => {
+  const handleNextSong = (e) => {
+    e.stopPropagation();
+
     const songNextIndex =
       currentSongIndex + 1 >= detailPlaylist?.song.total
         ? 0
@@ -159,27 +178,38 @@ const Player = () => {
     const songNextId = detailPlaylist.song.items[songNextIndex]?.encodeId;
 
     dispatch(songsSlice.actions.setIndex(songNextIndex));
+
     dispatch(songsSlice.actions.setCurrentSongId(songNextId));
+
     dispatch(songsSlice.actions.isPlaying(true));
   };
   // handle prev song
-  const handlePrevSong = () => {
+  const handlePrevSong = (e) => {
+    e.stopPropagation();
+
     const songPrevIndex =
       currentSongIndex - 1 < 0
         ? detailPlaylist?.song?.total - 1
         : currentSongIndex - 1;
+
     const songPrevId = detailPlaylist?.song?.items[songPrevIndex]?.encodeId;
 
     dispatch(songsSlice.actions.setIndex(songPrevIndex));
+
     dispatch(songsSlice.actions.setCurrentSongId(songPrevId));
+
     dispatch(songsSlice.actions.isPlaying(true));
   };
   // hande repeat song
-  const handleRepeatSong = () => {
+  const handleRepeatSong = (e) => {
+    e.stopPropagation();
+
     dispatch(songsSlice.actions.setIsRepeat(!isReapeat));
   };
   // hande random song
-  const handleRandomSong = () => {
+  const handleRandomSong = (e) => {
+    e.stopPropagation();
+
     dispatch(songsSlice.actions.setIsRandom(!isRandom));
   };
   // handle click player
@@ -188,17 +218,21 @@ const Player = () => {
   };
   const handleClickPlayer = (e) => {
     e.stopPropagation();
+
     navigator(trimLink(currentSongInfor?.album?.link));
   };
   const handleToggleLyric = (e) => {
     e.stopPropagation();
+
     setIsToggleLyric((prev) => !prev);
   };
 
   // when song is load
   audio.current.onloadeddata = () => {
     audio.current.pause();
+
     dispatch(songsSlice.actions.setIsLoaded(true));
+
     audio.current.volume = +thumbVolume.current.clientWidth / 100;
 
     if (isPlaying) {
@@ -215,9 +249,11 @@ const Player = () => {
   // when song is update
   audio.current.ontimeupdate = () => {
     setCurrentTime(audio.current.currentTime);
+
     const numberPixel =
       (audio.current.currentTime * trackProgressbar.current.offsetWidth) /
       currentSongInfor?.duration;
+
     thumbProgressBar.current.style.cssText = `width: ${numberPixel}px`;
 
     lyricSong?.sentences?.map((sentence, index) => {
@@ -236,17 +272,25 @@ const Player = () => {
       const randomIndex = Math.floor(
         Math.random() * (detailPlaylist?.song?.total - 1)
       );
+
       const randomSongId = detailPlaylist?.song?.items[randomIndex]?.encodeId;
+
       dispatch(songsSlice.actions.setIndex(randomIndex));
+
       dispatch(songsSlice.actions.setCurrentSongId(randomSongId));
+
       dispatch(songsSlice.actions.isPlaying(true));
     }
     if (isReapeat) {
       audio.current.currentTime = 0;
+
       setCurrentTime(0);
+
+      // dispatch thunk actions
       dispatch(songsSlice.actions.setIndex(currentSongIndex));
       dispatch(songsSlice.actions.setCurrentSongId(currentSongId));
       dispatch(songsSlice.actions.isPlaying(true));
+
       audio.current.play();
     } else {
       handleNextSong();
@@ -266,16 +310,20 @@ const Player = () => {
     const hourPrefix = prefixTime(hour);
     const minutePrefix = prefixTime(minute);
     const secondPrefix = prefixTime(second);
+
     if (hour > 0) {
       return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
     }
+
     return `${minutePrefix}:${secondPrefix}`;
   };
 
   return (
     <>
       <section
-        className={`bottom-0 left-0 right-0 px-[2rem] border-t border-border-primary flex items-center justify-between bg-layout-bg cursor-pointer`}
+        className={`bottom-0 left-0 right-0 px-[2rem] border-t border-border-primary ${
+          currentSongId ? "flex" : "hidden"
+        } items-center justify-between bg-layout-bg cursor-pointer`}
         onClick={handleClickPlayer}
       >
         <div className="flex h-[9rem] py-5 w-[30%]">

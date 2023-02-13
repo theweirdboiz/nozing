@@ -5,6 +5,8 @@ import Navbar from "@layouts/components/Sidebar/components/Navbar";
 
 import LoginVipContainer from "@components/LoginVipContainer";
 import { publicRoutes } from "@routers";
+import { useDispatch, useSelector } from "react-redux";
+import { currentSongIdSelector } from "@redux/selectors";
 
 const Sidebar = () => {
   const container1 = {
@@ -219,13 +221,20 @@ const Sidebar = () => {
       name: "MV",
     },
   ];
+  const dispatch = useDispatch();
+
+  const currentSongId = useSelector(currentSongIdSelector);
   return (
-    <aside className="relative left-0 top-0 sidebar bg-sidebar-bg flex-shrink-0">
+    <aside
+      className={`relative left-0 top-0  bg-sidebar-bg flex-shrink-0 ${
+        currentSongId ? "sidebar" : "sidebar-h-full"
+      }`}
+    >
       <div className="flex flex-col h-full">
         <Brand />
         <Navbar navbarList={navbar1} publicRoutes={publicRoutes} />
         <div className="divide"></div>
-        <div className="sidebar-scrollbar mt-4 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-secondary scrollbar-thumb-rounded-lg">
+        <div className="sidebar-scrollbar mt-4 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-alpha-bg scrollbar-thumb-rounded-lg">
           <Navbar navbarList={navbar2} />
           <div className="pl-[2rem] pr-6">
             <LoginVipContainer container={container1} />

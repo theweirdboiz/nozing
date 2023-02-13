@@ -12,6 +12,9 @@ import {
 } from "@redux/selectors";
 
 import SongItem from "@pages/Explore/components/songItem";
+import SkeletonMedia from "@components/skeletonMedia";
+
+import { BtnPlayNewRelease } from "@components/button";
 
 const Queue = () => {
   // define
@@ -35,9 +38,8 @@ const Queue = () => {
 
   // first time
   useEffect(() => {
-    currentPlaylistId && setQueue(detailPlaylist);
-  }, [detailPlaylist]);
-
+    detailPlaylist && setQueue(detailPlaylist);
+  }, [queue]);
   // bug
   useEffect(() => {
     isPlaying && setQueue(detailPlaylist);
@@ -117,7 +119,7 @@ const Queue = () => {
                 tabActive && "hidden"
               }`}
             >
-              {currentPlaylistId && (
+              {currentSongInfor && (
                 <SongItem
                   songId={currentSongInfor?.encodeId}
                   title={currentSongInfor?.title}
@@ -127,54 +129,88 @@ const Queue = () => {
                   isSmall
                 />
               )}
-              <div className="mt-6 text-[1.4rem]">
-                <p className="text-secondary font-medium px-[1rem]">
-                  <span className="font-bold text-white  line-clamp-1">
-                    Tiếp theo
-                  </span>
-                  <span className="line-clamp-1">
-                    <Link className="ml-1">
-                      Từ play list{" "}
-                      <span className="text-link-text-hover  capitalize">
-                        {queue?.title}
-                      </span>
-                    </Link>
-                  </span>
-                </p>
-                <ul className="flex flex-col gap-y-1 mt-6">
-                  {queue?.song?.items?.map((item) => {
-                    return (
-                      <li key={item?.encodeId}>
-                        <SongItem
-                          songId={item?.encodeId}
-                          title={item?.title}
-                          artists={item?.artists}
-                          thumbnail={item?.thumbnail}
-                          isSmall
-                        />
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+              {detailPlaylist ? (
+                <div className="mt-6 text-[1.4rem]">
+                  <p className="text-secondary font-medium px-[1rem]">
+                    <span className="font-bold text-white  line-clamp-1">
+                      Tiếp theo
+                    </span>
+                    <span className="line-clamp-1">
+                      <Link className="ml-1">
+                        Từ play list{" "}
+                        <span className="text-link-text-hover  capitalize">
+                          {queue?.title}
+                        </span>
+                      </Link>
+                    </span>
+                  </p>
+                  <ul className="flex flex-col gap-y-1 mt-6">
+                    {queue?.song?.items?.map((item) => {
+                      return (
+                        <li key={item?.encodeId}>
+                          <SongItem
+                            songId={item?.encodeId}
+                            title={item?.title}
+                            artists={item?.artists}
+                            thumbnail={item?.thumbnail}
+                            isSmall
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : (
+                <div className="px-5">
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <div className="text-[1.4rem] font-semibold">
+                    <p className="px-6 text-center">
+                      Khám phá thêm các bài hát mới của Zing MP3
+                    </p>
+                    <BtnPlayNewRelease />
+                  </div>
+                </div>
+              )}
             </div>
             <div
               className={`absolute inset-0 scrollbar-thin px-3 ${
                 !tabActive && "hidden"
               }`}
             >
-              {recentSongs?.map((song, index) => {
-                return (
-                  <SongItem
-                    key={index}
-                    songId={song?.songId}
-                    title={song?.title}
-                    thumbnail={song?.thumbnail}
-                    artists={song?.artists}
-                    isSmall
-                  />
-                );
-              })}
+              {detailPlaylist ? (
+                <>
+                  {recentSongs?.map((song, index) => {
+                    return (
+                      <SongItem
+                        key={index}
+                        songId={song?.songId}
+                        title={song?.title}
+                        thumbnail={song?.thumbnail}
+                        artists={song?.artists}
+                        isSmall
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="px-5">
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <SkeletonMedia />
+                  <div className="text-[1.4rem] font-semibold">
+                    <p className="px-6 text-center">
+                      Khám phá thêm các bài hát mới của Zing MP3
+                    </p>
+                    <BtnPlayNewRelease />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

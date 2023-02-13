@@ -23,11 +23,10 @@ const Explore = () => {
   // hooks
   useEffect(() => {
     dispatch(fetchHomeData());
-    console.log("fetch home data");
   }, []);
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full">
       <Gallary />
       <NewRelease />
       <Chanel data={autoTheme1}></Chanel>
