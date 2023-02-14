@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
-import Gallary from "../../components/Gallary";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+import { fetchHomeData } from "@redux/exploreSlice";
+import { homeDataSelector } from "@redux/selectors";
+
+import Gallary from "@components/Gallary";
 import Chanel from "./components/chanel";
 import NewRelease from "./components/newRelease";
 import ChartSection from "./components/chart/ChartSection";
 
-import { useDispatch, useSelector } from "react-redux";
-import { fetchHomeData } from "@redux/exploreSlice";
-import { homeDataSelector } from "@redux/selectors";
-import { Link } from "react-router-dom";
+import { trimLink } from "@helpers/helpers";
 
 const Explore = () => {
   // define
@@ -16,10 +18,6 @@ const Explore = () => {
   const { autoTheme1, autoTheme2, top100, album, artistTheme, weekChart } =
     useSelector(homeDataSelector);
 
-  // helper
-  const trimLink = (link) => {
-    return link.slice(0, link.indexOf("."));
-  };
   // hooks
   useEffect(() => {
     dispatch(fetchHomeData());

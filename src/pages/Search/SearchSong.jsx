@@ -1,15 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { searchDataSelector, searchSongsDataSelector } from "@redux/selectors";
-import { fetchSearchArtistSongs } from "@redux/songsSlice";
+import { useSelector } from "react-redux";
+import { searchDataSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
 
 const SearchSong = (props) => {
-  const dispatch = useDispatch();
-
   const searchData = useSelector(searchDataSelector);
 
   return (

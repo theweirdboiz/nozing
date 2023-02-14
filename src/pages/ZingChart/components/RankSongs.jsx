@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { memo } from "react";
 
 import MediaItem from "@components/MediaItem";
 const RankSongs = ({ listSong, isRank, inPlaylist }) => {
@@ -27,4 +26,4 @@ const RankSongs = ({ listSong, isRank, inPlaylist }) => {
 
 RankSongs.propTypes = {};
 
-export default RankSongs;
+export default memo(RankSongs);

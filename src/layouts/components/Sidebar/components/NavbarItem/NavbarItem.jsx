@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
 
@@ -26,4 +26,4 @@ NavbarItem.defaultProps = {
   path: "/error",
 };
 
-export default NavbarItem;
+export default memo(NavbarItem);

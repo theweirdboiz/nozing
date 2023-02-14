@@ -15,6 +15,8 @@ export default defineConfig({
       "@APIs": path.resolve(__dirname, "./src/APIs"),
       "@axios": path.resolve(__dirname, "./src/axios"),
       "@ultis": path.resolve(__dirname, "./src/ultis"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@helpers": path.resolve(__dirname, "./src/helpers"),
     },
   },
   plugins: [react()],

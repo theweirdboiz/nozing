@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 const GallaryItem = ({ item, classList, handleClickBanner }) => {
@@ -16,4 +16,4 @@ const GallaryItem = ({ item, classList, handleClickBanner }) => {
 
 GallaryItem.propTypes = {};
 
-export default GallaryItem;
+export default memo(GallaryItem);

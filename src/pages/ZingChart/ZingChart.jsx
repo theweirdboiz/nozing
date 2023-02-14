@@ -11,7 +11,6 @@ import SongItem from "@pages/Explore/components/songItem";
 import { RoutesConfig } from "@config";
 import { Link } from "react-router-dom";
 
-import MediaItem from "@components/MediaItem";
 import RankSongs from "./components/RankSongs";
 
 const ZingChart = (props) => {
@@ -93,8 +92,6 @@ const ZingChart = (props) => {
 
   const [isMore, setIsMore] = useState(false);
 
-  const [listSong, setListSong] = useState();
-
   useEffect(() => {
     dispatch(fetchChartHomeData());
   }, []);
@@ -125,13 +122,6 @@ const ZingChart = (props) => {
     setDataChart({ labels, datasets });
   }, [chartHomeData]);
 
-  // useEffect(() => {
-  //   if (isMore) {
-  //     setListSong(chartHomeData?.RTChart?.items);
-  //   } else {
-  //     setListSong(chartHomeData?.RTChart?.items?.slice(0, 10));
-  //   }
-  // }, [isMore, listSong]);
   // handle events
   const handleSeeMore = () => {
     setIsMore((prev) => !prev);

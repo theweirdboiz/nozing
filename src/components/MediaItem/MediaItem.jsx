@@ -1,9 +1,9 @@
 import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import songsSlice from "@redux/songsSlice";
-import { currentSongInforSelector } from "@redux/selectors";
 import { Link } from "react-router-dom";
+import { formatDuration } from "../../helpers/helpers";
 const MediaItem = ({
   songId,
   thumbnail,
@@ -17,27 +17,24 @@ const MediaItem = ({
 }) => {
   const dispatch = useDispatch();
 
-  const prefixTime = (time) => {
-    return time > 9 ? time : `0${time}`;
-  };
   const handleClick = (songId, index) => {
     dispatch(songsSlice.actions.isPlaying(true));
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.setIndex(index));
   };
-  const formatDuration = (t) => {
-    const time = Number.parseInt(t);
-    const hour = Math.floor(time / 3600);
-    const minute = Math.floor((time - hour * 3600) / 60);
-    const second = time - (hour * 3600 + minute * 60);
-    const hourPrefix = prefixTime(hour);
-    const minutePrefix = prefixTime(minute);
-    const secondPrefix = prefixTime(second);
-    if (hour > 0) {
-      return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
-    }
-    return `${minutePrefix}:${secondPrefix}`;
-  };
+  // const formatDuration = (t) => {
+  //   const time = Number.parseInt(t);
+  //   const hour = Math.floor(time / 3600);
+  //   const minute = Math.floor((time - hour * 3600) / 60);
+  //   const second = time - (hour * 3600 + minute * 60);
+  //   const hourPrefix = prefixTime(hour);
+  //   const minutePrefix = prefixTime(minute);
+  //   const secondPrefix = prefixTime(second);
+  //   if (hour > 0) {
+  //     return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
+  //   }
+  //   return `${minutePrefix}:${secondPrefix}`;
+  // };
   // handle events
 
   return (

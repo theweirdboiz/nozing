@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import NavbarItem from "../NavbarItem/NavbarItem";
 
@@ -26,4 +26,4 @@ Navbar.defaultProps = {
   publicRoutes: [],
 };
 
-export default Navbar;
+export default memo(Navbar);

@@ -20,6 +20,7 @@ import {
 } from "@redux/selectors";
 import { useRef } from "react";
 import { useState } from "react";
+import { formatDuration, trimLink } from "@helpers/helpers";
 
 const Player = () => {
   // define
@@ -75,6 +76,12 @@ const Player = () => {
   const thumbVolume = useRef();
 
   const [mute, setMute] = useState(0);
+
+  const handleNavigator = (e, link) => {
+    e.stopPropagation();
+    console.log(link);
+    navigator(trimLink(link));
+  };
 
   // the first load
   useEffect(() => {
@@ -213,9 +220,9 @@ const Player = () => {
     dispatch(songsSlice.actions.setIsRandom(!isRandom));
   };
   // handle click player
-  const trimLink = (link) => {
-    return link.slice(0, link.indexOf("."));
-  };
+  // const trimLink = (link) => {
+  //   return link.slice(0, link.indexOf("."));
+  // };
   const handleClickPlayer = (e) => {
     e.stopPropagation();
 
@@ -296,28 +303,6 @@ const Player = () => {
       handleNextSong();
     }
   };
-  const prefixTime = (time) => {
-    return time > 9 ? time : `0${time}`;
-  };
-  const formatDuration = (t) => {
-    // 1p = 60
-    // ? = 230
-    const time = Number.parseInt(t);
-    const hour = Math.floor(time / 3600);
-    const minute = Math.floor((time - hour * 3600) / 60);
-    const second = time - (hour * 3600 + minute * 60);
-    // return
-    const hourPrefix = prefixTime(hour);
-    const minutePrefix = prefixTime(minute);
-    const secondPrefix = prefixTime(second);
-
-    if (hour > 0) {
-      return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
-    }
-
-    return `${minutePrefix}:${secondPrefix}`;
-  };
-
   return (
     <>
       <section
@@ -335,18 +320,31 @@ const Player = () => {
             </Link>
             <div>
               <h3 className="text-[1.4rem] font-semibold">
-                <Link>{currentSongInfor?.title}</Link>
+                <span
+                  onClick={(e) => handleNavigator(e, currentSongInfor?.link)}
+                >
+                  {currentSongInfor?.title}
+                </span>
               </h3>
-              <p>
-                {currentSongInfor?.artists?.map((artist) => {
-                  return (
-                    <Link key={artist?.id}>
-                      <span className="text-[1.2rem] font-medium text-secondary hover:text-link-text-hover hover:underline">
-                        {artist?.name}{" "}
+              <p className="text-[1.2rem] font-medium text-secondary hover:text-link-text-hover hover:underline">
+                {currentSongInfor?.artists
+                  ?.map((artist, index) => artist?.name)
+                  ?.join(", --")
+                  ?.split("--")
+                  ?.map((artist, index) => {
+                    return (
+                      <span
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigator(currentSongInfor?.artists[index]?.link);
+                        }}
+                        key={currentSongInfor?.artists[index]?.id}
+                        className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
+                      >
+                        {artist}
                       </span>
-                    </Link>
-                  );
-                })}
+                    );
+                  })}
               </p>
             </div>
             <div className="ml-6 flex gap-x-4">

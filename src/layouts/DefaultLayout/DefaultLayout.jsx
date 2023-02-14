@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { memo, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Sidebar from "@layouts/components/Sidebar";
@@ -54,4 +54,4 @@ DefaultLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default DefaultLayout;
+export default memo(DefaultLayout);

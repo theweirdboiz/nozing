@@ -221,7 +221,6 @@ const Sidebar = () => {
       name: "MV",
     },
   ];
-  const dispatch = useDispatch();
 
   const currentSongId = useSelector(currentSongIdSelector);
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
+import { trimLink } from "@helpers/helpers";
 
 const Album = ({
   encodeId,
@@ -17,9 +18,7 @@ const Album = ({
     e.stopPropagation();
     navigator(link);
   };
-  const trimLink = (link) => {
-    return link.slice(0, link.indexOf("."));
-  };
+
   const handlePlayChanel = (e, link) => {
     e.stopPropagation();
     e.preventDefault();

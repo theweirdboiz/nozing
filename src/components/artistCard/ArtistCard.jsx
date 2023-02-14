@@ -1,17 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { prefixFollow } from "@helpers/helpers";
 
 const ArtistCard = ({ id, link, name, thumbnail, follow }) => {
-  const prefixFollow = (follow) => {
-    if (follow < 1000) {
-      return follow;
-    }
-    if (follow < 1000000) {
-      return Math.floor(follow / 1000).toFixed(0) + "K";
-    }
-    return (follow / 1000000).toFixed(1) + "M";
-  };
+  // const prefixFollow = (follow) => {
+  //   if (follow < 1000) {
+  //     return follow;
+  //   }
+  //   if (follow < 1000000) {
+  //     return Math.floor(follow / 1000).toFixed(0) + "K";
+  //   }
+  //   return (follow / 1000000).toFixed(1) + "M";
+  // };
 
   return (
     <div className="text-center">

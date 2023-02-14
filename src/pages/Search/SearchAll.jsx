@@ -11,7 +11,7 @@ import ArtistCard from "@components/artistCard";
 const SearchAll = (props) => {
   const searchData = useSelector(searchDataSelector);
 
-  const isArtist = searchData?.top?.objectType === "artist";
+  // const isArtist = searchData?.top?.objectType === "artist";
 
   return (
     <div className="pb-10">

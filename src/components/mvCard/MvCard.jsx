@@ -1,6 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
+import { formatDuration, trimLink } from "@helpers/helpers";
 
 const MvCard = ({
   encodeId,
@@ -11,26 +12,26 @@ const MvCard = ({
   link,
   artistImg,
 }) => {
-  const prefixTime = (time) => {
-    return time > 9 ? time : `0${time}`;
-  };
+  // const prefixTime = (time) => {
+  //   return time > 9 ? time : `0${time}`;
+  // };
   const navigator = useNavigate();
-  const formatDuration = (t) => {
-    const time = Number.parseInt(t);
-    const hour = Math.floor(time / 3600);
-    const minute = Math.floor((time - hour * 3600) / 60);
-    const second = time - (hour * 3600 + minute * 60);
-    const hourPrefix = prefixTime(hour);
-    const minutePrefix = prefixTime(minute);
-    const secondPrefix = prefixTime(second);
-    if (hour > 0) {
-      return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
-    }
-    return `${minutePrefix}:${secondPrefix}`;
-  };
-  const trimLink = (link) => {
-    return link.slice(0, link.indexOf("."));
-  };
+  // const formatDuration = (t) => {
+  //   const time = Number.parseInt(t);
+  //   const hour = Math.floor(time / 3600);
+  //   const minute = Math.floor((time - hour * 3600) / 60);
+  //   const second = time - (hour * 3600 + minute * 60);
+  //   const hourPrefix = prefixTime(hour);
+  //   const minutePrefix = prefixTime(minute);
+  //   const secondPrefix = prefixTime(second);
+  //   if (hour > 0) {
+  //     return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
+  //   }
+  //   return `${minutePrefix}:${secondPrefix}`;
+  // };
+  // const trimLink = (link) => {
+  //   return link.slice(0, link.indexOf("."));
+  // };
   const handlePlayChanel = (e, link) => {
     e.stopPropagation();
     e.preventDefault();
@@ -105,4 +106,4 @@ const MvCard = ({
 
 MvCard.propTypes = {};
 
-export default MvCard;
+export default memo(MvCard);

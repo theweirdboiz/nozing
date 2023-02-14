@@ -4,8 +4,7 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice, { fetchSearchData } from "@redux/songsSlice";
-import { searchKeywordSelector } from "@redux/selectors";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 const Search = (props) => {
   const inputRef = useRef();
