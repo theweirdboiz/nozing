@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
 const SongItem = ({
@@ -15,11 +15,15 @@ const SongItem = ({
   isSmall,
 }) => {
   const dispatch = useDispatch();
-
+  const navigator = useNavigate();
   // handle events
   const handleClick = (id) => {
     dispatch(songsSlice.actions.isPlaying(true));
     dispatch(songsSlice.actions.setCurrentSongId(id));
+  };
+  const handleNavigator = (e, link) => {
+    e.stopPropagation();
+    navigator(link);
   };
   const formatReleaseDate = (time) => {
     const milis = Math.floor(Date.now() / 1000 - time);
@@ -79,19 +83,20 @@ const SongItem = ({
           </figure>
           <div className="text-[1.2rem] font-medium text-secondary">
             <h3 className="text-[1.4rem] text-white line-clamp-1">{title}</h3>
-            <p className="line-clamp-1">
+            <p className="line-clamp-1 relative z-50">
               {artists
                 ?.map((artist) => artist?.name)
                 ?.join(", --")
                 ?.split("--")
                 ?.map((artist, index) => {
                   return (
-                    <Link
+                    <span
+                      onClick={(e) => handleNavigator(e, artists[index]?.link)}
                       className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
                       key={index}
                     >
                       {artist}
-                    </Link>
+                    </span>
                   );
                 })}
             </p>

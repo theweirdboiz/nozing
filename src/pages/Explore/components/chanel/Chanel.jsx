@@ -10,7 +10,7 @@ const Chanel = ({ data }) => {
           return (
             <Album
               key={item?.encodeId}
-              sectionId={item?.sectionId}
+              sectionId={data?.sectionId}
               encodeId={item?.encodeId}
               thumbnail={item?.thumbnail}
               title={item?.title}

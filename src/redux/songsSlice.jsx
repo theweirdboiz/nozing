@@ -89,10 +89,8 @@ export default createSlice({
       })
       .addCase(fetchDetailSong.fulfilled, (state, action) => {
         const [res1, res2] = action.payload;
-        if (res1.err === 0) {
+        if (res1.err === 0 && res2.err === 0) {
           state.currentSong = res1?.data;
-        }
-        if (res2.err === 0) {
           state.currentSongInfor = res2?.data;
         }
         if (res1.err !== 0) {

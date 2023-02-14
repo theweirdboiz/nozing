@@ -8,6 +8,7 @@ import MediaItem from "@components/MediaItem";
 import Album from "@pages/Explore/components/album";
 import MvCard from "@components/mvCard/MvCard";
 import ArtistCard from "@components/artistCard";
+import songsSlice from "../../redux/songsSlice";
 
 const Artist = (props) => {
   const { artist } = useParams();
@@ -288,9 +289,10 @@ const Artist = (props) => {
             ></p>
             <div className="flex items-center gap-x-20">
               <h4>
-                <span className="font-bold text-[2rem]">
+                <strong className="font-bold text-[2rem]">
                   {currentArtist?.follow}
-                </span>
+                </strong>
+                <br />
                 <span className="text-[1.4rem] text-secondary font-medium">
                   Người quan tâm
                 </span>
@@ -299,9 +301,11 @@ const Artist = (props) => {
                 <span className="font-bold text-[2rem]">
                   {currentArtist?.awards?.length}
                 </span>
-                <span className="text-[1.4rem] text-secondary font-medium">
-                  Giải thưởng
-                </span>
+                {currentArtist?.awards && (
+                  <span className="text-[1.4rem] text-secondary font-medium">
+                    Giải thưởng
+                  </span>
+                )}
               </h4>
             </div>
           </div>

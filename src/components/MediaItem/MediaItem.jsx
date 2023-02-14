@@ -140,7 +140,9 @@ const MediaItem = ({
           </span>
         )}
         <div
-          className={!albumTitle && !inPlaylist ? "w-[30%]" : "flex-1 text-end"}
+          className={`${
+            !albumTitle && !inPlaylist ? "w-[30%]" : "flex-1"
+          } text-end`}
         >
           <div className="hidden text-white group-hover/item:flex justify-end">
             <button className="circle__large">

@@ -42,7 +42,7 @@ const Search = (props) => {
     setIsShow(0);
   };
   return (
-    <div className="w-[42rem] relative">
+    <div className="w-[40rem] relative">
       <div className="flex items-center gap-x-2 bg-alpha-bg h-[4rem] rounded-[9.9rem] relative">
         <button
           onClick={() => {

@@ -322,7 +322,7 @@ const Player = () => {
     <>
       <section
         className={`bottom-0 left-0 right-0 px-[2rem] border-t border-border-primary ${
-          currentSongId ? "flex" : "hidden"
+          currentSong && currentSongInfor ? "flex" : "hidden"
         } items-center justify-between bg-layout-bg cursor-pointer`}
         onClick={handleClickPlayer}
       >

@@ -13,6 +13,10 @@ const Album = ({
 }) => {
   const navigator = useNavigate();
 
+  const handleNavigator = (e, link) => {
+    e.stopPropagation();
+    navigator(link);
+  };
   const trimLink = (link) => {
     return link.slice(0, link.indexOf("."));
   };
@@ -87,26 +91,31 @@ const Album = ({
       </Link>
       <div className="mt-[1.2rem]">
         <h3 className="font-semibold hover:text-link-text-hover cursor-pointer line-clamp-1">
-          {title}
+          <Link to={trimLink(link)}>{title}</Link>
         </h3>
         <p className=" text-secondary text-[1.4rem] font-medium line-clamp-1">
-          {sectionId === "h100" || sectionId === "search" ? (
+          {sectionId === "h100" ||
+          sectionId === "hAutoTheme2" ||
+          sectionId === "hAlbum" ? (
             <>
-              {artists?.map((artist) => {
-                return (
-                  <Link
-                    key={artist?.id}
-                    className="hover:underline hover:text-link-text-hover"
-                    to={artist?.link}
-                  >
-                    {artist.name}
-                    {", "}
-                  </Link>
-                );
-              })}
+              {artists
+                ?.map((artist) => artist?.name)
+                ?.join(", --")
+                ?.split("--")
+                ?.map((artist, index) => {
+                  return (
+                    <span
+                      onClick={(e) => handleNavigator(e, artists[index]?.link)}
+                      className="font-medium hover:underline hover:text-link-text-hover cursor-pointer"
+                      key={index}
+                    >
+                      {artist}
+                    </span>
+                  );
+                })}
             </>
           ) : (
-            sortDescription
+            <span className="line-clamp-2">{sortDescription}</span>
           )}
         </p>
       </div>
