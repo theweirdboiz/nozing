@@ -35,3 +35,9 @@ export const isQueueSelector = (state) => state.songs.isQueue;
 export const isBgSelector = (state) => state.songs.isBg;
 
 export const currentArtistSelector = (state) => state.songs.currentArtist;
+
+// playlist slice
+export const playlistSelector = (state) => state.playlists;
+
+// audio slice
+export const audioSelector = (state) => state.songAudio;

@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import exploreSlice from "./exploreSlice";
 import songsSlice from "./songsSlice";
+import playlistSlice from "./playlistSlice";
+import audioSlice from "./audioSlice";
 import {
   persistReducer,
   FLUSH,
@@ -34,6 +36,8 @@ const store = configureStore({
   reducer: {
     explore: exploreSlice.reducer,
     songs: persistReducer(musicConfig, songsSlice.reducer),
+    playlists: playlistSlice.reducer,
+    songAudio: audioSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

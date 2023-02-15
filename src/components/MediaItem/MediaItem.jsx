@@ -22,19 +22,7 @@ const MediaItem = ({
     dispatch(songsSlice.actions.setCurrentSongId(songId));
     dispatch(songsSlice.actions.setIndex(index));
   };
-  // const formatDuration = (t) => {
-  //   const time = Number.parseInt(t);
-  //   const hour = Math.floor(time / 3600);
-  //   const minute = Math.floor((time - hour * 3600) / 60);
-  //   const second = time - (hour * 3600 + minute * 60);
-  //   const hourPrefix = prefixTime(hour);
-  //   const minutePrefix = prefixTime(minute);
-  //   const secondPrefix = prefixTime(second);
-  //   if (hour > 0) {
-  //     return `${hourPrefix}:${minutePrefix}:${secondPrefix}`;
-  //   }
-  //   return `${minutePrefix}:${secondPrefix}`;
-  // };
+
   // handle events
 
   return (

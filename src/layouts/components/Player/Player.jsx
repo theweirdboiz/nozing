@@ -21,11 +21,18 @@ import {
 import { useRef } from "react";
 import { useState } from "react";
 import { formatDuration, trimLink } from "@helpers/helpers";
+import playlistSlice from "@redux/playlistSlice";
+import { audioSelector } from "@redux/selectors";
+import audioSlice from "../../../redux/audioSlice";
 
 const Player = () => {
   // define
   const dispatch = useDispatch();
   const navigator = useNavigate();
+
+  const songAudio = useSelector(audioSelector);
+
+  console.log(songAudio);
 
   const audio = useRef(new Audio());
   const currentSentenceHightlight = useRef();
@@ -75,18 +82,15 @@ const Player = () => {
   const trackVolume = useRef();
   const thumbVolume = useRef();
 
-  const [mute, setMute] = useState(0);
+  const [mute, setMute] = useState(false);
 
   const handleNavigator = (e, link) => {
     e.stopPropagation();
-    console.log(link);
     navigator(trimLink(link));
   };
 
   // the first load
   useEffect(() => {
-    // set state "is loaded:false"
-    dispatch(songsSlice.actions.setIsLoaded(false));
     // check exist currentSongInfor?
     if (currentSongInfor?.encodeId) {
       // notice store save current song to recent songs
@@ -110,6 +114,7 @@ const Player = () => {
     audio.current.pause();
     if (currentSong) {
       audio.current.src = currentSong?.[128];
+      dispatch(audioSlice.actions.setSrc(currentSong?.[128]));
     }
   }, [currentSong]);
 
@@ -122,6 +127,7 @@ const Player = () => {
     } else {
       const trackRect = trackVolume.current.getBoundingClientRect();
       audio.current.volume = 0.75;
+      console.log(audio.current.volume);
       thumbVolume.current.style.cssText = `width: ${0.75 * trackRect.width}px`;
     }
   }, [mute]);
@@ -219,10 +225,7 @@ const Player = () => {
 
     dispatch(songsSlice.actions.setIsRandom(!isRandom));
   };
-  // handle click player
-  // const trimLink = (link) => {
-  //   return link.slice(0, link.indexOf("."));
-  // };
+
   const handleClickPlayer = (e) => {
     e.stopPropagation();
 
@@ -252,6 +255,7 @@ const Player = () => {
   };
   audio.current.onpause = () => {
     dispatch(songsSlice.actions.isPlaying(false));
+    dispatch(playlistSlice.actions.setIsPlayling(false));
   };
   // when song is update
   audio.current.ontimeupdate = () => {

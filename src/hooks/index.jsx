@@ -1,1 +1,1 @@
-export { default as useTrimLink } from "./useTrimLink";
+export { default as useRandomSong } from "./useRandomSong";

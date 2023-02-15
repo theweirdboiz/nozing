@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { trimLink } from "@helpers/helpers";
+import songsSlice from "@redux/songsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { isPlayingSelector } from "@redux/selectors";
+import { playlistSelector } from "../../../../redux/selectors";
+import playlistSlice from "../../../../redux/playlistSlice";
 
 const Album = ({
   encodeId,
@@ -13,6 +18,11 @@ const Album = ({
   link,
 }) => {
   const navigator = useNavigate();
+  const dispatch = useDispatch();
+
+  // const isPlaying = useSelector(isPlayingSelector);
+
+  // const {isPlaying} = useSelector(playlistSelector)
 
   const handleNavigator = (e, link) => {
     e.stopPropagation();
@@ -22,8 +32,13 @@ const Album = ({
   const handlePlayChanel = (e, link) => {
     e.stopPropagation();
     e.preventDefault();
-    navigator(trimLink(link), { state: { isPlay: true } });
+    navigator(trimLink(link));
+    dispatch(playlistSlice.actions.setIsPlaying(true));
   };
+
+  useEffect(() => {
+    dispatch(playlistSlice.actions.setIsPlaying(false));
+  }, []);
 
   return (
     <div className="" key={encodeId}>

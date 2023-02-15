@@ -42,10 +42,12 @@ const Queue = () => {
   }, [queue]);
   // bug
   useEffect(() => {
+    console.log(isPlaying, "1");
     isPlaying && setQueue(detailPlaylist);
-  }, [currentPlaylistId, isPlaying]);
+  }, [queue, isPlaying]);
 
   useEffect(() => {
+    console.log(isPlaying, "2");
     isPlaying && setTabActive(0);
   }, [isPlaying]);
 

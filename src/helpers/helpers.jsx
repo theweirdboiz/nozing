@@ -32,3 +32,9 @@ export const formatDuration = (t) => {
   }
   return `${minutePrefix}:${secondPrefix}`;
 };
+export const formatDate = (date) =>
+  new Date(date * 1000).toLocaleDateString("vi-VI");
+
+export const randomIndex = (playlist) => {
+  return Math.floor(Math.random() * (playlist?.length - 1));
+};

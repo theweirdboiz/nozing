@@ -4,20 +4,14 @@ import { useSelector } from "react-redux";
 import { detailPlaylistSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
+import { formatTime } from "@helpers/helpers";
 
-const ListSong = () => {
-  const detailPlaylist = useSelector(detailPlaylistSelector);
-
-  const formatTime = (totalDuration) => {
-    const hour = Math.floor(totalDuration / 3600);
-    const minute = Math.floor((totalDuration - hour * 3600) / 60);
-    return `${hour} giờ ${minute} phút`;
-  };
+const ListSong = ({ data, status }) => {
   // handle events
   return (
     <>
       <ul>
-        {detailPlaylist?.song?.items?.map((song, index) => {
+        {data?.song?.items?.map((song, index) => {
           return (
             <MediaItem
               key={song?.encodeId}
@@ -34,9 +28,9 @@ const ListSong = () => {
         })}
       </ul>
       <h6 className="text-[1.2rem] font-medium text-secondary flex items-center mt-4">
-        {detailPlaylist?.song?.items?.length} bài hát
+        {data?.song?.items?.length} bài hát
         <span className="font-bold mx-4 text-[1.6rem]">•</span>
-        {formatTime(detailPlaylist?.song?.totalDuration)}
+        {formatTime(data?.song?.totalDuration)}
       </h6>
     </>
   );
