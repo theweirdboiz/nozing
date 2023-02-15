@@ -2,11 +2,8 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { trimLink } from "@helpers/helpers";
-import songsSlice from "@redux/songsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { isPlayingSelector } from "@redux/selectors";
-import { playlistSelector } from "../../../../redux/selectors";
-import playlistSlice from "../../../../redux/playlistSlice";
+import playlistSlice from "@redux/playlistSlice";
 
 const Album = ({
   encodeId,

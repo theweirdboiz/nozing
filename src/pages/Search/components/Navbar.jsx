@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { SearchMenuNavbar } from "@ultis";
 import { useSelector } from "react-redux";
-import { searchKeywordSelector } from "@redux/selectors";
+import songsSlice from "@redux/songsSlice";
 const Navbar = (props) => {
-  const searchKeyword = useSelector(searchKeywordSelector);
+  const { searchKeyword } = useSelector(songsSlice);
   return (
     <>
       <nav className="mb-[2.8rem]">

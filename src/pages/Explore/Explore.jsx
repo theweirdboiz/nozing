@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchHomeData } from "@redux/exploreSlice";
-import { homeDataSelector } from "@redux/selectors";
 
 import Gallary from "@components/Gallary";
 import Chanel from "./components/chanel";
@@ -11,12 +10,13 @@ import NewRelease from "./components/newRelease";
 import ChartSection from "./components/chart/ChartSection";
 
 import { trimLink } from "@helpers/helpers";
+import { homeSelector } from "@redux/selectors";
 
 const Explore = () => {
   // define
   const dispatch = useDispatch();
   const { autoTheme1, autoTheme2, top100, album, artistTheme, weekChart } =
-    useSelector(homeDataSelector);
+    useSelector(homeSelector);
 
   // hooks
   useEffect(() => {
@@ -33,13 +33,13 @@ const Explore = () => {
       {/* chart */}
       <ChartSection />
       {/* week chart */}
-      <div className="grid grid-cols-3 gap-x-12 mt-[2.8rem] px-[6rem]">
+      <div className="grid grid-cols-3 gap-x-6 md:gap-x-12 mt-[2.8rem] px-[6rem]">
         {weekChart?.map((item) => {
           return (
             <Link
               key={item?.banner}
               to={trimLink(item?.link)}
-              className="rounded-lg overflow-hidden"
+              className="rounded-lg overflow-hidden "
             >
               <img src={item?.cover} alt="" />
             </Link>

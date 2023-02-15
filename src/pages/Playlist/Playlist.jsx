@@ -66,10 +66,10 @@ const Playlist = (props) => {
   };
 
   return (
-    <section className="pt-[2rem] relative px-[6rem] mt-[7rem]">
-      <div className="flex gap-x-6 justify-between">
+    <section className="pt-[4rem] relative px-[6rem] mt-[7rem]">
+      <div className="flex flex-col md:flex-row gap-x-6 justify-between">
         <>
-          <div className="fixed top-[11rem] w-[30rem] h-full">
+          <div className="block md:fixed top-[11rem] w-[30rem] h-full">
             <div className="relative cursor-pointer group/item rounded-xl overflow-hidden">
               <figure
                 className={`overflow-hidden ${
@@ -177,7 +177,7 @@ const Playlist = (props) => {
             </div>
           </div>
         </>
-        <div className="ml-[33rem] flex-1">
+        <div className="md:ml-[33rem] flex-1">
           <h3 className="mb-5 text-[1.4rem]">
             <span className="text-secondary font-semibold">Lời tựa </span>
             <span className="font-medium">

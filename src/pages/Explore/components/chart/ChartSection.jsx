@@ -1,18 +1,17 @@
 import React, { memo } from "react";
 import PropTypes, { object } from "prop-types";
-import { Chart } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { homeDataSelector } from "@redux/selectors";
 import { useEffect } from "react";
 import { useRef } from "react";
-
+import { Chart } from "chart.js";
 import _ from "lodash";
 
 import SongItem from "../songItem";
 import { RoutesConfig } from "@config";
 import { Link } from "react-router-dom";
+import { homeSelector } from "@redux/selectors";
 
 const ChartSection = (props) => {
   // define
@@ -20,7 +19,7 @@ const ChartSection = (props) => {
 
   const link = RoutesConfig.find((route) => route.id === "zing-chart").id;
 
-  const { chart, rank } = useSelector(homeDataSelector);
+  const { chart, rank } = useSelector(homeSelector);
 
   const chartRef = useRef();
 
@@ -72,7 +71,6 @@ const ChartSection = (props) => {
             dataset.data.some((item) => item === counter)
           );
           setHoverItemId(rs[0].encodeId);
-          console.log(rs[0].borderColor);
           // custom tooltip
           const newTooltipData = {
             opacity: 1,
@@ -153,8 +151,8 @@ const ChartSection = (props) => {
           </svg>
         </h2>
       </Link>
-      <div className="flex items-center gap-x-6 relative">
-        <div className="w-2/5 flex-shrink-0">
+      <div className="flex flex-col-reverse md:flex-row items-center gap-x-6 relative">
+        <div className="w-full md:w-2/5 flex-shrink-0">
           <div className="grid grid-cols-1 gap-y-4">
             {rank?.slice(0, 3).map((item, index) => {
               return (
@@ -177,7 +175,7 @@ const ChartSection = (props) => {
             </div>
           </div>
         </div>
-        <div className="flex-1 h-[30rem] py-3 relative">
+        <div className="w-full md:flex-1 h-[30rem] py-3 relative">
           {dataChart && (
             <Line ref={chartRef} data={dataChart} options={options} />
           )}

@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import songsSlice from "@redux/songsSlice";
-
-import { homeDataSelector } from "@redux/selectors";
+import { homeSelector } from "@redux/selectors";
 
 const BtnPlayNewRelease = (props) => {
   const dispatch = useDispatch();
 
-  const { newRelease } = useSelector(homeDataSelector);
+  const { newRelease } = useSelector(homeSelector);
 
   const handleClick = () => {
     dispatch(songsSlice.actions.setDetailPlaylist(newRelease?.items?.vPop));

@@ -74,7 +74,7 @@ const Search = (props) => {
           onChange={handleKeywordChange}
           type="text"
           placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát ..."
-          className="absolute left-16 bg-transparent w-full"
+          className="text-[1.3rem] absolute left-16 bg-transparent w-full line"
         />
         <button
           onClick={handleClearSearchKeyword}

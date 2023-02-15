@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { searchDataSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
+import songsSlice from "@redux/songsSlice";
 
 const SearchSong = (props) => {
-  const searchData = useSelector(searchDataSelector);
+  const { searchData } = useSelector(songsSlice);
 
   return (
     <div className="pb-10">

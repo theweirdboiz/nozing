@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { searchDataSelector } from "@redux/selectors";
 import MvCard from "@components/mvCard/MvCard";
+import songsSlice from "@redux/songsSlice";
 const SearchMv = (props) => {
-  const searchData = useSelector(searchDataSelector);
+  const { searchData } = useSelector(songsSlice);
+
   return (
     <div className="grid grid-cols-3 gap-12 pb-10">
       {searchData?.videos?.map((item) => {

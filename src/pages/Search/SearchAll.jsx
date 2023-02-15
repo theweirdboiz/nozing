@@ -2,14 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 
-import { searchDataSelector } from "@redux/selectors";
-
 import MediaItem from "@components/MediaItem";
 import Album from "@pages/Explore/components/album";
 import ArtistCard from "@components/artistCard";
+import songsSlice from "../../redux/songsSlice";
 
 const SearchAll = (props) => {
-  const searchData = useSelector(searchDataSelector);
+  const { searchData } = useSelector(songsSlice);
 
   // const isArtist = searchData?.top?.objectType === "artist";
 

@@ -1,14 +1,14 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { homeDataSelector } from "@redux/selectors";
 
 import SongItem from "../songItem";
 import { useState } from "react";
 import { useEffect } from "react";
+import { homeSelector } from "@redux/selectors";
 
 const NewRelease = (props) => {
-  const { newRelease } = useSelector(homeDataSelector);
+  const { newRelease } = useSelector(homeSelector);
 
   const [tabActiveIndex, setTabActiveIndex] = useState(0);
   const [tabPanel, setTabPanel] = useState([]);

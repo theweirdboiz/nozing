@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import GallaryItem from "./GallaryItem";
 import songsSlice from "@redux/songsSlice";
-import { bannerSelector } from "@redux/selectors";
 
 import { useNavigate } from "react-router-dom";
+import { homeSelector } from "../../redux/selectors";
 
 const Gallary = () => {
   // define
   const dispatch = useDispatch();
-  const banner = useSelector(bannerSelector);
+  const { banner } = useSelector(homeSelector);
 
   const number = 1;
   const navigator = useNavigate();
@@ -82,7 +82,7 @@ const Gallary = () => {
   };
   return (
     <div className="gallary px-[6rem] mt-[7rem] pt-[2rem] ">
-      <div className="gallary__container h-[22rem]">
+      <div className="gallary__container h-[10rem] md:h-[22rem]">
         <div className="gallary__prev" onClick={handleClickPrevBtn}>
           <button className="btn">
             <svg

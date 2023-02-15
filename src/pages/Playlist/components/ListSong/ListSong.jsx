@@ -1,7 +1,5 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
-import { detailPlaylistSelector } from "@redux/selectors";
 
 import MediaItem from "@components/MediaItem";
 import { formatTime } from "@helpers/helpers";

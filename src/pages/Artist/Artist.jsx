@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArtist } from "@redux/songsSlice";
-import { currentArtistSelector } from "@redux/selectors";
 import MediaItem from "@components/MediaItem";
 import Album from "@pages/Explore/components/album";
 import MvCard from "@components/mvCard/MvCard";
 import ArtistCard from "@components/artistCard";
-import songsSlice from "../../redux/songsSlice";
+import { songSelector } from "@redux/selectors";
 
 const Artist = (props) => {
   const { artist } = useParams();
 
   const dispatch = useDispatch();
 
-  const currentArtist = useSelector(currentArtistSelector);
+  const { currentArtist } = useSelector(songSelector);
 
   const bgRef = useRef();
 

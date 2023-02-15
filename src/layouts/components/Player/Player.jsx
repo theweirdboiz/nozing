@@ -5,25 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useEffect } from "react";
 import songsSlice, { fetchDetailSong, fetchLyricSong } from "@redux/songsSlice";
-import {
-  currentSongSelector,
-  isPlayingSelector,
-  currentSongInforSelector,
-  currentSongIdSelector,
-  detailPlaylistSelector,
-  currentSongIndexSelector,
-  isRepeatSelector,
-  isRandomSelector,
-  isLoadedSelector,
-  isQueueSelector,
-  lyricSongSelector,
-} from "@redux/selectors";
+
 import { useRef } from "react";
 import { useState } from "react";
 import { formatDuration, trimLink } from "@helpers/helpers";
 import playlistSlice from "@redux/playlistSlice";
 import { playerSelector } from "@redux/selectors";
 import playerSlice from "@redux/playerSlice";
+import { songSelector } from "../../../redux/selectors";
 
 const Player = () => {
   // define
@@ -49,27 +38,19 @@ const Player = () => {
 
   // elements
   const { src, volumeValue } = useSelector(playerSelector);
-  const detailPlaylist = useSelector(detailPlaylistSelector);
 
-  const isPlaying = useSelector(isPlayingSelector);
-
-  const isQueue = useSelector(isQueueSelector);
-
-  // get current song id from store
-  const currentSongId = useSelector(currentSongIdSelector);
-
-  // get current song from store
-  const currentSongInfor = useSelector(currentSongInforSelector);
-
-  const currentSong = useSelector(currentSongSelector);
-
-  const currentSongIndex = useSelector(currentSongIndexSelector);
-
-  const isReapeat = useSelector(isRepeatSelector);
-
-  const isRandom = useSelector(isRandomSelector);
-
-  const lyricSong = useSelector(lyricSongSelector);
+  const {
+    detailPlaylist,
+    isQueue,
+    isPlaying,
+    currentSongInfor,
+    currentSongId,
+    currentSong,
+    currentSongIndex,
+    isReapeat,
+    isRandom,
+    lyricSong,
+  } = useSelector(songSelector);
 
   // hooks
   const trackProgressbar = useRef();
@@ -296,11 +277,13 @@ const Player = () => {
     <>
       <section
         className={`bottom-0 left-0 right-0 px-[2rem] border-t border-border-primary ${
-          currentSong && currentSongInfor ? "flex" : "hidden"
+          currentSong && currentSongInfor
+            ? "flex flex-col md:flex-row"
+            : "hidden"
         } items-center justify-between bg-layout-bg cursor-pointer`}
         onClick={handleClickPlayer}
       >
-        <div className="flex h-[9rem] py-5 w-[30%]">
+        <div className="hidden md:flex h-[9rem] py-5 w-full md:w-[30%]">
           <div className="flex justify-start items-center gap-x-5">
             <Link>
               <figure className="w-[6.4rem] h-[6.4rem] rounded-md overflow-hidden">
@@ -373,7 +356,7 @@ const Player = () => {
           </div>
         </div>
         {/* Player control */}
-        <div className="flex flex-col flex-1 relative z-[222]">
+        <div className="flex flex-col w-full md:flex-1 relative z-[222]">
           <div className="flex gap-x-8 items-center justify-center">
             {/* random */}
             <button
@@ -543,7 +526,7 @@ const Player = () => {
           </div>
         </div>
         {/* option */}
-        <div className="w-[30%] flex items-center justify-end gap-x-2">
+        <div className="w-full md:w-[30%] flex items-center justify-center md:justify-end gap-x-2">
           <button className="circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"

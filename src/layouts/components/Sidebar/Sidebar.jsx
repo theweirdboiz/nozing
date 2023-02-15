@@ -6,7 +6,7 @@ import Navbar from "@layouts/components/Sidebar/components/Navbar";
 import LoginVipContainer from "@components/LoginVipContainer";
 import { publicRoutes } from "@routers";
 import { useDispatch, useSelector } from "react-redux";
-import { currentSongIdSelector } from "@redux/selectors";
+import { songSelector } from "../../../redux/selectors";
 
 const Sidebar = () => {
   const container1 = {
@@ -222,7 +222,7 @@ const Sidebar = () => {
     },
   ];
 
-  const currentSongId = useSelector(currentSongIdSelector);
+  const { currentSongId } = useSelector(songSelector);
   return (
     <aside
       className={`relative left-0 top-0  bg-sidebar-bg flex-shrink-0 ${
@@ -240,7 +240,7 @@ const Sidebar = () => {
             <LoginVipContainer container={container2} />
           </div>
         </div>
-        <div className="h-[5.4rem] border-t-[1px] border-border-primary flex items-center flex-shrink-0 pl-[2.5rem] hover:text-[#ddd]">
+        <div className="hidden md:flex h-[5.4rem] border-t-[1px] border-border-primary items-center flex-shrink-0 pl-[2.5rem] hover:text-[#ddd]">
           <button className="flex gap-x-3 border ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -259,6 +259,22 @@ const Sidebar = () => {
             <span className="font-semibold text-[14px]">Tạo playlist mới</span>
           </button>
         </div>
+        <button className="circle__large flex-shrink-0 bg-hover-circle mx-auto mb-5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
       </div>
     </aside>
   );

@@ -8,12 +8,12 @@ import Player from "@layouts/components/Player";
 import { useDispatch, useSelector } from "react-redux";
 
 import songsSlice from "@redux/songsSlice";
-import { currentSongIdSelector } from "@redux/selectors";
+import { songSelector } from "@redux/selectors";
 
 const DefaultLayout = ({ children }) => {
   const dispatch = useDispatch();
 
-  const currentSongId = useSelector(currentSongIdSelector);
+  const { currentSongId } = useSelector(songSelector);
 
   const handleBgHeader = (e) => {
     const position = e.target.scrollTop;

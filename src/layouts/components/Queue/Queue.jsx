@@ -2,19 +2,14 @@ import React, { memo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  currentSongInforSelector,
-  detailPlaylistSelector,
-  currentPlaylistIdSelector,
-  isPlayingSelector,
-  isQueueSelector,
-  recentSongsSelector,
-} from "@redux/selectors";
+import {} from "@redux/selectors";
 
 import SongItem from "@pages/Explore/components/songItem";
 import SkeletonMedia from "@components/skeletonMedia";
 
 import { BtnPlayNewRelease } from "@components/button";
+import songsSlice from "../../../redux/songsSlice";
+import { songSelector } from "../../../redux/selectors";
 
 const Queue = () => {
   // define
@@ -25,16 +20,8 @@ const Queue = () => {
     setTabActive(index);
   };
 
-  const recentSongs = useSelector(recentSongsSelector);
-
-  const currentSongInfor = useSelector(currentSongInforSelector);
-
-  const detailPlaylist = useSelector(detailPlaylistSelector);
-
-  const currentPlaylistId = useSelector(currentPlaylistIdSelector);
-
-  const isPlaying = useSelector(isPlayingSelector);
-  const isQueue = useSelector(isQueueSelector);
+  const { detailPlaylist, isPlaying, recentSongs, isQueue, currentSongInfor } =
+    useSelector(songSelector);
 
   // first time
   useEffect(() => {
@@ -42,7 +29,6 @@ const Queue = () => {
   }, [queue]);
   // bug
   useEffect(() => {
-    console.log(isPlaying, "1");
     isPlaying && setQueue(detailPlaylist);
   }, [queue, isPlaying]);
 

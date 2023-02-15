@@ -54,9 +54,9 @@ $navigation-text: #dadada;
   height: 100vh;
 }
 .sidebar {
-  width: 24rem;
   height: calc(100vh - $player-height);
   z-index: 100;
+  @apply w-[7rem] md:w-[24rem];
 }
 .sidebar-h-full {
   width: 24rem;

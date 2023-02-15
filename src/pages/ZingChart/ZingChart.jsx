@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChartHomeData } from "@redux/exploreSlice";
-import { chartHomeDataSelector } from "../../redux/selectors";
+import { homeSelector } from "@redux/selectors";
 import _ from "lodash";
-
+import { Chart } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
 import SongItem from "@pages/Explore/components/songItem";
@@ -15,7 +15,7 @@ import RankSongs from "./components/RankSongs";
 
 const ZingChart = (props) => {
   const dispatch = useDispatch();
-  const chartHomeData = useSelector(chartHomeDataSelector);
+  const { zingchart } = useSelector(homeSelector);
 
   const [dataChart, setDataChart] = useState();
 
@@ -97,9 +97,9 @@ const ZingChart = (props) => {
   }, []);
 
   useEffect(() => {
-    const items = chartHomeData?.RTChart?.chart?.items;
+    const items = zingchart?.RTChart?.chart?.items;
     const datasets = [];
-    const labels = chartHomeData?.RTChart?.chart?.times
+    const labels = zingchart?.RTChart?.chart?.times
       ?.filter((time) => +time?.hour % 2 === 0)
       ?.map((time) => time.hour + ":00");
     if (items) {
@@ -120,7 +120,7 @@ const ZingChart = (props) => {
       }
     }
     setDataChart({ labels, datasets });
-  }, [chartHomeData]);
+  }, [zingchart]);
 
   // handle events
   const handleSeeMore = () => {
@@ -178,24 +178,24 @@ const ZingChart = (props) => {
             <SongItem
               songId={hoverItemId}
               title={
-                chartHomeData?.RTChart?.items?.find(
+                zingchart?.RTChart?.items?.find(
                   (item) => item?.encodeId === hoverItemId
                 )?.title
               }
               thumbnail={
-                chartHomeData?.RTChart?.items?.find(
+                zingchart?.RTChart?.items?.find(
                   (item) => item?.encodeId === hoverItemId
                 )?.thumbnail
               }
               artists={
-                chartHomeData?.RTChart?.items?.find(
+                zingchart?.RTChart?.items?.find(
                   (item) => item?.encodeId === hoverItemId
                 )?.artists
               }
               percent={handlePercent(
-                chartHomeData?.RTChart?.items?.find(
+                zingchart?.RTChart?.items?.find(
                   (item) => item?.encodeId === hoverItemId
-                )?.score / chartHomeData?.RTChart?.chart?.totalScore
+                )?.score / zingchart?.RTChart?.chart?.totalScore
               )}
               bgColor={tooltip.bgColor}
             />
@@ -230,8 +230,8 @@ const ZingChart = (props) => {
           isRank
           listSong={
             isMore
-              ? chartHomeData?.RTChart?.items
-              : chartHomeData?.RTChart?.items?.slice(0, 10)
+              ? zingchart?.RTChart?.items
+              : zingchart?.RTChart?.items?.slice(0, 10)
           }
           inPlaylist
         />
@@ -244,8 +244,7 @@ const ZingChart = (props) => {
           {isMore ? "Xem top 10" : "Xem top 100"}
         </div>
       </div>
-      {/*  */}
-      <section className="mt-10 mb-4 relative">
+      <section className="mt-10 mb-4 relative ">
         <div className="absolute inset-0 bg-chart-section bg-top bg-cover bg-no-repeat grayscale"></div>
         <div className="absolute inset-0 bg-chart-bg-alpha"></div>
         <div className="relative z-10 p-[6rem]">
@@ -257,7 +256,7 @@ const ZingChart = (props) => {
             <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
               <div className="">
                 <RankSongs
-                  listSong={chartHomeData?.weekChart?.vn?.items?.slice(0, 5)}
+                  listSong={zingchart?.weekChart?.vn?.items?.slice(0, 5)}
                   isRank
                 />
               </div>
@@ -273,7 +272,7 @@ const ZingChart = (props) => {
             <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
               <div className="">
                 <RankSongs
-                  listSong={chartHomeData?.weekChart?.us?.items?.slice(0, 5)}
+                  listSong={zingchart?.weekChart?.us?.items?.slice(0, 5)}
                   isRank
                 />
               </div>
@@ -290,7 +289,7 @@ const ZingChart = (props) => {
             <div className="bg-chart-box-alpha rounded-3xl py-6 px-4">
               <div className="">
                 <RankSongs
-                  listSong={chartHomeData?.weekChart?.korea?.items?.slice(0, 5)}
+                  listSong={zingchart?.weekChart?.korea?.items?.slice(0, 5)}
                   isRank
                 />
               </div>

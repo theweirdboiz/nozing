@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { searchDataSelector } from "@redux/selectors";
 import ArtistCard from "@components/artistCard";
 import { useSelector } from "react-redux";
+import songsSlice from "@redux/songsSlice";
 
 const SearchArtist = (props) => {
-  const searchData = useSelector(searchDataSelector);
+  const { searchData } = useSelector(songsSlice);
 
   return (
     <div className="grid grid-cols-5 gap-12 pb-[10]">
