@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import exploreSlice from "./exploreSlice";
 import songsSlice from "./songsSlice";
 import playlistSlice from "./playlistSlice";
-import audioSlice from "./audioSlice";
 import {
   persistReducer,
   FLUSH,
@@ -14,6 +13,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import playerSlice from "./playerSlice";
 
 const persistConfig = {
   version: 1,
@@ -37,7 +37,7 @@ const store = configureStore({
     explore: exploreSlice.reducer,
     songs: persistReducer(musicConfig, songsSlice.reducer),
     playlists: playlistSlice.reducer,
-    songAudio: audioSlice.reducer,
+    player: playerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

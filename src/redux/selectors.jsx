@@ -40,4 +40,4 @@ export const currentArtistSelector = (state) => state.songs.currentArtist;
 export const playlistSelector = (state) => state.playlists;
 
 // audio slice
-export const audioSelector = (state) => state.songAudio;
+export const playerSelector = (state) => state.player;

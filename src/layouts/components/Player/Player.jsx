@@ -22,17 +22,13 @@ import { useRef } from "react";
 import { useState } from "react";
 import { formatDuration, trimLink } from "@helpers/helpers";
 import playlistSlice from "@redux/playlistSlice";
-import { audioSelector } from "@redux/selectors";
-import audioSlice from "../../../redux/audioSlice";
+import { playerSelector } from "@redux/selectors";
+import playerSlice from "@redux/playerSlice";
 
 const Player = () => {
   // define
   const dispatch = useDispatch();
   const navigator = useNavigate();
-
-  const songAudio = useSelector(audioSelector);
-
-  console.log(songAudio);
 
   const audio = useRef(new Audio());
   const currentSentenceHightlight = useRef();
@@ -52,6 +48,7 @@ const Player = () => {
   const [lyric, setLyric] = useState(initLyric);
 
   // elements
+  const { src, volumeValue } = useSelector(playerSelector);
   const detailPlaylist = useSelector(detailPlaylistSelector);
 
   const isPlaying = useSelector(isPlayingSelector);
@@ -72,8 +69,6 @@ const Player = () => {
 
   const isRandom = useSelector(isRandomSelector);
 
-  const isLoaded = useSelector(isLoadedSelector);
-
   const lyricSong = useSelector(lyricSongSelector);
 
   // hooks
@@ -88,8 +83,6 @@ const Player = () => {
     e.stopPropagation();
     navigator(trimLink(link));
   };
-
-  // the first load
   useEffect(() => {
     // check exist currentSongInfor?
     if (currentSongInfor?.encodeId) {
@@ -111,24 +104,20 @@ const Player = () => {
 
   // the first load
   useEffect(() => {
-    audio.current.pause();
-    if (currentSong) {
-      audio.current.src = currentSong?.[128];
-      dispatch(audioSlice.actions.setSrc(currentSong?.[128]));
-    }
+    audio.current.src = currentSong?.[128];
+    dispatch(playerSlice.actions.setSrc(currentSong?.[128]));
   }, [currentSong]);
-
   // first load
   useEffect(() => {
     // handle volume
     if (mute) {
-      audio.current.volume = 0.0;
+      audio.current.volume = 0;
       thumbVolume.current.style.cssText = `width: 0px`;
     } else {
-      const trackRect = trackVolume.current.getBoundingClientRect();
-      audio.current.volume = 0.75;
-      console.log(audio.current.volume);
-      thumbVolume.current.style.cssText = `width: ${0.75 * trackRect.width}px`;
+      audio.current.volume = volumeValue;
+      thumbVolume.current.style.cssText = `width: ${
+        volumeValue * trackVolume.current.width
+      }px`;
     }
   }, [mute]);
 
@@ -142,10 +131,10 @@ const Player = () => {
       });
     }
   }, [currentSentenceHightlight.current]);
-
   // handle events
   // when change volume
   const handleChangeVolume = (e) => {
+    setMute(false);
     e.stopPropagation();
     const trackRect = trackVolume.current.getBoundingClientRect();
     const percent = +((e.clientX - trackRect.left) / trackRect.width).toFixed(
@@ -240,14 +229,10 @@ const Player = () => {
   // when song is load
   audio.current.onloadeddata = () => {
     audio.current.pause();
-
-    dispatch(songsSlice.actions.setIsLoaded(true));
-
     audio.current.volume = +thumbVolume.current.clientWidth / 100;
-
-    if (isPlaying) {
-      audio.current.play();
-    }
+    // if (isPlaying) {
+    //   audio.current.play();
+    // }
   };
   // when song is play
   audio.current.onplay = () => {
@@ -255,7 +240,7 @@ const Player = () => {
   };
   audio.current.onpause = () => {
     dispatch(songsSlice.actions.isPlaying(false));
-    dispatch(playlistSlice.actions.setIsPlayling(false));
+    dispatch(playlistSlice.actions.setIsPlaying(false));
   };
   // when song is update
   audio.current.ontimeupdate = () => {
@@ -432,7 +417,7 @@ const Player = () => {
               className="hover:text-link-text-hover"
               onClick={handlePlaySong}
             >
-              {!isLoaded ? (
+              {!src ? (
                 <svg
                   fill="none"
                   viewBox="0 0 24 24"

@@ -1,19 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import * as APIs from "@APIs";
-
-const audio = new Audio();
 export default createSlice({
-  name: "songAudio",
+  name: "player",
   initialState: {
-    audioElement: null,
+    src: "",
     isPlaying: false,
     isPausing: true,
     isLoading: false,
+    volumeValue: 0.75,
   },
   reducers: {
     setSrc: (state, action) => {
-      state.audioElement = new Audio(action.payload);
+      state.src = action.payload;
     },
   },
   // listen thunk actions
