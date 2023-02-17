@@ -12,7 +12,7 @@ import { formatDuration, trimLink } from "@helpers/helpers";
 import playlistSlice from "@redux/playlistSlice";
 import { playerSelector } from "@redux/selectors";
 import playerSlice from "@redux/playerSlice";
-import { songSelector } from "../../../redux/selectors";
+import { songSelector } from "@redux/selectors";
 
 const Player = () => {
   // define
@@ -112,6 +112,7 @@ const Player = () => {
       });
     }
   }, [currentSentenceHightlight.current]);
+
   // handle events
   // when change volume
   const handleChangeVolume = (e) => {

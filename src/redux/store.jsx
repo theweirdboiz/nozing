@@ -24,19 +24,20 @@ const persistConfig = {
 const musicConfig = {
   key: "MUSIC",
   ...persistConfig,
-  whitelist: [
-    "currentSongId",
-    "currentPlaylistId",
-    "detailPlaylist",
-    "recentSongs",
-  ],
+  whitelist: ["currentSongId", "detailPlaylist", "recentSongs"],
+};
+
+const playlistConfig = {
+  key: "PLAYLIST",
+  ...persistConfig,
+  whitelist: ["id"],
 };
 
 const store = configureStore({
   reducer: {
     explore: exploreSlice.reducer,
     songs: persistReducer(musicConfig, songsSlice.reducer),
-    playlists: playlistSlice.reducer,
+    playlists: persistReducer(playlistConfig, playlistSlice.reducer),
     player: playerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

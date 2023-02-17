@@ -8,32 +8,34 @@ import SongItem from "@pages/Explore/components/songItem";
 import SkeletonMedia from "@components/skeletonMedia";
 
 import { BtnPlayNewRelease } from "@components/button";
-import songsSlice from "../../../redux/songsSlice";
-import { songSelector } from "../../../redux/selectors";
+import { songSelector } from "@redux/selectors";
+import { playlistSelector } from "@redux/selectors";
 
 const Queue = () => {
   // define
   // 0: playlist, 1: recent songs
+  const { id: playlistId, data: detailPlaylist } =
+    useSelector(playlistSelector);
+
   const [tabActive, setTabActive] = useState(0);
   const [queue, setQueue] = useState();
   const handleSetTabActive = (index) => {
     setTabActive(index);
   };
 
-  const { detailPlaylist, isPlaying, recentSongs, isQueue, currentSongInfor } =
+  const { isPlaying, recentSongs, isQueue, currentSongInfor } =
     useSelector(songSelector);
 
   // first time
   useEffect(() => {
     detailPlaylist && setQueue(detailPlaylist);
-  }, [queue]);
+  }, [playlistId]);
   // bug
   useEffect(() => {
     isPlaying && setQueue(detailPlaylist);
-  }, [queue, isPlaying]);
+  }, [playlistId, isPlaying]);
 
   useEffect(() => {
-    console.log(isPlaying, "2");
     isPlaying && setTabActive(0);
   }, [isPlaying]);
 

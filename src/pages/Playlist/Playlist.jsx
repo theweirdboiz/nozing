@@ -29,8 +29,9 @@ const Playlist = (props) => {
   useEffect(() => {
     dispatch(playlistSlice.actions.setId(playlistId));
   }, []);
+
   useEffect(() => {
-    dispatch(fetchDetailPlaylist(playlistId));
+    if (playlistId) dispatch(fetchDetailPlaylist(playlistId));
   }, [playlistId]);
   useEffect(() => {
     if (isPlaying) {
