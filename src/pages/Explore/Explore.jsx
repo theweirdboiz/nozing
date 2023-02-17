@@ -1,22 +1,31 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchHomeData } from "@redux/exploreSlice";
 
 import Gallary from "@components/Gallary";
+
 import Chanel from "./components/chanel";
 import NewRelease from "./components/newRelease";
 import ChartSection from "./components/chart/ChartSection";
 
 import { trimLink } from "@helpers/helpers";
 import { homeSelector } from "@redux/selectors";
+import SkeletonCustom from "@components/Skeleton";
 
 const Explore = () => {
   // define
   const dispatch = useDispatch();
-  const { autoTheme1, autoTheme2, top100, album, artistTheme, weekChart } =
-    useSelector(homeSelector);
+  const {
+    autoTheme1,
+    autoTheme2,
+    top100,
+    album,
+    artistTheme,
+    weekChart,
+    loading,
+  } = useSelector(homeSelector);
 
   // hooks
   useEffect(() => {
@@ -25,6 +34,7 @@ const Explore = () => {
 
   return (
     <div className="w-full h-full">
+      {/* {loading !== "done" ? <Gallary.Loading /> : <Gallary />} */}
       <Gallary />
       <NewRelease />
       <Chanel data={autoTheme1}></Chanel>

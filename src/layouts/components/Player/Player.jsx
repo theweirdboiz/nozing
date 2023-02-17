@@ -209,17 +209,19 @@ const Player = () => {
 
   // when song is load
   audio.current.onloadeddata = () => {
-    audio.current.pause();
+    dispatch(songsSlice.actions.isPlaying(false));
     audio.current.volume = +thumbVolume.current.clientWidth / 100;
-    // if (isPlaying) {
-    //   audio.current.play();
-    // }
+    if (isPlaying) {
+      audio.current.play();
+    }
   };
   // when song is play
   audio.current.onplay = () => {
+    console.log("play");
     dispatch(songsSlice.actions.isPlaying(true));
   };
   audio.current.onpause = () => {
+    console.log("pause");
     dispatch(songsSlice.actions.isPlaying(false));
     dispatch(playlistSlice.actions.setIsPlaying(false));
   };
@@ -624,7 +626,8 @@ const Player = () => {
           </div>
           <div className="h-16 border-l ml-6 border-border-primary"></div>
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               dispatch(songsSlice.actions.setIsQueue(!isQueue));
             }}
             className={`${

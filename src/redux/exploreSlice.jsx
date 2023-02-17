@@ -16,11 +16,15 @@ export default createSlice({
     chart: {},
     rank: [],
     zingchart: null,
+    loading: "idle",
   },
   reducers: {},
   // listen thunk actions
   extraReducers: (builder) => {
     builder
+      .addCase(fetchHomeData.pending, (state, action) => {
+        state.loading = "pending";
+      })
       .addCase(fetchHomeData.fulfilled, (state, action) => {
         state.banner =
           action.payload.find((item) => item.sectionId === "hSlider")?.items ||
@@ -46,6 +50,7 @@ export default createSlice({
           action.payload.find((item) => item.sectionId === "hZC")?.chart || {};
         state.rank =
           action.payload.find((item) => item.sectionId === "hZC")?.items || [];
+        state.loading = "done";
       })
       .addCase(fetchChartHomeData.fulfilled, (state, action) => {
         state.zingchart = action.payload;

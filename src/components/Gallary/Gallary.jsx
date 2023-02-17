@@ -7,7 +7,7 @@ import GallaryItem from "./GallaryItem";
 import songsSlice from "@redux/songsSlice";
 
 import { useNavigate } from "react-router-dom";
-import { homeSelector } from "../../redux/selectors";
+import { homeSelector } from "@redux/selectors";
 
 const Gallary = () => {
   // define
@@ -82,7 +82,7 @@ const Gallary = () => {
   };
   return (
     <div className="gallary px-[6rem] mt-[7rem] pt-[2rem] ">
-      <div className="gallary__container h-[10rem] md:h-[22rem]">
+      <div className="gallary__container h-[22rem]">
         <div className="gallary__prev" onClick={handleClickPrevBtn}>
           <button className="btn">
             <svg
